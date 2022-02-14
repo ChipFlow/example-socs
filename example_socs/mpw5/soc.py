@@ -1,4 +1,5 @@
 from ..common.wrapper import SoCWrapper
+from ..common.software.soft_gen import SoftwareGenerator
 
 from amaranth_soc import wishbone
 
@@ -81,6 +82,19 @@ class Mpw5SoC(SoCWrapper):
 
         if self.is_sim(platform):
             m.submodules.bus_mon = platform.add_monitor("wb_mon", self._decoder.bus)
+
+        sw = SoftwareGenerator(
+            rom_start=self.spi_base + 0x00100000, rom_size=0x00100000, # place BIOS at 1MB so room for bitstream
+            ram_start=self.hyperram_base + 0x01F00000, ram_size=0x00100000, # place BIOS data at top of RAM above kernel (it stays resident)
+        )
+
+        sw.add_periph("spiflash", "FLASH_CTRL", self.spi_ctrl_base)
+        sw.add_periph("gpio", "LED_GPIO", self.led_gpio_base)
+        sw.add_periph("uart", "UART0", self.uart_base)
+        sw.add_periph("plat_timer", "TIMER0", self.timer_base)
+        sw.add_periph("soc_id", "SOC_ID", self.soc_id_base)
+
+        sw.generate("example_socs/mpw5/software/generated")
 
         return m
 

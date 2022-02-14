@@ -83,6 +83,8 @@ struct hyperram_model : public bb_p_hyperram__model {
                 sn.addr++;
             }
         }
+        if (sn.addr >= data.size())
+            sn.addr = 0;
         ++sn.clk_count;
     }
 
