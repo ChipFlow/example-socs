@@ -13,12 +13,12 @@ struct hyperram_model : public bb_p_hyperram__model {
         uint32_t curr_cs = 0;
         uint64_t ca = 0;
         uint32_t addr = 0;
+        uint16_t cfg0 = 0x8028;
+        uint16_t latency = 7;
     } s, sn;
 
     std::vector<uint8_t> data;
     int N; // number of devices
-
-    const int latency = 7; // TODO: configuration
 
     hyperram_model() {
         N = p_csn__o.bits;
@@ -37,20 +37,42 @@ struct hyperram_model : public bb_p_hyperram__model {
         return result;
     }
 
+    uint16_t lookup_latency(uint16_t cfg) {
+        uint8_t lat_key = (cfg >> 4) & 0xF;
+        switch (lat_key) {
+            case 0b0000: return 5;
+            case 0b0001: return 6;
+            case 0b0010: return 7;
+            case 0b1110: return 3;
+            case 0b1111: return 4;
+            default: log("unknown RAM latency %0x\n", lat_key); return 7;
+        }
+    }
+
     void handle_clk(bool posedge)
     {
         if (sn.clk_count < 6) {
+            p_rwds__i.set(1U); // 2x latency; always
             sn.ca |= uint64_t(p_dq__o.get<uint8_t>()) << ((5U - sn.clk_count) * 8U);
-        } else if (sn.clk_count == 6) {
+        }
+        if (sn.clk_count == 6) {    
             sn.addr = ((((sn.ca & 0x0FFFFFFFFFULL) >> 16U) << 3) | (sn.ca & 0x7)) * 2; // *2 to convert word address to byte address
             sn.addr += sn.dev * (8U * 1024U * 1024U); // device offsets
-        } else if (sn.clk_count >= (4 + 4 * latency)) {
+        }
+        if (sn.clk_count >= 6) {
+            bool is_reg = (sn.ca >> 46) & 0x1;
             bool is_read = (sn.ca >> 47) & 0x1;
-            if (is_read) {
+            if (is_reg && !is_read && sn.clk_count < 8) {
+                sn.cfg0 <<= 8;
+                sn.cfg0 |= p_dq__o.get<uint8_t>();
+                if (sn.clk_count == 7) {
+                    sn.latency = lookup_latency(sn.cfg0);
+                }
+            } else if (is_read && (sn.clk_count >= (3 + 4 * sn.latency))) {
                 // log("read %08x %02x\n", sn.addr, data.at(sn.addr));
                 p_dq__i.set(data.at(sn.addr++));
                 p_rwds__i.set(posedge);
-            } else {
+            } else if (!is_read && (sn.clk_count >= (4 + 4 * sn.latency))) {
                 if (!p_rwds__o) { // data mask 
                     // log("write %08x %02x\n", sn.addr, p_dq__o.get<uint8_t>());
                     data.at(sn.addr) = p_dq__o.get<uint8_t>();
