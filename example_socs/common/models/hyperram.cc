@@ -67,6 +67,7 @@ struct hyperram_model : public bb_p_hyperram__model {
                 sn.cfg0 |= p_dq__o.get<uint8_t>();
                 if (sn.clk_count == 7) {
                     sn.latency = lookup_latency(sn.cfg0);
+                    // log("set latency %d\n", sn.latency);
                 }
             } else if (is_read && (sn.clk_count >= (3 + 4 * sn.latency))) {
                 // log("read %08x %02x\n", sn.addr, data.at(sn.addr));

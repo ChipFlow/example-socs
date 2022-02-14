@@ -14,7 +14,7 @@ using namespace cxxrtl_design;
 int main(int argc, char **argv) {
     cxxrtl_design::p_sim__top top;
 
-    // wb_mon_set_output(*top.cell_p_bus__mon, "build/wishbone_log.csv");
+    wb_mon_set_output(*top.cell_p_bus__mon, "build/wishbone_log.csv");
     spiflash_load(*top.cell_p_flash, "../software/bios.bin", 0x00100000U);
 
     // TODO: provide infrastructure for these
