@@ -9,6 +9,8 @@ from amaranth_orchard.base.gpio import GPIOPins
 from amaranth_orchard.io.uart import UARTPins
 from amaranth_orchard.memory.hyperram import HyperRAMPins
 
+from .sky130_platform import Sky130Platform
+
 class SoCWrapper(Elaboratable):
     """
     This wrapper provides glue to simplify use of the ULX3S platform, and integrate between
@@ -18,9 +20,14 @@ class SoCWrapper(Elaboratable):
     def is_sim(self, platform):
         return hasattr(platform, "is_sim") and platform.is_sim
 
+    def is_sky130(self, platform):
+        return hasattr(platform, "is_sky130") and platform.is_sky130
+
     def get_flash(self, m, platform):
         flash = QSPIPins()
-        if self.is_sim(platform):
+        if self.is_sky130(platform):
+            platform.connect_io(m, flash, "flash")
+        elif self.is_sim(platform):
             m.submodules.flash = platform.add_model("spiflash_model", flash, edge_det=['clk_o', 'csn_o'])
         else:
             plat_flash = platform.request("spi_flash", dir=dict(cs='-', copi='-', cipo='-', wp='-', hold='-'))
@@ -50,7 +57,9 @@ class SoCWrapper(Elaboratable):
 
     def get_led_gpio(self, m, platform):
         leds = GPIOPins(width=8)
-        if self.is_sim(platform):
+        if self.is_sky130(platform):
+            platform.connect_io(m, leds, "gpio")
+        elif self.is_sim(platform):
             # TODO
             pass
         else:
@@ -61,7 +70,9 @@ class SoCWrapper(Elaboratable):
 
     def get_uart(self, m, platform):
         uart = UARTPins()
-        if self.is_sim(platform):
+        if self.is_sky130(platform):
+            platform.connect_io(m, uart, "uart")
+        elif self.is_sim(platform):
             m.submodules.uart_model = platform.add_model("uart_model", uart, edge_det=[])
         else:
             plat_uart = platform.request("uart")
@@ -74,7 +85,9 @@ class SoCWrapper(Elaboratable):
     def get_hram(self, m, platform):
         # Dual HyperRAM PMOD, starting at GPIO 0+/-
         hram = HyperRAMPins(cs_count=4)
-        if self.is_sim(platform):
+        if self.is_sky130(platform):
+            platform.connect_io(m, hram, "ram")
+        elif self.is_sim(platform):
             m.submodules.hram = platform.add_model("hyperram_model", hram, edge_det=['clk_o', ])
         else:
             platform.add_resources([
@@ -108,7 +121,28 @@ class SoCWrapper(Elaboratable):
 
     def elaborate(self, platform):
         m = Module()
-        if self.is_sim(platform):
+        if self.is_sky130(platform):
+            sys_io = Record([
+                ('clk_i', 1),
+                ('rstn_i', 1),
+            ])
+            platform.connect_io(m, sys_io, "sys")
+            m.domains.sync = ClockDomain()
+            m.d.comb += ClockSignal().eq(sys_io.clk_i)
+
+            rst = Signal()
+            m.d.comb += rst.eq(~sys_io.rstn_i)
+            rst_sync0 = Signal(reset_less=True)
+            rst_sync1 = Signal(reset_less=True)
+            m.d.sync += [
+                rst_sync0.eq(rst),
+                rst_sync1.eq(rst_sync0),
+            ]
+            m.d.comb += [
+                ResetSignal().eq(rst_sync1),
+            ]
+
+        elif self.is_sim(platform):
             m.domains.sync = ClockDomain()
             m.d.comb += ClockSignal().eq(platform.clk)
             m.d.comb += ResetSignal().eq(platform.rst)
@@ -119,3 +153,5 @@ class SoCWrapper(Elaboratable):
             reset_in = platform.request("button_pwr", 0)
             m.submodules += ResetSynchronizer(reset_in)
         return m
+
+
