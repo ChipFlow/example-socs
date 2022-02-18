@@ -96,6 +96,9 @@ class Sky130Platform():
         cell_name = top_name
         cell = CRL.Blif.load(cell_name)
 
+        from .sky130_scripts.split_inv_clocks import split_inv_clocks
+        split_inv_clocks(cell)
+
         af = CRL.AllianceFramework.get()
         env = af.getEnvironment()
         env.setCLOCK('io_in_from_pad(0)')
