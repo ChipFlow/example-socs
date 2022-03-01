@@ -148,6 +148,19 @@ class Sky130Platform():
         chipBuilder.save()
         self.do_fixup()
 
+        # Write LEF and DEF for PEX etc
+        Path("export").mkdir(parents=True, exist_ok=True)
+        os.chdir("export")
+        db = DataBase.getDB()
+        rootlib = db.getRootLibrary()
+        lib = rootlib.getLibrary("StdCellLib")
+        CRL.LefExport.drive(lib, 1)
+        CRL.DefExport.drive(conf.corona, 0)
+        for cell in lib.getCells():
+            if cell.getName() in (conf.corona.getName(), conf.core.getName(), conf.chip.getName()):
+                continue
+            CRL.DefExport.drive(cell, 0)
+
     def build(self, e, synth=True, pnr=True):
         Path(self.build_dir).mkdir(parents=True, exist_ok=True)
         top_name = "user_project_core_mpw5"
