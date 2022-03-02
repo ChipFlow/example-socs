@@ -8,7 +8,7 @@ read_def $BUILD_DIR/export/corona_cts_export.def
 define_process_corner -ext_model_index 0 X
 
 foreach corner {min nom max} {
-	extract_parasitics -ext_model_file "$CALIB/openrcx-magic/$PDK/rules.openrcx.$PDK.$corner.magic" -lef_res -cc_model 12 -max_res 0 -context_depth 10 -coupling_threshold 0 
+	extract_parasitics -ext_model_file "$CALIB/openrcx-magic/$PDK/rules.openrcx.$PDK.$corner.magic"
 	write_spef $BUILD_DIR/export/corona_cts_export.$corner.spef
 }
 
