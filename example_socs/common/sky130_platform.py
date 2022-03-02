@@ -197,6 +197,8 @@ class Sky130Platform():
             print(f"setundef -zero", file=f)
             print(f"write_blif {self.build_dir}/{top_name}.blif", file=f)
             print(f"write_json {self.build_dir}/{top_name}.json", file=f)
+            print(f"splitnets -ports", file=f) # required for tas
+            print(f"write_verilog -noattr {self.build_dir}/{top_name}_syn.v", file=f)
             print(f"stat", file=f)
         if synth:
             subprocess.run(["yosys", "-ql", Path(self.build_dir) / "synth.log", top_ys], check=True)

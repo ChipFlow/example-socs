@@ -39,14 +39,13 @@ foreach cell {sff1_x4 sff1r_x4} {
     inf_MarkSignal sff_s "FLIPFLOP+SLAVE"
 }
 
-avt_LoadFile ../export/corona_cts_export.v verilog
-avt_LoadFile ../export/corona_cts_export.$corner.spef spef
-set fig [hitas corona_cts_export]
+avt_LoadFile ../user_project_core_mpw5_syn.v verilog
+set fig [hitas user_project_core_mpw5]
 
-inf_SetFigureName corona_cts_export
-create_clock -period 10000 -waveform {5000 0} {io_in_from_pad_net(0)}
+inf_SetFigureName user_project_core_mpw5
+create_clock -period 10000 -waveform {5000 0} {io_in[0]}
 
-set fig [ttv_LoadSpecifiedTimingFigure corona_cts_export]
+set fig [ttv_LoadSpecifiedTimingFigure user_project_core_mpw5]
 set stbfig [stb $fig]
-stb_DisplaySlackReport [fopen slack_pnr_max.rep.$corner w] $stbfig * * ?? 10  all 10000
+stb_DisplaySlackReport [fopen slack_syn.rep.$corner w] $stbfig * * ?? 10  all 10000
 
