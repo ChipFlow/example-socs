@@ -156,6 +156,7 @@ class Sky130Platform():
         lib = rootlib.getLibrary("StdCellLib")
         CRL.LefExport.drive(lib, 1)
         CRL.DefExport.drive(conf.corona, 0)
+        CRL.DefExport.drive(conf.chip, 0)
         for cell in lib.getCells():
             if cell.getName() in (conf.corona.getName(), conf.core.getName(), conf.chip.getName()):
                 continue
