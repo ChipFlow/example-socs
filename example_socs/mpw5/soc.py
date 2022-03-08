@@ -13,7 +13,7 @@ from amaranth_orchard.base.platform_timer import PlatformTimer
 from amaranth_orchard.base.soc_id import SoCID
 
 class Mpw5SoC(SoCWrapper):
-    def __init__(self):
+    def __init__(self, *, large_cfg=False):
         super().__init__()
 
         # Memory regions
@@ -27,6 +27,7 @@ class Mpw5SoC(SoCWrapper):
         self.timer_base = 0xb3000000
         self.soc_id_base = 0xb4000000
         self.hram_ctrl_base = 0xb5000000
+        self.large_cfg = large_cfg
 
     def elaborate(self, platform):
         m = super().elaborate(platform)
@@ -34,7 +35,7 @@ class Mpw5SoC(SoCWrapper):
         self._arbiter = wishbone.Arbiter(addr_width=30, data_width=32, granularity=8)
         self._decoder = wishbone.Decoder(addr_width=30, data_width=32, granularity=8)
 
-        self.cpu = VexRiscv(config="LinuxMPW5", reset_vector=0x00100000)
+        self.cpu = VexRiscv(config="LinuxMPW5L" if self.large_cfg else "LinuxMPW5", reset_vector=0x00100000)
         self._arbiter.add(self.cpu.ibus)
         self._arbiter.add(self.cpu.dbus)
 
@@ -73,12 +74,24 @@ class Mpw5SoC(SoCWrapper):
 
         m.d.comb += [
             self._arbiter.bus.connect(self._decoder.bus),
-            self.cpu.jtag_tck.eq(0),
-            self.cpu.jtag_tdi.eq(0),
-            self.cpu.jtag_tms.eq(0),
             self.cpu.software_irq.eq(0),
             self.cpu.timer_irq.eq(self.timer.timer_irq),
         ]
+
+        if self.is_sky130(platform):
+            jtag_pins = super().get_jtag(m, platform)
+            m.d.comb += [
+                self.cpu.jtag_tck.eq(jtag_pins.tck_i),
+                self.cpu.jtag_tdi.eq(jtag_pins.tdi_i),
+                self.cpu.jtag_tms.eq(jtag_pins.tms_i),
+                jtag_pins.tdo_o.eq(self.cpu.jtag_tdo),
+            ]
+        else:
+            m.d.comb += [
+                self.cpu.jtag_tck.eq(0),
+                self.cpu.jtag_tdi.eq(0),
+                self.cpu.jtag_tms.eq(0),
+            ]
 
         if self.is_sim(platform):
             m.submodules.bus_mon = platform.add_monitor("wb_mon", self._decoder.bus)

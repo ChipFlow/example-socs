@@ -5,7 +5,7 @@ from amaranth import *
 from amaranth.back import rtlil
 
 class Sky130Platform():
-    def __init__(self, pin_map, io_count=38):
+    def __init__(self, pin_map, io_count=38, core_size=(280*10.0, 330*10.0)):
         self.pin_map = pin_map
         self.build_dir = "build/sky130"
         self.pdk_dir = os.environ["PDK_DIR"] if "PDK_DIR" in os.environ else os.environ["HOME"] + "/mpw4/thirdparty/open_pdk/C4M.Sky130"
@@ -14,6 +14,7 @@ class Sky130Platform():
         self.io_oeb = Signal(io_count)
         self.extra_files = set()
         self.is_sky130 = True
+        self.core_size = core_size
 
     def add_file(self, filename, content):
         self.extra_files.add(filename)
@@ -137,7 +138,7 @@ class Sky130Platform():
         conf.bColumns            = 2
         conf.bRows               = 2
         conf.chipName            = 'chip'
-        conf.coreSize            = ( u( 220*10.0), u( 220*10.0) )
+        conf.coreSize            = ( u(self.core_size[0]), u(self.core_size[1]) )
         conf.useHTree( 'io_in_from_pad(0)', Spares.HEAVY_LEAF_LOAD )
 
         coreToChip = CoreToChip( conf )

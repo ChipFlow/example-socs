@@ -52,6 +52,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--synth', action='store_true')
     parser.add_argument('--pnr', action='store_true')
+    parser.add_argument('--large', action='store_true')
+
     args = parser.parse_args(sys.argv[1:])
 
-    platform.build(Mpw5SoC(), synth=args.synth, pnr=args.pnr)
+    platform.build(Mpw5SoC(large_cfg=args.large), synth=args.synth, pnr=args.pnr)

@@ -119,6 +119,17 @@ class SoCWrapper(Elaboratable):
             ]
         return hram
 
+    def get_jtag(self, m, platform):
+        assert self.is_sky130(platform)
+        jtag_io = Record([
+            ('tck_i', 1),
+            ('tms_i', 1),
+            ('tdi_i', 1),
+            ('tdo_o', 1),
+        ])
+        platform.connect_io(m, jtag_io, "jtag")
+        return jtag_io
+
     def elaborate(self, platform):
         m = Module()
         if self.is_sky130(platform):
