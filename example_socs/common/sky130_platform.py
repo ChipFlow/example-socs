@@ -149,6 +149,19 @@ class Sky130Platform():
         chipBuilder.save()
         self.do_fixup()
 
+        # Write LEF and DEF for PEX etc
+        Path("export").mkdir(parents=True, exist_ok=True)
+        os.chdir("export")
+        db = DataBase.getDB()
+        rootlib = db.getRootLibrary()
+        lib = rootlib.getLibrary("StdCellLib")
+        CRL.LefExport.drive(lib, 1)
+        CRL.DefExport.drive(conf.corona, 0)
+        for cell in lib.getCells():
+            if cell.getName() in (conf.corona.getName(), conf.core.getName(), conf.chip.getName()):
+                continue
+            CRL.DefExport.drive(cell, 0)
+
     def build(self, e, synth=True, pnr=True):
         Path(self.build_dir).mkdir(parents=True, exist_ok=True)
         top_name = "user_project_core_mpw5"
@@ -185,6 +198,8 @@ class Sky130Platform():
             print(f"setundef -zero", file=f)
             print(f"write_blif {self.build_dir}/{top_name}.blif", file=f)
             print(f"write_json {self.build_dir}/{top_name}.json", file=f)
+            print(f"splitnets -ports", file=f) # required for tas
+            print(f"write_verilog -noattr {self.build_dir}/{top_name}_syn.v", file=f)
             print(f"stat", file=f)
         if synth:
             subprocess.run(["yosys", "-ql", Path(self.build_dir) / "synth.log", top_ys], check=True)
