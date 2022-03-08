@@ -48,7 +48,6 @@ pins = {
 }
 
 if __name__ == '__main__':
-    platform = Sky130Platform(pin_map=pins)
     parser = argparse.ArgumentParser()
     parser.add_argument('--synth', action='store_true')
     parser.add_argument('--pnr', action='store_true')
@@ -56,4 +55,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args(sys.argv[1:])
 
+    platform = Sky130Platform(pin_map=pins, core_size=(285*10.0, 335*10.0) if args.large else (220*10.0, 220*10.0))
     platform.build(Mpw5SoC(large_cfg=args.large), synth=args.synth, pnr=args.pnr)
