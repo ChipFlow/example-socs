@@ -1,0 +1,29 @@
+image: python:latest
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  PYPI_INDEX: "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/api/v4/groups/${CI_PROJECT_NAMESPACE}/-/packages/pypi/simple"
+
+cache:
+  paths:
+    - .cache/pip
+
+before_script:
+  - pip3 install git+https://github.com/amaranth-lang/amaranth
+  - pip3 install git+https://github.com/amaranth-lang/amaranth-boards
+  - pip3 install git+https://github.com/amaranth-lang/amaranth-soc
+  - pip3 install git+https://github.com/amaranth-lang/amaranth-stdio
+  - pip3 install amaranth-vexriscv --extra-index-url https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/api/v4/projects/33096707/packages/pypi/simple
+  - pip3 install git+https://gitlab.com/ChipFlow/amaranth-orchard
+  - pip3 install yowasp-yosys
+
+do_build:
+  script:
+    - export PATH=$HOME/.local/bin:$PATH
+    - python -m example_socs.mpw5.sky130 --yowasp --gen-rtlil ${CI_PROJECT_DIR}/mpw5_soc.il
+  artifacts:
+    paths:
+      - mpw5_soc.il
+      
+

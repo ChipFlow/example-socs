@@ -162,7 +162,7 @@ class Sky130Platform():
                 continue
             CRL.DefExport.drive(cell, 0)
 
-    def build(self, e, gen_rtlil=False, synth=True, pnr=True):
+    def build(self, e, yowasp=False, gen_rtlil=False, synth=True, pnr=True):
         Path(self.build_dir).mkdir(parents=True, exist_ok=True)
         top_name = "user_project_core_mpw5"
         output = rtlil.convert(e, name=top_name, ports=[self.io_out, self.io_oeb, self.io_in], platform=self)
@@ -184,7 +184,8 @@ class Sky130Platform():
         if gen_rtlil is not None:
             assert not synth and not pnr
         with open(top_ys, "w") as f:
-            print(f"read_liberty -lib {liberty}", file=f)
+            if synth:
+                print(f"read_liberty -lib {liberty}", file=f)
             for extra in sorted(self.extra_files):
                 if extra.endswith(".il"):
                     print(f"read_rtlil {extra}", file=f)
@@ -193,6 +194,10 @@ class Sky130Platform():
             print(f"read_ilang {top_rtlil}", file=f)
             if gen_rtlil is not None:
                 print(f"hierarchy -top {top_name}", file=f)
+                if not synth:
+                    # HACK: avoid a dependency on the liberty for just generating rtlil
+                    # where we just need a blackbox for the buffer
+                    print(f"hierarchy -generate buf_x1 i:i o:q", file=f)
                 print(f"write_rtlil {gen_rtlil}", file=f)
             if synth:
                 print(f"synth -flatten -top {top_name}", file=f)
@@ -208,6 +213,6 @@ class Sky130Platform():
                 print(f"write_verilog -noattr {self.build_dir}/{top_name}_syn.v", file=f)
                 print(f"stat", file=f)
         if synth or gen_rtlil is not None:
-            subprocess.run(["yosys", "-ql", Path(self.build_dir) / "synth.log", top_ys], check=True)
+            subprocess.run(["yowasp-yosys" if yowasp else "yosys", "-ql", Path(self.build_dir) / "synth.log", top_ys], check=True)
         if pnr:
             self.run_pnr(top_name)

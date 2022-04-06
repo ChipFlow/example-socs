@@ -49,6 +49,7 @@ pins = {
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--yowasp', action='store_true')
     parser.add_argument('--synth', action='store_true')
     parser.add_argument('--gen-rtlil', type=str, default=None)
     parser.add_argument('--pnr', action='store_true')
@@ -57,4 +58,4 @@ if __name__ == '__main__':
     args = parser.parse_args(sys.argv[1:])
 
     platform = Sky130Platform(pin_map=pins, core_size=(285*10.0, 335*10.0) if args.large else (240*10.0, 240*10.0))
-    platform.build(Mpw5SoC(large_cfg=args.large), gen_rtlil=args.gen_rtlil, synth=args.synth, pnr=args.pnr)
+    platform.build(Mpw5SoC(large_cfg=args.large), yowasp=args.yowasp, gen_rtlil=args.gen_rtlil, synth=args.synth, pnr=args.pnr)
