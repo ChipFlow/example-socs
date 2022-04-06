@@ -162,7 +162,7 @@ class Sky130Platform():
                 continue
             CRL.DefExport.drive(cell, 0)
 
-    def build(self, e, synth=True, pnr=True):
+    def build(self, e, gen_rtlil=False, synth=True, pnr=True):
         Path(self.build_dir).mkdir(parents=True, exist_ok=True)
         top_name = "user_project_core_mpw5"
         output = rtlil.convert(e, name=top_name, ports=[self.io_out, self.io_oeb, self.io_in], platform=self)
@@ -181,6 +181,8 @@ class Sky130Platform():
             print("set_load 1.0", file=f)
 
         top_ys = Path(self.build_dir) / "sky130.ys"
+        if gen_rtlil is not None:
+            assert not synth and not pnr
         with open(top_ys, "w") as f:
             print(f"read_liberty -lib {liberty}", file=f)
             for extra in sorted(self.extra_files):
@@ -189,19 +191,23 @@ class Sky130Platform():
                 else:
                     print(f"read_verilog -defer {extra}", file=f)
             print(f"read_ilang {top_rtlil}", file=f)
-            print(f"synth -flatten -top {top_name}", file=f)
-            print(f"dfflibmap -liberty {liberty}", file=f)
-            print(f"opt", file=f)
-            print(f"abc -script +strash;ifraig;scorr;dc2;dretime;strash;&get,-n;&dch,-f;&nf,-D,{target_delay};&put;buffer,-G,1000,-N,{max_fanout};upsize,-D,{target_delay};dnsize,-D,{target_delay};stime,-p -constr {abc_constr} -liberty {liberty}", file=f)
-            print(f"setundef -zero", file=f)
-            print(f"clean -purge", file=f)
-            print(f"setundef -zero", file=f)
-            print(f"write_blif {self.build_dir}/{top_name}.blif", file=f)
-            print(f"write_json {self.build_dir}/{top_name}.json", file=f)
-            print(f"splitnets -ports", file=f) # required for tas
-            print(f"write_verilog -noattr {self.build_dir}/{top_name}_syn.v", file=f)
-            print(f"stat", file=f)
-        if synth:
+            if gen_rtlil is not None:
+                print(f"hierarchy -top {top_name}", file=f)
+                print(f"write_rtlil {gen_rtlil}", file=f)
+            if synth:
+                print(f"synth -flatten -top {top_name}", file=f)
+                print(f"dfflibmap -liberty {liberty}", file=f)
+                print(f"opt", file=f)
+                print(f"abc -script +strash;ifraig;scorr;dc2;dretime;strash;&get,-n;&dch,-f;&nf,-D,{target_delay};&put;buffer,-G,1000,-N,{max_fanout};upsize,-D,{target_delay};dnsize,-D,{target_delay};stime,-p -constr {abc_constr} -liberty {liberty}", file=f)
+                print(f"setundef -zero", file=f)
+                print(f"clean -purge", file=f)
+                print(f"setundef -zero", file=f)
+                print(f"write_blif {self.build_dir}/{top_name}.blif", file=f)
+                print(f"write_json {self.build_dir}/{top_name}.json", file=f)
+                print(f"splitnets -ports", file=f) # required for tas
+                print(f"write_verilog -noattr {self.build_dir}/{top_name}_syn.v", file=f)
+                print(f"stat", file=f)
+        if synth or gen_rtlil is not None:
             subprocess.run(["yosys", "-ql", Path(self.build_dir) / "synth.log", top_ys], check=True)
         if pnr:
             self.run_pnr(top_name)
