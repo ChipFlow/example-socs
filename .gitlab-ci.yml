@@ -5,11 +5,17 @@ variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
   PYPI_INDEX: "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/api/v4/groups/${CI_PROJECT_NAMESPACE}/-/packages/pypi/simple"
 
+services:
+  - name: registry.gitlab.com/chipflow/gds-build-proto/gdsbuilder:latest
+    alias: gdsbuilder
+
 cache:
   paths:
     - .cache/pip
 
 before_script:
+  - apt-get update -y
+  - apt-get install curl
   - pip3 install git+https://github.com/amaranth-lang/amaranth
   - pip3 install git+https://github.com/amaranth-lang/amaranth-boards
   - pip3 install git+https://github.com/amaranth-lang/amaranth-soc
@@ -22,8 +28,10 @@ do_build:
   script:
     - export PATH=$HOME/.local/bin:$PATH
     - python -m example_socs.mpw5.sky130 --yowasp --gen-rtlil ${CI_PROJECT_DIR}/mpw5_soc.il
+    - curl --output ${CI_PROJECT_DIR}/mpw5_soc.gds --data-binary @${CI_PROJECT_DIR}/mpw5_soc.il http://gdsbuilder:5000/build # simulate cloud GDS build
   artifacts:
     paths:
       - mpw5_soc.il
-      
+      - mpw5_soc.gds
+
 
