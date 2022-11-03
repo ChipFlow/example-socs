@@ -5,7 +5,7 @@ description = "ChipFlow examples for making chips!"
 authors = ["Robert Taylor <rob.taylor@chipflow.io>"]
 license = "BSD-2-Clause"
 readme = "README.md"
-packages = [{include = "example_socs"}]
+packages = [{include = "chipflow_examples"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"

@@ -10,21 +10,21 @@ Dependencies:
 Build SoC and sim models
 
 ```
-cd example_socs/mpw5/sim
+cd chipflow_examples/mpw5/sim
 make
 ```
 
 Build BIOS:
 
 ```
-cd example_socs/mpw5/software
+cd chipflow_examples/mpw5/software
 make
 ```
 
 Run simulation:
 
 ```
-cd example_socs/mpw5/sim
+cd chipflow_examples/mpw5/sim
 ./build/sim_soc
 ```
 
@@ -33,13 +33,13 @@ cd example_socs/mpw5/sim
 Build SoC:
 
 ```
-python -m example_socs.mpw5.ulx3s
+python -m chipflow_examples.mpw5.ulx3s
 ```
 
 Build and program BIOS:
 
 ```
-cd example_socs/mpw5/software
+cd chipflow_examples/mpw5/software
 make
 openFPGALoader -fb ulx3s -o 0x00100000 bios.bin
 ```
@@ -55,5 +55,5 @@ openFPGALoader -b ulx3s build/top.bit
 Make sure Yosys and Coriolis are in environment
 
 ```
-python -m example_socs.mpw5.sky130 --synth --pnr
+python -m chipflow_examples.mpw5.sky130 --synth --pnr
 ```
