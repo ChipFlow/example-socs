@@ -3,7 +3,7 @@
 ## Preparing your local environment
 
  - Ensure you have [Poetry installed](https://python-poetry.org/docs/#installation).
- - Ensure you have a riscv compiler:
+ - Ensure you have the 32-bit RISC-V toolchain:
    - macOS: `brew tap riscv-software-src/riscv` then `brew install riscv-tools` (See [homebrew-riscv](https://github.com/riscv-software-src/homebrew-riscv))
  - Clone this repository to your local environment.
  - Run `poetry install` to install the dependencies.
