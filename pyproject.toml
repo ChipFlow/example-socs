@@ -10,8 +10,18 @@ packages = [{include = "chipflow_examples"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 amaranth = { git = "https://github.com/amaranth-lang/amaranth.git" }
-amaranth-soc = { git = "https://github.com/amaranth-lang/amaranthi-soc.git" }
+amaranth-soc = { git = "https://github.com/amaranth-lang/amaranth-soc.git" }
+amaranth-boards = { git = "https://github.com/amaranth-lang/amaranth-boards.git" }
+amaranth-stdio = { git = "https://github.com/amaranth-lang/amaranth-stdio.git" }
 amaranth-orchard = { git = "https://gitlab.com/ChipFlow/amaranth-orchard.git" }
+yowasp-yosys = "^0.23.dev444"
+amaranth-vexriscv = {version = "0.*", source = "chipflow"}
+
+[[tool.poetry.source]]
+name = "chipflow"
+url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
+default = false
+secondary = false
 
 [tool.poetry-dynamic-versioning]
 enable = true
