@@ -1,5 +1,6 @@
 CXXFLAGS=-O3 -g -std=c++17 -I ../../common/models
 RTL_CXXFLGAGS=-O1 -std=c++17
+YOSYS_DATDIR = $(shell poetry run python print_yosys_datdir.py)
 
 all: build/sim_soc
 
@@ -13,14 +14,14 @@ build/sim_soc.cc: build/sim_soc.ys
 build/sim_soc.h: build/sim_soc.cc
 
 build/sim_soc.o: build/sim_soc.cc build/sim_soc.h
-	$(CXX) -I . -I $(shell yosys-config --datdir)/include $(RTL_CXXFLGAGS) -o $@ -c $<
+	$(CXX) -I . -I $(YOSYS_DATDIR)/include $(RTL_CXXFLGAGS) -o $@ -c $<
 
 build/models/%.o: ../../common/models/%.cc build/sim_soc.h
 	mkdir -p build/models
-	$(CXX) -I . -I $(shell yosys-config --datdir)/include $(CXXFLAGS) -o $@ -c $<
+	$(CXX) -I . -I $(YOSYS_DATDIR)/include $(CXXFLAGS) -o $@ -c $<
 
 build/%.o: %.cc build/sim_soc.h
-	$(CXX) -I . -I $(shell yosys-config --datdir)/include $(CXXFLAGS) -o $@ -c $<
+	$(CXX) -I . -I $(YOSYS_DATDIR)/include $(CXXFLAGS) -o $@ -c $<
 
 models_objs=$(patsubst ../../common/models/%.cc, build/models/%.o, $(wildcard ../../common/models/*.cc))
 
