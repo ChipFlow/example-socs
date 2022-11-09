@@ -9,11 +9,19 @@ BIOS_START=generated/start.S
 DRV_SOURCES=$(wildcard $(COMMON)/drivers/*.c) $(wildcard $(COMMON)/drivers/*.S)
 DRV_HEADERS=$(wildcard $(COMMON)/drivers/*.h)
 
+ifeq ($(shell uname),Darwin)
+	RISCVGCC ?= riscv64-unknown-elf-gcc
+	RISCVOBJCOPY ?= riscv64-unknown-elf-objcopy
+else
+	RISCVGCC ?= riscv32-unknown-linux-gnu-gcc
+	RISCVOBJCOPY ?= riscv32-unknown-linux-gnu-objcopy
+endif
+
 bios.elf: $(BIOS_START) $(DRV_SOURCES) $(DRV_HEADERS) $(BIOS_HEADERS) $(BIOS_SOURCES) $(LINKER_SCR)
-	riscv32-unknown-linux-gnu-gcc $(CFLAGS) -o bios.elf $(BIOS_START) $(DRV_SOURCES) $(BIOS_SOURCES)
+	$(RISCVGCC) $(CFLAGS) -o bios.elf $(BIOS_START) $(DRV_SOURCES) $(BIOS_SOURCES)
 
 bios.bin: bios.elf
-	riscv32-unknown-linux-gnu-objcopy -O binary bios.elf bios.bin
+	$(RISCVOBJCOPY) -O binary bios.elf bios.bin
 
 clean:
 	rm -f bios.bin bios.elf
