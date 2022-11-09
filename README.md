@@ -1,9 +1,10 @@
 # Example SoCs
 
-Dependencies:
- - https://gitlab.com/ChipFlow/amaranth-orchard
- - https://gitlab.com/ChipFlow/amaranth-vexriscv
- - 32-bit RISC-V toolchain
+## Preparing your local environment
+
+ - Ensure you have [Poetry installed](https://python-poetry.org/docs/#installation).
+ - Clone this repository to your local environment.
+ - Run `poetry install` to install the dependencies.
 
 ## Building in simulation
 
