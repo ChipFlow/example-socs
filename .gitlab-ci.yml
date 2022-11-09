@@ -3,11 +3,6 @@ image: python:3.11
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-  PYPI_INDEX: "https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/api/v4/groups/${CI_PROJECT_NAMESPACE}/-/packages/pypi/simple"
-
-services:
-  - name: registry.gitlab.com/chipflow/gds-build-proto/gdsbuilder:latest
-    alias: gdsbuilder
 
 cache:
   paths:
@@ -19,13 +14,9 @@ before_script:
   - pip3 install poetry
   - poetry install
 
-do_build:
+generate_rtlil:
   script:
     - poetry run python -m chipflow_examples.mpw5.sky130 --yowasp --gen-rtlil ${CI_PROJECT_DIR}/mpw5_soc.il
-    - curl --output ${CI_PROJECT_DIR}/mpw5_soc.gds --data-binary @${CI_PROJECT_DIR}/mpw5_soc.il http://gdsbuilder:5000/build # simulate cloud GDS build
   artifacts:
     paths:
       - mpw5_soc.il
-      - mpw5_soc.gds
-
-
