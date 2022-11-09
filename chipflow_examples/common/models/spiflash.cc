@@ -1,6 +1,7 @@
 #include <backends/cxxrtl/cxxrtl.h>
 #include <fstream>
 #include <stdexcept>
+#include <array>
 #include "build/sim_soc.h"
 #include "log.h"
 
