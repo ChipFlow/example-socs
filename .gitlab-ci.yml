@@ -1,4 +1,4 @@
-image: python:latest
+image: python:3.11
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -16,18 +16,12 @@ cache:
 before_script:
   - apt-get update -y
   - apt-get install curl
-  - pip3 install git+https://github.com/amaranth-lang/amaranth
-  - pip3 install git+https://github.com/amaranth-lang/amaranth-boards
-  - pip3 install git+https://github.com/amaranth-lang/amaranth-soc
-  - pip3 install git+https://github.com/amaranth-lang/amaranth-stdio
-  - pip3 install amaranth-vexriscv --extra-index-url https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/api/v4/projects/33096707/packages/pypi/simple
-  - pip3 install git+https://gitlab.com/ChipFlow/amaranth-orchard
-  - pip3 install yowasp-yosys
+  - pip3 install poetry
+  - poetry install
 
 do_build:
   script:
-    - export PATH=$HOME/.local/bin:$PATH
-    - python -m example_socs.mpw5.sky130 --yowasp --gen-rtlil ${CI_PROJECT_DIR}/mpw5_soc.il
+    - poetry run python -m chipflow_examples.mpw5.sky130 --yowasp --gen-rtlil ${CI_PROJECT_DIR}/mpw5_soc.il
     - curl --output ${CI_PROJECT_DIR}/mpw5_soc.gds --data-binary @${CI_PROJECT_DIR}/mpw5_soc.il http://gdsbuilder:5000/build # simulate cloud GDS build
   artifacts:
     paths:
