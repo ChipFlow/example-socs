@@ -5,7 +5,7 @@ all: build/sim_soc
 
 build/sim_soc.ys: ../soc.py
 	mkdir -p build
-	(cd ../../.. && BUILD_DIR=chipflow_examples/mpw5/sim/build python -m chipflow_examples.mpw5.sim_soc)
+	(cd ../../.. && BUILD_DIR=chipflow_examples/mpw5/sim/build poetry run python -m chipflow_examples.mpw5.sim_soc)
 
 build/sim_soc.cc: build/sim_soc.ys
 	(cd build && yosys sim_soc.ys)
