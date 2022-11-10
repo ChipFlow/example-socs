@@ -31,5 +31,8 @@ build/sim_soc: build/sim_soc.o $(models_objs)  build/main.o
 run: build/sim_soc
 	./build/sim_soc
 
+clean:
+	rm -fr build
+
 .PRECIOUS: build/sim_soc.ys build/sim_soc.cc
 .PHONY: run

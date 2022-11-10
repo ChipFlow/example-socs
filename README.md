@@ -3,32 +3,17 @@
 ## Preparing your local environment
 
  - Ensure you have [Poetry installed](https://python-poetry.org/docs/#installation).
- - Ensure you have the 32-bit RISC-V toolchain:
-   - macOS: `brew tap riscv-software-src/riscv` then `brew install riscv-tools` (See [homebrew-riscv](https://github.com/riscv-software-src/homebrew-riscv))
+ - Ensure you have Docker (or podman) available, which is used for the 
+   [dockcross](https://github.com/dockcross/dockcross) builds.
  - Clone this repository to your local environment.
  - Run `poetry install` to install the dependencies.
 
 ## Building in simulation
 
-Build SoC and sim models
+Run simulation (will build the BIOS and simulation code first):
 
 ```
-cd chipflow_examples/mpw5/sim
-make
-```
-
-Build BIOS:
-
-```
-cd chipflow_examples/mpw5/software
-make
-```
-
-Run simulation:
-
-```
-cd chipflow_examples/mpw5/sim
-./build/sim_soc
+make run-mpw5-simulation
 ```
 
 ## Building for ULX3S
