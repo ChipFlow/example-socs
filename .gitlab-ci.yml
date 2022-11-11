@@ -14,6 +14,27 @@ before_script:
   - pip3 install poetry
   - poetry install
 
+test:
+  # We need dind (Docker-IN-Docker) for dockcross
+  services:
+    - name: "docker:20.10.17-dind"
+      variables:
+        WAIT_FOR_SERVICE_TCP_PORT: '2376'
+  variables:
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_VERIFY: 1
+    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_CERT_PATH: "/certs/client"
+    DOCKER_DRIVER: overlay2 
+  script:
+    - curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+    - apt-get install -y software-properties-common
+    - apt-get update   
+    - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable"
+    - apt-get update && apt-get install -y docker-ce-cli 
+    - make build-all
+    - poetry run pytest
+
 generate_rtlil:
   script:
     - poetry run python -m chipflow_examples.mpw5.sky130 --yowasp --gen-rtlil ${CI_PROJECT_DIR}/mpw5_soc.il
