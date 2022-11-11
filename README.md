@@ -1,4 +1,4 @@
-# Example SoCs
+# Example ChipFlow design
 
 ## Preparing your local environment
 
@@ -8,15 +8,20 @@
  - Clone this repository to your local environment.
  - Run `make init` to install the dependencies.
 
-## Building in simulation
+## Run the design in simulation
 
-Run simulation (will build the BIOS and simulation code first):
+Run your design in a local simulation binary. 
+This will build the BIOS and simulation code first:
 
 ```
-make run-mpw5-simulation
+make run-simulation
 ```
 
-## Building for ULX3S
+You should see something like this:
+
+![Simulation output](docs/simulation-output.png)
+
+## Run the design on a ULX3S board
 
 Build SoC:
 
@@ -38,10 +43,8 @@ Program bitstream:
 openFPGALoader -b ulx3s build/top.bit
 ```
 
-## Building for Sky130
-
-Make sure Yosys and Coriolis are in environment
+## Send your design to the ChipFlow cloud
 
 ```
-python -m chipflow_examples.mpw5.sky130 --synth --pnr
+make send-to-chipflow
 ```
