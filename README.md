@@ -6,7 +6,7 @@
  - Ensure you have Docker (or podman) available, which is used for the 
    [dockcross](https://github.com/dockcross/dockcross) builds.
  - Clone this repository to your local environment.
- - Run `poetry install` to install the dependencies.
+ - Run `make init` to install the dependencies.
 
 ## Building in simulation
 

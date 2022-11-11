@@ -1,6 +1,9 @@
 # Prevent sharing of our host .ssh folder with dockcross - we don't need to git clone anything
 DOCKCROSS_CMD := SSH_DIR="/dev/null" ./chipflow_examples/common/software/dockcross-linux-riscv32
 
+init: 
+	poetry install
+
 build-mpw5-simulation: 
 	make -C chipflow_examples/mpw5/sim
 
