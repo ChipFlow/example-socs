@@ -329,6 +329,23 @@ url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
 reference = "chipflow"
 
 [[package]]
+name = "yowasp-nextpnr-ecp5"
+version = "0.4.post25.dev361"
+description = "nextpnr-ecp5 FPGA place and route tool"
+category = "main"
+optional = false
+python-versions = "~=3.5"
+
+[package.dependencies]
+appdirs = ">=1.4,<2.0"
+wasmtime = ">=0.30,<2.0"
+
+[package.source]
+type = "legacy"
+url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
+reference = "chipflow"
+
+[[package]]
 name = "yowasp-yosys"
 version = "0.23.dev444"
 description = "Yosys Open SYnthesis Suite"
@@ -348,7 +365,7 @@ reference = "chipflow"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "9db32c72ff83b6e9609b2a6fc645567d4a3ed49361394fa32f68b886dbd0896f"
+content-hash = "a3d351001d5734abab1b9840d75b088b5ae24bec13a26434f2ba5f58d33639b4"
 
 [metadata.files]
 amaranth = []
@@ -457,6 +474,9 @@ wasmtime = [
     {file = "wasmtime-1.0.1-py3-none-manylinux1_x86_64.whl", hash = "sha256:b257ec11ba6d39e3cd9eed4f90c4633bcf3b964219948254244347236fe45172"},
     {file = "wasmtime-1.0.1-py3-none-manylinux2014_aarch64.whl", hash = "sha256:f34ac6db5f91ab359566f531dca7c53d2e63f657d5b10ec9cf53d1c29ac718c0"},
     {file = "wasmtime-1.0.1-py3-none-win_amd64.whl", hash = "sha256:0ae7e2d43a5d9da72a884a695049d7b1773717ba059bdb0ad0369e5c1e03a388"},
+]
+yowasp-nextpnr-ecp5 = [
+    {file = "yowasp_nextpnr_ecp5-0.4.post25.dev361-py3-none-any.whl", hash = "sha256:590e22477c65bdd4b8eac4f5be4bf927d4dbd6b68f8b2cfed37aa546d203df0c"},
 ]
 yowasp-yosys = [
     {file = "yowasp_yosys-0.23.dev444-py3-none-any.whl", hash = "sha256:60e9129b34e93b127ce61b65cd6ad5beaf12ffc3995a7257be4cb0ff97be9ce2"},
