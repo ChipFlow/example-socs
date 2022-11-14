@@ -5,6 +5,8 @@
  - Ensure you have [Poetry installed](https://python-poetry.org/docs/#installation).
  - Ensure you have Docker (or podman) available, which is used for the 
    [dockcross](https://github.com/dockcross/dockcross) builds.
+ - If you want to use a board, ensure you have openfpgaloader
+  - macOS: `brew install openfpgaloader`
  - Clone this repository to your local environment.
  - Run `make init` to install the dependencies.
 
@@ -23,23 +25,23 @@ You should see something like this:
 
 ## Run the design on a ULX3S board
 
-Build SoC:
+Build SoC (doesn't load it):
 
 ```
-python -m chipflow_examples.mpw5.ulx3s
+make build-ulx3s
 ```
 
-Build and program BIOS onto the flash:
+Build and program BIOS into the board's flash:
 
 ```
 make build-mpw5-bios
-openFPGALoader -fb ulx3s -o 0x00100000 chipflow_examples/mpw5/software/bios.bin
+make load-ulx3s-bios
 ```
 
-Program bitstream:
+Load SoC onto board (program its bitstream):
 
 ```
-openFPGALoader -b ulx3s build/top.bit
+make load-ulx3s
 ```
 
 ## Send your design to the ChipFlow cloud

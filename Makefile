@@ -10,9 +10,21 @@ build-simulation: # Builds a local binary to run the design in simulation
 build-bios: build-simulation # Builds the RISC-V bios to run on the design
 	$(DOCKCROSS_CMD) make -C chipflow_examples/mpw5/software/
 
+build-ulx3s:
+	export NEXTPNR_ECP5=yowasp-nextpnr-ecp5
+	export ECPPACK=yowasp-ecppack
+	export YOSYS=yowasp-yosys
+	poetry run python -m chipflow_examples.mpw5.ulx3s
+
 build-all: build-bios
 
-run-simulation: build-bios # Run the simulation binary
+load-ulx3s-bios:
+	openFPGALoader -fb ulx3s -o 0x00100000 chipflow_examples/mpw5/software/bios.bin
+
+load-ulx3s:
+	openFPGALoader -b ulx3s build/top.bit
+
+run-simulation: build-bios
 	cd chipflow_examples/mpw5/sim && ./build/sim_soc
 
 send-to-chipflow:
