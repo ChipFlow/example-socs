@@ -11,9 +11,9 @@ build-bios: build-simulation # Builds the RISC-V bios to run on the design
 	$(DOCKCROSS_CMD) make -C chipflow_examples/mpw5/software/
 
 build-ulx3s:
-	export NEXTPNR_ECP5=yowasp-nextpnr-ecp5
-	export ECPPACK=yowasp-ecppack
-	export YOSYS=yowasp-yosys
+	export NEXTPNR_ECP5=yowasp-nextpnr-ecp5 && \
+	export ECPPACK=yowasp-ecppack && \
+	export YOSYS=yowasp-yosys && \
 	poetry run python -m chipflow_examples.mpw5.ulx3s
 
 build-all: build-bios
