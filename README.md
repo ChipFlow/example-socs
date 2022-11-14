@@ -29,12 +29,11 @@ Build SoC:
 python -m chipflow_examples.mpw5.ulx3s
 ```
 
-Build and program BIOS:
+Build and program BIOS onto the flash:
 
 ```
-cd chipflow_examples/mpw5/software
-make
-openFPGALoader -fb ulx3s -o 0x00100000 bios.bin
+make build-mpw5-bios
+openFPGALoader -fb ulx3s -o 0x00100000 chipflow_examples/mpw5/software/bios.bin
 ```
 
 Program bitstream:
