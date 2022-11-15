@@ -1,4 +1,4 @@
-from chipflow.wrapper import SoCWrapper
+from chipflow.chip_wrapper import SoCWrapper
 from chipflow.software.soft_gen import SoftwareGenerator
 
 from amaranth_soc import wishbone
