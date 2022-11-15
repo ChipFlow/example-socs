@@ -20,7 +20,7 @@ class Main():
         from my_design.sky130 import Platform
 
         platform = Platform()
-        platform.build(large_cfg=args.large)
+        platform.build()
 
     def run(self):    
         parser = argparse.ArgumentParser()
@@ -28,7 +28,6 @@ class Main():
 
         args = parser.parse_args(sys.argv[1:])
         getattr(self, '_' + args.action)(args)
-        # print(args)
 
 if __name__ == '__main__':
     Main().run()

@@ -28,6 +28,9 @@ load-ulx3s:
 run-simulation: build-bios
 	cd my_design/sim && ./build/sim_soc
 
+build-rtlil:
+	poetry run python -m chipflow.cli gen_rtlil
+
 send-to-chipflow:
 	echo "See https://chipflow.io for details on how to join the beta"
 
