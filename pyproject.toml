@@ -4,20 +4,12 @@ version = "0.0.0"
 description = "ChipFlow examples for making chips!"
 authors = ["Robert Taylor <rob.taylor@chipflow.io>"]
 license = "BSD-2-Clause"
-readme = "README.md"
-packages = [{include = "chipflow_examples"}]
+packages = [{include = "my_design"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-amaranth = { git = "https://github.com/amaranth-lang/amaranth.git" }
-amaranth-soc = { git = "https://github.com/amaranth-lang/amaranth-soc.git" }
-amaranth-boards = { git = "https://github.com/amaranth-lang/amaranth-boards.git" }
-amaranth-stdio = { git = "https://github.com/amaranth-lang/amaranth-stdio.git" }
-amaranth-orchard = { git = "https://gitlab.com/ChipFlow/amaranth-orchard.git" }
-yowasp-yosys = "^0.23.dev444"
-amaranth-vexriscv = {version = "0.*", source = "chipflow"}
 pytest = "^7.2.0"
-yowasp-nextpnr-ecp5 = "^0.4.post25.dev361"
+chipflow = {path = "./lib/chipflow", develop = true}
 
 [[tool.poetry.source]]
 name = "chipflow"

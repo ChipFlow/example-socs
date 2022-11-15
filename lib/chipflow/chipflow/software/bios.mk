@@ -3,7 +3,10 @@ CC=riscv32-unknown-linux-gnu-gcc
 CINC=-I. -I$(COMMON)
 CFLAGS=-g -march=rv32ima -mabi=ilp32 -Wl,--build-id=none,-Bstatic,-T,$(LINKER_SCR),--strip-debug -static -ffreestanding -nostdlib $(CINC)
 OBJCOPY=riscv32-unknown-linux-gnu-objcopy
-COMMON=../../common/software/
+# TODO: This dir needs to come from the chipflow python module
+CHIPFLOW_SOFTWARE_DIR=../../lib/chipflow/chipflow/software
+# TODO: Instead of rewriting common, perhaps copy drivers etc. to folder
+COMMON=$(CHIPFLOW_SOFTWARE_DIR)
 
 BIOS_START=generated/start.S
 DRV_SOURCES=$(wildcard $(COMMON)/drivers/*.c) $(wildcard $(COMMON)/drivers/*.S)

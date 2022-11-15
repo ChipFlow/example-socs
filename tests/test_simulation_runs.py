@@ -8,7 +8,7 @@ from subprocess import Popen, PIPE, STDOUT
 class TestAPI(unittest.TestCase):
     def test_built_simulation_runs_and_boops_kernel(self):
         sim_path = os.path.abspath(
-            os.path.dirname(__file__) + "/../chipflow_examples/mpw5/sim"
+            os.path.dirname(__file__) + "/../my_design/sim"
         )
         sim_build_path = "/build/sim_soc"
 

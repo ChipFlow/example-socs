@@ -1,5 +1,5 @@
-from ..common.wrapper import SoCWrapper
-from ..common.software.soft_gen import SoftwareGenerator
+from chipflow.wrapper import SoCWrapper
+from chipflow.software.soft_gen import SoftwareGenerator
 
 from amaranth_soc import wishbone
 
@@ -107,7 +107,7 @@ class Mpw5SoC(SoCWrapper):
         sw.add_periph("plat_timer", "TIMER0", self.timer_base)
         sw.add_periph("soc_id", "SOC_ID", self.soc_id_base)
 
-        sw.generate("chipflow_examples/mpw5/software/generated")
+        sw.generate("my_design/software/generated")
 
         return m
 

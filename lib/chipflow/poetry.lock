@@ -139,30 +139,6 @@ url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
 reference = "chipflow"
 
 [[package]]
-name = "chipflow"
-version = "0.1.0"
-description = "ChipFlow common tools."
-category = "main"
-optional = false
-python-versions = "^3.9"
-develop = false
-
-[package.dependencies]
-amaranth = {git = "https://github.com/amaranth-lang/amaranth.git"}
-amaranth-boards = {git = "https://github.com/amaranth-lang/amaranth-boards.git"}
-amaranth-orchard = {git = "https://gitlab.com/ChipFlow/amaranth-orchard.git"}
-amaranth-soc = {git = "https://github.com/amaranth-lang/amaranth-soc.git"}
-amaranth-stdio = {git = "https://github.com/amaranth-lang/amaranth-stdio.git"}
-amaranth-vexriscv = "0.*"
-pytest = "^7.2.0"
-yowasp-nextpnr-ecp5 = "^0.4.post25.dev361"
-yowasp-yosys = "^0.23.dev444"
-
-[package.source]
-type = "directory"
-url = "lib/chipflow"
-
-[[package]]
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
@@ -389,7 +365,7 @@ reference = "chipflow"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "9e6d9ad39dc0a416c86311674b8a5e3d9bdf82a0bac0524fedfb45c370ecf774"
+content-hash = "a3d351001d5734abab1b9840d75b088b5ae24bec13a26434f2ba5f58d33639b4"
 
 [metadata.files]
 amaranth = []
@@ -409,7 +385,6 @@ attrs = [
     {file = "attrs-22.1.0-py2.py3-none-any.whl", hash = "sha256:86efa402f67bf2df34f51a335487cf46b1ec130d02b8d39fd248abfd30da551c"},
     {file = "attrs-22.1.0.tar.gz", hash = "sha256:29adc2665447e5191d0e7c568fde78b21f9672d344281d0c6e1ab085429b22b6"},
 ]
-chipflow = []
 colorama = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
