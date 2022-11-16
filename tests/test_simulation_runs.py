@@ -2,26 +2,31 @@ import os
 import time
 import unittest
 import pytest
-from subprocess import Popen, PIPE, STDOUT
+from subprocess import run, Popen, PIPE, STDOUT
 
 
 class TestAPI(unittest.TestCase):
-    def test_built_simulation_runs_and_boops_kernel(self):
-        sim_path = os.path.abspath(
-            os.path.dirname(__file__) + "/../my_design/sim"
+    def test_simulation_builds_and_boops_kernel(self):
+        project_path = os.path.abspath(
+            os.path.dirname(__file__) + "/../"
         )
-        sim_build_path = "/build/sim_soc"
 
-        command = f"cd {sim_path} && .{sim_build_path}"
+        build_command = f"cd {project_path} && \
+            make build-simulation && \
+            make build-bios"
 
-        assert True == os.path.exists(sim_path + sim_build_path), "Simulation binary has been build ready for us to run. If this fails, you might need to run the build before this test."
+        run(build_command, shell=True, check=True)
 
-        process = Popen(command, stdout=PIPE, stderr=STDOUT, shell=True)
+        run_command = f"cd {project_path} && \
+            make run-simulation"
+
+        process = Popen(run_command, stdout=PIPE, stderr=STDOUT, shell=True)
 
         output_lines = []
         start_time = time.time()
-        max_seconds = 30
+        max_seconds = 60
         expected_text = "about to boop the kernel"
+        extra_msg = ""
 
         while True:
             binary_line = process.stdout.readline()
@@ -35,9 +40,8 @@ class TestAPI(unittest.TestCase):
                 # Leave the loop early, we do our assertion after to make the failure case look nicer.
                 break
             if (time.time() - start_time) > max_seconds:
-                pytest.fail(
-                    f"Timeout of {max_seconds}s reached, and we didn't find our expected text.")
+                extra_msg = f"Timeout of {max_seconds}s reached."
                 break
 
         assert expected_text in "".join(
-            output_lines), "We found our expected text in the simulation output."
+            output_lines), f"We found our expected text in the simulation output. {extra_msg}"

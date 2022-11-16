@@ -32,5 +32,4 @@ test:
     - apt-get update   
     - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable"
     - apt-get update && apt-get install -y docker-ce-cli 
-    - make build-all
     - poetry run pytest

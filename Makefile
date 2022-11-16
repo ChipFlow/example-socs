@@ -17,15 +17,13 @@ build-ulx3s:
 	export YOSYS=yowasp-yosys && \
 	poetry run python -m chipflow.cli ulx3s
 
-build-all: build-bios
-
 load-ulx3s-bios:
 	openFPGALoader -fb ulx3s -o 0x00100000 my_design/software/bios.bin
 
 load-ulx3s:
 	openFPGALoader -b ulx3s build/top.bit
 
-run-simulation: build-bios
+run-simulation:
 	cd my_design/sim && ./build/sim_soc
 
 build-rtlil:
@@ -34,8 +32,11 @@ build-rtlil:
 send-to-chipflow:
 	echo "See https://chipflow.io for details on how to join the beta"
 
+clean-simulation: 
+	make -C my_design/sim clean
+
 clean-bios: 
 	$(DOCKCROSS_CMD) make -C my_design/software/ clean
 
-clean-all: clean-bios
-	make -C my_design/sim clean
+clean: clean-bios clean-simulation
+	rm -fr build
