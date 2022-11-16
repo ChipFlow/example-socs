@@ -1,4 +1,4 @@
-from .design import Mpw5SoC
+from .design import MySoC
 from chipflow.sky130_platform import Sky130Platform
 
 pins = {
@@ -48,10 +48,9 @@ pins = {
 
 class Platform:
     def build(self):
-        large = False
-
-        my_design = Mpw5SoC(large_cfg=large)
+        my_design = MySoC()
         gen_rtlil = "build/my_design.rtlil"
+        our_core_size = (285*10.0, 335*10.0)
 
-        platform = Sky130Platform(pin_map=pins, core_size=(285*10.0, 335*10.0) if large else (240*10.0, 240*10.0))
+        platform = Sky130Platform(pin_map=pins, core_size=our_core_size)
         platform.build(my_design, yowasp=True, gen_rtlil=gen_rtlil, synth=False, pnr=False)

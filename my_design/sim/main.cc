@@ -21,15 +21,6 @@ int main(int argc, char **argv) {
 #endif
     spiflash_load(*top.cell_p_flash, "../software/bios.bin", 0x00100000U);
 
-    // TODO: provide infrastructure for these
-    if (std::filesystem::exists("../prebuilt/xipImage")) {
-        spiflash_load(*top.cell_p_flash, "../prebuilt/linux.dtb", 15*1024*1024 + 512*1024);
-        spiflash_load(*top.cell_p_flash, "../prebuilt/xipImage", 8*1024*1024);
-        spiflash_load(*top.cell_p_flash, "../prebuilt/rootfs.bin", 2*1024*1024);
-    } else {
-        log("kernel image not found and won't be loaded - see README.md in prebuilt/\n");
-    }
-
     top.step();
     auto tick = [&]() {
         top.p_clk.set(false);

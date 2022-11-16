@@ -3,6 +3,8 @@ CHIPFLOW_MODEL_DIR=../../lib/chipflow/chipflow/models
 CXXFLAGS=-O3 -g -std=c++17 -I $(CHIPFLOW_MODEL_DIR)
 RTL_CXXFLGAGS=-O1 -std=c++17
 YOSYS_DATDIR = $(shell poetry run python print_yosys_datdir.py)
+# TODO: we need these models to be pulled in according to what has been used in the design
+MODEL_OBJS=build/models/uart.o build/models/spiflash.o build/models/spiflash.o build/models/wb_mon.o build/models/log.o
 
 all: build/sim_soc
 
@@ -25,9 +27,7 @@ build/models/%.o: $(CHIPFLOW_MODEL_DIR)/%.cc build/sim_soc.h
 build/%.o: %.cc build/sim_soc.h
 	$(CXX) -I . -I $(YOSYS_DATDIR)/include $(CXXFLAGS) -o $@ -c $<
 
-models_objs=$(patsubst $(CHIPFLOW_MODEL_DIR)/%.cc, build/models/%.o, $(wildcard $(CHIPFLOW_MODEL_DIR)/*.cc))
-
-build/sim_soc: build/sim_soc.o $(models_objs)  build/main.o
+build/sim_soc: build/sim_soc.o $(MODEL_OBJS) build/main.o
 	$(CXX) -o $@ $^
 
 run: build/sim_soc
