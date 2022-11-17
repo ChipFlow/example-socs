@@ -6,7 +6,7 @@ from amaranth.back import rtlil
 
 class SimPlatform():
     def __init__(self):
-        self.is_sim = True
+        self.chipflow_context = "sim"
         self.build_dir = os.environ['BUILD_DIR']
         self.extra_files = set()
         self.clk = Signal()

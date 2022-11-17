@@ -1,6 +1,8 @@
 from chipflow.chip_wrapper import SoCWrapper
 from chipflow.software.soft_gen import SoftwareGenerator
 
+from amaranth import Module
+
 from amaranth_soc import wishbone
 
 from amaranth_vexriscv.vexriscv import VexRiscv
@@ -29,7 +31,9 @@ class MySoC(SoCWrapper):
         self.soc_id_base = 0xb4000000
 
     def elaborate(self, platform):
-        m = super().elaborate(platform)
+        m = Module()
+
+        self.require(platform, "Init")().add(m, platform)
 
         self._arbiter = wishbone.Arbiter(addr_width=30, data_width=32, granularity=8)
         self._decoder = wishbone.Decoder(addr_width=30, data_width=32, granularity=8)
@@ -38,19 +42,19 @@ class MySoC(SoCWrapper):
         self._arbiter.add(self.cpu.ibus)
         self._arbiter.add(self.cpu.dbus)
 
-        self.rom = SPIMemIO(flash=super().get_flash(m, platform))
+        self.rom = SPIMemIO(flash=self.require(platform, "QSPIFlash")().add(m, platform))
         self._decoder.add(self.rom.data_bus, addr=self.spi_base)
         self._decoder.add(self.rom.ctrl_bus, addr=self.spi_ctrl_base)
 
         self.sram = SRAMPeripheral(size=self.sram_size)
         self._decoder.add(self.sram.bus, addr=self.sram_base)
 
-        self.gpio = GPIOPeripheral(pins=super().get_led_gpio(m, platform))
+        self.gpio = GPIOPeripheral(pins=self.require(platform, "LEDGPIO")().add(m, platform))
         self._decoder.add(self.gpio.bus, addr=self.led_gpio_base)
 
         self.uart = UARTPeripheral(
             init_divisor=(25000000//115200),
-            pins=super().get_uart(m, platform))
+            pins=self.require(platform, "UART")().add(m, platform))
         self._decoder.add(self.uart.bus, addr=self.uart_base)
 
         self.timer = PlatformTimer(width=48)
@@ -76,22 +80,9 @@ class MySoC(SoCWrapper):
             self.cpu.timer_irq.eq(self.timer.timer_irq),
         ]
 
-        if self.is_sky130(platform):
-            jtag_pins = super().get_jtag(m, platform)
-            m.d.comb += [
-                self.cpu.jtag_tck.eq(jtag_pins.tck_i),
-                self.cpu.jtag_tdi.eq(jtag_pins.tdi_i),
-                self.cpu.jtag_tms.eq(jtag_pins.tms_i),
-                jtag_pins.tdo_o.eq(self.cpu.jtag_tdo),
-            ]
-        else:
-            m.d.comb += [
-                self.cpu.jtag_tck.eq(0),
-                self.cpu.jtag_tdi.eq(0),
-                self.cpu.jtag_tms.eq(0),
-            ]
+        self.require(platform, "JTAG")().add(m, platform, self.cpu)
 
-        if self.is_sim(platform):
+        if self.get_chipflow_context(platform) == "sim":
             m.submodules.bus_mon = platform.add_monitor("wb_mon", self._decoder.bus)
 
         sw = SoftwareGenerator(

@@ -13,7 +13,7 @@ class Sky130Platform():
         self.io_out = Signal(io_count)
         self.io_oeb = Signal(io_count)
         self.extra_files = set()
-        self.is_sky130 = True
+        self.chipflow_context = "silicon"
         self.core_size = core_size
 
     def add_file(self, filename, content):
