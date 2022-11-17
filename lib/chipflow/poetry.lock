@@ -19,7 +19,7 @@ remote-build = ["paramiko (>=2.7,<3.0)"]
 type = "git"
 url = "https://github.com/amaranth-lang/amaranth.git"
 reference = "HEAD"
-resolved_reference = "db24a14b57a7417b1613a9bf3ba466d107040f2f"
+resolved_reference = "af7c11441db7d733db2f4a34190867c11e59a7a0"
 
 [[package]]
 name = "amaranth-boards"
@@ -365,7 +365,7 @@ reference = "chipflow"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "a3d351001d5734abab1b9840d75b088b5ae24bec13a26434f2ba5f58d33639b4"
+content-hash = "0a02f9d9e8e609e69e33c53aaf0ee01073478771136cebec4aaa1a637e105dd0"
 
 [metadata.files]
 amaranth = []
