@@ -5,25 +5,16 @@ class ChipFlowError(Exception):
 
 class Main():
     def run_simulate(self, args):
-        from .sim_platform import SimPlatform
-
-        platform = SimPlatform()
-        platform.build(self._load_design())
+        context = self._load("load_sim_context")
+        context.build()
 
     def run_ulx3s(self, args):
-        # TODO: refactor this/make this load from config
-        from amaranth_boards.ulx3s import ULX3S_85F_Platform
-
-        platform = ULX3S_85F_Platform()
-        platform.chipflow_context = "board_ulx3s"
-        platform.build(self._load_design(), do_program=False)
+        context = self._load("load_board_context")
+        context.build()
 
     def run_gen_rtlil(self, args):
-        # TODO: refactor this/make this load from config
-        from my_design.sky130 import Platform
-
-        platform = Platform()
-        platform.build()
+        context = self._load("load_silicon_context")
+        context.build()
 
     def run(self):    
         parser = argparse.ArgumentParser()
@@ -43,19 +34,18 @@ class Main():
         with open(config_file, mode="rb") as fp:
             self.config = tomli.load(fp)
 
-    def _load_design(self):
+    def _load(self, loader_name):
         try:
-            module_loc = self.config["chipflow"]["design_module"]
-            class_name = self.config["chipflow"]["design_class"]
+            module_loc = self.config["chipflow"]["loader_module"]
 
             module = importlib.import_module(module_loc)
         except ModuleNotFoundError as error:
-            raise ChipFlowError("Could not load design module, {module_loc}.") from error
+            raise ChipFlowError("Could not locate module, {module_loc}.") from error
 
-        if (not hasattr(module, class_name)):
-            raise ChipFlowError(f"Design module is missing class. {module_loc}, {class_name}");
+        if (not hasattr(module, loader_name)):
+            raise ChipFlowError(f"Loader module is missing loader. module={module_loc}, loader={loader_name}");
 
-        return getattr(module, class_name)()
+        return getattr(module, loader_name)(self.config)
 
 if __name__ == '__main__':
     Main().run()

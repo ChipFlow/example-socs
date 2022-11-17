@@ -1,4 +1,3 @@
 [chipflow]
-design_module = "my_design.design"
-design_class = "MySoC"
+loader_module = "my_design.chipflow"
 target_silicon = ["sky130"]

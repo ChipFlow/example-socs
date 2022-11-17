@@ -162,7 +162,12 @@ class Sky130Platform():
                 continue
             CRL.DefExport.drive(cell, 0)
 
-    def build(self, e, yowasp=False, gen_rtlil=False, synth=True, pnr=True):
+    def build(self, e):
+        # PnR/synth will be stripped in a subsequent PR
+        yowasp=True
+        gen_rtlil = "build/my_design.rtlil"
+        synth=False
+        pnr=False
         Path(self.build_dir).mkdir(parents=True, exist_ok=True)
         top_name = "user_project_core_mpw5"
         output = rtlil.convert(e, name=top_name, ports=[self.io_out, self.io_oeb, self.io_in], platform=self)

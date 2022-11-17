@@ -1,5 +1,6 @@
-from .design import MySoC
+from ..design import MySoC
 from chipflow.sky130_platform import Sky130Platform
+from chipflow.contexts.silicon import SiliconContext
 
 pins = {
     "sys_clk":   0,
@@ -46,11 +47,14 @@ pins = {
     "jtag_tdo": 36,
 }
 
-class Platform:
+class MySiliconContext(SiliconContext):
+    def __init__(self):
+        our_core_size = (285*10.0, 335*10.0)
+        platform = Sky130Platform(pin_map=pins, core_size=our_core_size)
+
+        super().__init__(platform)
+    
     def build(self):
         my_design = MySoC()
-        gen_rtlil = "build/my_design.rtlil"
-        our_core_size = (285*10.0, 335*10.0)
-
-        platform = Sky130Platform(pin_map=pins, core_size=our_core_size)
-        platform.build(my_design, yowasp=True, gen_rtlil=gen_rtlil, synth=False, pnr=False)
+        
+        self.platform.build(my_design)
