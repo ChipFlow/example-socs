@@ -11,16 +11,16 @@ build-simulation: # Builds a local binary to run the design in simulation
 build-bios: build-simulation # Builds the RISC-V bios to run on the design
 	poetry run python -m chipflow.cli software build
 
-build-ulx3s:
+build-board:
 	export NEXTPNR_ECP5=yowasp-nextpnr-ecp5 && \
 	export ECPPACK=yowasp-ecppack && \
 	export YOSYS=yowasp-yosys && \
-	poetry run python -m chipflow.cli ulx3s
+	poetry run python -m chipflow.cli board
 
-load-ulx3s-bios:
+load-board-bios-ulx3s:
 	openFPGALoader -fb ulx3s -o 0x00100000 build/software/bios.bin
 
-load-ulx3s:
+load-board-ulx3s:
 	openFPGALoader -b ulx3s build/top.bit
 
 run-simulation:

@@ -2,7 +2,7 @@ import os
 import unittest
 import subprocess
 
-class TestUlx3s(unittest.TestCase):
+class TestBoard(unittest.TestCase):
     def test_build_runs(self):
         project_path = os.path.abspath(
             os.path.dirname(__file__) + "/../"
@@ -15,7 +15,7 @@ class TestUlx3s(unittest.TestCase):
             export PATH={project_path}:$PATH && \
             cp README.md {fake_file} && \
             chmod +x {fake_file} && \
-            make build-ulx3s"
+            make build-board"
 
         try:
             subprocess.run(command, shell=True, check=True)

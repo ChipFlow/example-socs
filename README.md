@@ -41,20 +41,20 @@ You should see something like this:
 Build the design into a bitstream for the board (doesn't load it):
 
 ```
-make build-ulx3s
+make build-board
 ```
 
-Build and program BIOS into the board's flash:
+Build the bios, and program BIOS into the board's flash:
 
 ```
 make build-mpw5-bios
-make load-ulx3s-bios
+make load-board-bios-ulx3s
 ```
 
 Load SoC onto board (program its bitstream):
 
 ```
-make load-ulx3s
+make load-board-ulx3s
 ```
 
 Your board should now be running. You can connect to it via its serial port:

@@ -38,7 +38,7 @@ class Main():
 
         DoitMain(ModuleTaskLoader(chipflow.software.doit_build)).run(cmd)
 
-    def run_ulx3s(self, args):
+    def run_board(self, args):
         context = self._load("load_board_context")
         context.build()
 
@@ -75,7 +75,7 @@ class Main():
         sim_action.add_parser("build-yosys", help="Build the intermediate yosys simulation.")
 
         parser_action.add_parser("gen_rtlil", help="Generate RTLIL")
-        parser_action.add_parser("ulx3s", help="Build the design for a board.")
+        parser_action.add_parser("board", help="Build the design for a board.")
         parser_action.add_parser("path", help="Get path of module.")
         
         # Software/BIOS
