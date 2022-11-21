@@ -1,32 +1,42 @@
-init: # Init local environemnt
+.PHONY: init # Init local environemnt
+init: 
 	poetry install
 
-build-simulation: # Builds a local binary to run the design in simulation
+.PHONY: build-simulation # Builds a local binary to run the design in simulation
+build-simulation:
 	poetry run python -m chipflow.cli sim build
 
-build-bios: build-simulation # Builds the RISC-V bios to run on the design
+.PHONY: build-bios # Builds the RISC-V bios to run on the design
+build-bios: build-simulation
 	poetry run python -m chipflow.cli software build
 
+.PHONY: build-board # Build a bitstream for the board
 build-board:
 	export NEXTPNR_ECP5=yowasp-nextpnr-ecp5 && \
 	export ECPPACK=yowasp-ecppack && \
 	export YOSYS=yowasp-yosys && \
 	poetry run python -m chipflow.cli board
 
+.PHONY: load-board-bios-ulx3s # Load the bios onto a ulx3s board
 load-board-bios-ulx3s:
 	openFPGALoader -fb ulx3s -o 0x00100000 build/software/bios.bin
 
+.PHONY: load-board-ulx3s # Load the design onto a ulx3s board
 load-board-ulx3s:
 	openFPGALoader -b ulx3s build/top.bit
 
+.PHONY: run-simulation # Run the simulation of the design
 run-simulation:
 	cd build/sim && ./sim_soc
 
+.PHONY: build-rtlil # Build RTLIL for the design
 build-rtlil:
 	poetry run python -m chipflow.cli gen_rtlil
 
+.PHONY: send-to-chipflow # Send the design to ChipFlow
 send-to-chipflow:
 	echo "See https://chipflow.io for details on how to join the beta"
 
+.PHONY: clean # Clean/delete the builds
 clean: 
 	rm -fr build
