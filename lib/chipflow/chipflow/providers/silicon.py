@@ -8,11 +8,13 @@ from amaranth_orchard.base.gpio import GPIOPins
 from amaranth_orchard.io.uart import UARTPins
 from amaranth_orchard.memory.hyperram import HyperRAMPins
 
+
 class QSPIFlash():
     def add(self, m, platform):
         flash = QSPIPins()
         platform.connect_io(m, flash, "flash")
         return flash
+
 
 class LEDGPIO():
     def add(self, m, platform):
@@ -20,13 +22,15 @@ class LEDGPIO():
         platform.connect_io(m, leds, "gpio")
         return leds
 
+
 class UART():
     def add(self, m, platform):
         uart = UARTPins()
-        
+
         platform.connect_io(m, uart, "uart")
-        
+
         return uart
+
 
 class HyperRAM():
     def add(self, m, platform):
@@ -34,8 +38,9 @@ class HyperRAM():
         hram = HyperRAMPins(cs_count=4)
 
         platform.connect_io(m, hram, "ram")
-    
+
         return hram
+
 
 class JTAG:
     def add(self, m, platform, cpu):
@@ -55,6 +60,7 @@ class JTAG:
         ]
 
         return jtag_io
+
 
 class Init:
     def add(self, m, platform):
@@ -77,4 +83,3 @@ class Init:
         m.d.comb += [
             ResetSignal().eq(rst_sync1),
         ]
-

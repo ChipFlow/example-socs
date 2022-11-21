@@ -4,6 +4,7 @@ from pathlib import Path
 from amaranth import *
 from amaranth.back import rtlil
 
+
 class Sky130Platform():
     def __init__(self, pin_map, io_count=38, core_size=(280*10.0, 330*10.0)):
         self.pin_map = pin_map
@@ -36,7 +37,7 @@ class Sky130Platform():
             else:
                 assert d == "o"
                 outputs.add(pin)
-        for pin, width in sorted(pins.items(), key=lambda x:x[0]):
+        for pin, width in sorted(pins.items(), key=lambda x: x[0]):
             for i in range(width):
                 ext_name = f"{name}_{pin}{i}" if width > 1 else f"{name}_{pin}"
                 prefix = "" if pin == "" else f"{pin}_"
@@ -58,12 +59,14 @@ class Sky130Platform():
                     else:
                         oeb = 0
 
-                m.submodules += Instance("buf_x1",
+                m.submodules += Instance(
+                    "buf_x1",
                     i_i=out,
                     o_q=self.io_out[idx],
                     a_keep=True
                 )
-                m.submodules += Instance("buf_x1",
+                m.submodules += Instance(
+                    "buf_x1",
                     i_i=oeb,
                     o_q=self.io_oeb[idx],
                     a_keep=True

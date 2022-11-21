@@ -1,5 +1,6 @@
 from pathlib import Path
 
+
 class SoftwareGenerator:
     def __init__(self, *, rom_start, rom_size, ram_start, ram_size):
         self.rom_start = rom_start
@@ -27,7 +28,7 @@ class SoftwareGenerator:
 
     @property
     def soc_h(self):
-        result =  "#ifndef SOC_H\n"
+        result = "#ifndef SOC_H\n"
         result += "#define SOC_H\n"
         periph_types = sorted(set(x[0] for x in self.periphs))
 
@@ -38,7 +39,7 @@ class SoftwareGenerator:
         uart = None
 
         for t, n, a in self.periphs:
-            if uart is None and t == "uart": # first UART
+            if uart is None and t == "uart":  # first UART
                 uart = n
             result += f'#define {n} ((volatile {t}_regs_t *const)0x{a:08x})\n'
 
@@ -197,4 +198,4 @@ SECTIONS {{
         _heap_start = .;    /* define a global symbol at heap start */
     }} >RAM
 }}
-"""
+"""  # nopep8

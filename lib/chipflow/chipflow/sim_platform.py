@@ -1,8 +1,11 @@
-import argparse, sys, os
+import argparse
+import sys
+import os
 from pathlib import Path
 
 from amaranth import *
 from amaranth.back import rtlil
+
 
 class SimPlatform():
     def __init__(self):
@@ -18,6 +21,7 @@ class SimPlatform():
 
     def add_model(self, inst_type, rec, edge_det=[]):
         conns = dict(a_keep=True)
+
         def is_model_out(pin):
             assert field.endswith("_o") or field.endswith("_oe") or field.endswith("_i"), field
             return field.endswith("_i")
@@ -27,7 +31,7 @@ class SimPlatform():
             else:
                 conns[f"i_{field}"] = getattr(rec, field)
         if inst_type not in self.sim_boxes:
-            box =  'attribute \\blackbox 1\n'
+            box = 'attribute \\blackbox 1\n'
             box += 'attribute \\cxxrtl_blackbox 1\n'
             box += 'attribute \\keep 1\n'
             box += f'module \\{inst_type}\n'
@@ -42,9 +46,9 @@ class SimPlatform():
     def add_monitor(self, inst_type, rec):
         conns = dict(i_clk=ClockSignal(), a_keep=True)
         for field, width, _ in rec.layout:
-            conns[f'i_{field}'] = getattr(rec,field)
+            conns[f'i_{field}'] = getattr(rec, field)
         if inst_type not in self.sim_boxes:
-            box =  'attribute \\blackbox 1\n'
+            box = 'attribute \\blackbox 1\n'
             box += 'attribute \\cxxrtl_blackbox 1\n'
             box += 'attribute \\keep 1\n'
             box += f'module \\{inst_type}\n'
@@ -76,4 +80,3 @@ class SimPlatform():
             print("read_ilang sim_soc.il", file=f)
             print("hierarchy -top sim_top", file=f)
             print("write_cxxrtl -g1 -header sim_soc.cc", file=f)
-

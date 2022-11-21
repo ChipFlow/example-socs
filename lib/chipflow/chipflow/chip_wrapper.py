@@ -11,8 +11,10 @@ from amaranth_orchard.base.gpio import GPIOPins
 from amaranth_orchard.io.uart import UARTPins
 from amaranth_orchard.memory.hyperram import HyperRAMPins
 
+
 class ChipFlowError(Exception):
     pass
+
 
 class SoCWrapper(Elaboratable):
     """
@@ -35,6 +37,6 @@ class SoCWrapper(Elaboratable):
             raise ChipFlowError("Provider module couldn't be loaded for context, {module_loc}.") from error
 
         if (not hasattr(module, class_name)):
-            raise ChipFlowError(f"Provider module missing class. {module_loc}, {class_name}");
+            raise ChipFlowError(f"Provider module missing class. {module_loc}, {class_name}")
 
         return getattr(module, class_name)

@@ -8,19 +8,22 @@ from amaranth_orchard.base.gpio import GPIOPins
 from amaranth_orchard.io.uart import UARTPins
 from amaranth_orchard.memory.hyperram import HyperRAMPins
 
+
 class QSPIFlash():
     def add(self, m, platform):
         flash = QSPIPins()
 
         plat_flash = platform.request("spi_flash", dir=dict(cs='-', copi='-', cipo='-', wp='-', hold='-'))
         # Flash clock requires a special primitive to access in ECP5
-        m.submodules.usrmclk = Instance("USRMCLK",
+        m.submodules.usrmclk = Instance(
+            "USRMCLK",
             i_USRMCLKI=flash.clk_o,
-            i_USRMCLKTS=ResetSignal(), # tristate in reset for programmer accesss
+            i_USRMCLKTS=ResetSignal(),  # tristate in reset for programmer accesss
             a_keep=1,
         )
         # IO pins and buffers
-        m.submodules += Instance("OBZ",
+        m.submodules += Instance(
+            "OBZ",
             o_O=plat_flash.cs.io,
             i_I=flash.csn_o,
             i_T=ResetSignal(),
@@ -29,13 +32,15 @@ class QSPIFlash():
         data_pins = ["copi", "cipo", "wp", "hold"]
 
         for i in range(4):
-            m.submodules += Instance("BB",
+            m.submodules += Instance(
+                "BB",
                 io_B=getattr(plat_flash, data_pins[i]).io,
                 i_I=flash.d_o[i],
                 i_T=~flash.d_oe[i],
                 o_O=flash.d_i[i]
             )
         return flash
+
 
 class LEDGPIO():
     def add(self, m, platform):
@@ -46,6 +51,7 @@ class LEDGPIO():
             m.d.comb += led.o.eq(leds.o[i])
 
         return leds
+
 
 class UART():
     def add(self, m, platform):
@@ -59,13 +65,16 @@ class UART():
 
         return uart
 
+
 class HyperRAM():
     def add(self, m, platform):
         # Dual HyperRAM PMOD, starting at GPIO 0+/-
         hram = HyperRAMPins(cs_count=4)
 
         platform.add_resources([
-            Resource("hyperram", 0,
+            Resource(
+                "hyperram",
+                0,
                 Subsignal("csn",    Pins("9- 9+ 10- 10+", conn=("gpio", 0), dir='o')),
                 Subsignal("rstn",   Pins("8+", conn=("gpio", 0), dir='o')),
                 Subsignal("clk",    Pins("8-", conn=("gpio", 0), dir='o')),
@@ -94,6 +103,7 @@ class HyperRAM():
 
         return hram
 
+
 class JTAG:
     def add(self, m, platform, cpu):
         m.d.comb += [
@@ -101,6 +111,7 @@ class JTAG:
             cpu.jtag_tdi.eq(0),
             cpu.jtag_tms.eq(0),
         ]
+
 
 class Init:
     def add(self, m, platform):

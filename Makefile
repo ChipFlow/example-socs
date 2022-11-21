@@ -45,3 +45,4 @@ clean:
 lint: 
 	poetry run pycodestyle --config=./.pycodestyle my_design/*
 	poetry run pycodestyle --config=./.pycodestyle tests/*
+	poetry run pycodestyle --config=./.pycodestyle lib/chipflow/chipflow
