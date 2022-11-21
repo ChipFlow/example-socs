@@ -8,39 +8,47 @@ from doit.action import CmdAction
 
 CHIPFLOW_MODEL_DIR = chipflow.config.get_dir_models()
 DESIGN_DIR = os.path.dirname(__file__) + "/.."
-YOSYS_DATDIR = os.path.abspath(os.path.dirname(yowasp_yosys.__file__)) + "/share"
+YOSYS_DATDIR = os.path.abspath(
+    os.path.dirname(yowasp_yosys.__file__)) + "/share"
 BUILD_DIR = "./build/sim"
 CXX = "g++"
 CXXFLAGS = f"-O3 -g -std=c++17 -I {CHIPFLOW_MODEL_DIR}"
 RTL_CXXFLGAGS = "-O1 -std=c++17"
 # TODO: we need these models to be pulled in according to what has been used in the design
-DESIGN_MODELS=["uart", "spiflash", "wb_mon", "log"]
+DESIGN_MODELS = ["uart", "spiflash", "wb_mon", "log"]
+
 
 def task_build_sim_soc_yosys():
     def get_build_cmd():
         return f"BUILD_DIR=./build/sim poetry run python -m chipflow.cli sim build-yosys"
-    
+
     return {
         "actions": [CmdAction(get_build_cmd)],
         "targets": [f"{BUILD_DIR}/sim_soc.ys"],
     }
 
-def task_build_sim_soc_c_files():   
+
+def task_build_sim_soc_c_files():
     return {
         "actions": [f"cd {BUILD_DIR} && poetry run yowasp-yosys sim_soc.ys"],
         "targets": [f"{BUILD_DIR}/sim_soc.cc", f"{BUILD_DIR}/sim_soc.h"],
         "file_dep": [f"{BUILD_DIR}/sim_soc.ys"],
     }
 
+
 def task_build_sim_soc_objects():
     def get_build_cmd():
-        return f"{CXX} -I . -I {YOSYS_DATDIR}/include {RTL_CXXFLGAGS} -o {BUILD_DIR}/sim_soc.o -c {BUILD_DIR}/sim_soc.cc"
+        cmd = f"{CXX} -I . -I {YOSYS_DATDIR}/include {RTL_CXXFLGAGS} "
+        cmd += f"-o {BUILD_DIR}/sim_soc.o -c {BUILD_DIR}/sim_soc.cc"
+
+        return cmd
 
     return {
         "actions": [CmdAction(get_build_cmd)],
         "targets": [f"{BUILD_DIR}/sim_soc.o"],
         "file_dep": [f"{BUILD_DIR}/sim_soc.cc", f"{BUILD_DIR}/sim_soc.h"],
     }
+
 
 def task_gather_sim_model_files():
     model_src_files = []
@@ -65,8 +73,11 @@ def task_gather_sim_model_files():
             shutil.copyfile(model_src_files[i - 1], model_target_files[i - 1])
 
         for i in range(len(model_header_src_files)):
-            shutil.copyfile(model_header_src_files[i - 1], model_header_target_files[i - 1])
-        
+            shutil.copyfile(
+                model_header_src_files[i - 1],
+                model_header_target_files[i - 1]
+            )
+
     return {
         "actions": [do_copy],
         "targets": model_target_files + model_header_target_files,
@@ -81,7 +92,7 @@ def task_gather_sim_project_files():
 
     for source in sources:
         src_files.append(f"{DESIGN_DIR}/sim/{source}.cc")
-        target_files.append(f"{BUILD_DIR}/{source}.cc")     
+        target_files.append(f"{BUILD_DIR}/{source}.cc")
 
     def do_copy():
         # Ensure dir exists
@@ -101,9 +112,12 @@ def task_build_sim_model_objects():
     for model in DESIGN_MODELS:
         model_obj_file = f"{BUILD_DIR}/models/{model}.o"
 
+        cmd = f"{CXX} -I . -I {YOSYS_DATDIR}/include {CXXFLAGS} -o {model_obj_file} "
+        cmd += f"-c {BUILD_DIR}/models/{model}.cc"
+
         yield {
             "name": model_obj_file,
-            "actions": [f"{CXX} -I . -I {YOSYS_DATDIR}/include {CXXFLAGS} -o {model_obj_file} -c {BUILD_DIR}/models/{model}.cc"],
+            "actions": [cmd],
             "targets": [model_obj_file],
             "file_dep": [f"{BUILD_DIR}/models/{model}.cc", f"{BUILD_DIR}/sim_soc.h"],
         }

@@ -40,3 +40,8 @@ send-to-chipflow:
 .PHONY: clean # Clean/delete the builds
 clean: 
 	rm -fr build
+
+.PHONY: lint # Lint code
+lint: 
+	poetry run pycodestyle --config=./.pycodestyle my_design/*
+	poetry run pycodestyle --config=./.pycodestyle tests/*

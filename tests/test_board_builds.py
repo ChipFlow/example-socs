@@ -2,6 +2,7 @@ import os
 import unittest
 import subprocess
 
+
 class TestBoard(unittest.TestCase):
     def test_build_runs(self):
         project_path = os.path.abspath(
@@ -23,4 +24,4 @@ class TestBoard(unittest.TestCase):
             if os.path.exists(fake_file):
                 os.remove(fake_file)
 
-        assert True == os.path.exists(project_path + "/build/top.bit")
+        assert os.path.exists(project_path + "/build/top.bit") is True

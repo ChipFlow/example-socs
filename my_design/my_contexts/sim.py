@@ -8,8 +8,8 @@ class MySimContext(SimContext):
         platform = SimPlatform()
 
         super().__init__(platform)
-    
+
     def build(self):
         my_design = MySoC()
-        
+
         self.platform.build(my_design)

@@ -17,6 +17,10 @@ url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
 default = false
 secondary = false
 
+[tool.poetry.group.dev.dependencies]
+pycodestyle = "^2.9.1"
+autopep8 = "^2.0.0"
+
 [tool.poetry-dynamic-versioning]
 enable = true
 

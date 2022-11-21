@@ -14,6 +14,7 @@ from amaranth_orchard.memory.sram import SRAMPeripheral
 from amaranth_orchard.base.platform_timer import PlatformTimer
 from amaranth_orchard.base.soc_id import SoCID
 
+
 class MySoC(SoCWrapper):
     def __init__(self):
         super().__init__()
@@ -21,7 +22,7 @@ class MySoC(SoCWrapper):
         # Memory regions
         self.spi_base = 0x00000000
         self.sram_base = 0x10000000
-        self.sram_size = 8*1024 # 8KiB
+        self.sram_size = 8*1024  # 8KiB
 
         # CSR regions
         self.spi_ctrl_base = 0xb0000000
@@ -35,21 +36,33 @@ class MySoC(SoCWrapper):
 
         self.require(platform, "Init")().add(m, platform)
 
-        self._arbiter = wishbone.Arbiter(addr_width=30, data_width=32, granularity=8)
-        self._decoder = wishbone.Decoder(addr_width=30, data_width=32, granularity=8)
+        self._arbiter = wishbone.Arbiter(
+            addr_width=30,
+            data_width=32,
+            granularity=8
+        )
+        self._decoder = wishbone.Decoder(
+            addr_width=30,
+            data_width=32,
+            granularity=8
+        )
 
         self.cpu = VexRiscv(config="LiteDebug", reset_vector=0x00100000)
         self._arbiter.add(self.cpu.ibus)
         self._arbiter.add(self.cpu.dbus)
 
-        self.rom = SPIMemIO(flash=self.require(platform, "QSPIFlash")().add(m, platform))
+        self.rom = SPIMemIO(
+            flash=self.require(platform, "QSPIFlash")().add(m, platform)
+        )
         self._decoder.add(self.rom.data_bus, addr=self.spi_base)
         self._decoder.add(self.rom.ctrl_bus, addr=self.spi_ctrl_base)
 
         self.sram = SRAMPeripheral(size=self.sram_size)
         self._decoder.add(self.sram.bus, addr=self.sram_base)
 
-        self.gpio = GPIOPeripheral(pins=self.require(platform, "LEDGPIO")().add(m, platform))
+        self.gpio = GPIOPeripheral(
+            pins=self.require(platform, "LEDGPIO")().add(m, platform)
+        )
         self._decoder.add(self.gpio.bus, addr=self.led_gpio_base)
 
         self.uart = UARTPeripheral(
@@ -64,15 +77,15 @@ class MySoC(SoCWrapper):
         self.soc_id = SoCID(type_id=soc_type)
         self._decoder.add(self.soc_id.bus, addr=self.soc_id_base)
 
-        m.submodules.arbiter  = self._arbiter
-        m.submodules.cpu      = self.cpu
-        m.submodules.decoder  = self._decoder
-        m.submodules.rom      = self.rom
-        m.submodules.sram     = self.sram
-        m.submodules.gpio     = self.gpio
-        m.submodules.uart     = self.uart
-        m.submodules.timer    = self.timer
-        m.submodules.soc_id   = self.soc_id
+        m.submodules.arbiter = self._arbiter
+        m.submodules.cpu = self.cpu
+        m.submodules.decoder = self._decoder
+        m.submodules.rom = self.rom
+        m.submodules.sram = self.sram
+        m.submodules.gpio = self.gpio
+        m.submodules.uart = self.uart
+        m.submodules.timer = self.timer
+        m.submodules.soc_id = self.soc_id
 
         m.d.comb += [
             self._arbiter.bus.connect(self._decoder.bus),
@@ -83,11 +96,15 @@ class MySoC(SoCWrapper):
         self.require(platform, "JTAG")().add(m, platform, self.cpu)
 
         if self.get_chipflow_context(platform) == "sim":
-            m.submodules.bus_mon = platform.add_monitor("wb_mon", self._decoder.bus)
+            m.submodules.bus_mon = platform.add_monitor(
+                "wb_mon",
+                self._decoder.bus
+            )
 
         sw = SoftwareGenerator(
-            rom_start=self.spi_base + 0x00100000, rom_size=0x00100000, # place BIOS at 1MB so room for bitstream
-            ram_start=self.sram_base, ram_size=self.sram_size, # place BIOS data in SRAM
+            # place BIOS at 1MB so room for bitstream
+            rom_start=self.spi_base + 0x00100000, rom_size=0x00100000,
+            ram_start=self.sram_base, ram_size=self.sram_size,  # place BIOS data in SRAM
         )
 
         sw.add_periph("spiflash", "FLASH_CTRL", self.spi_ctrl_base)
@@ -99,4 +116,3 @@ class MySoC(SoCWrapper):
         sw.generate("build/software/generated")
 
         return m
-

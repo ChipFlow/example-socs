@@ -15,7 +15,9 @@ RISCVOBJCOPY = f"{DOCKCROSS_CMD} riscv32-unknown-linux-gnu-objcopy"
 CINC = f"-I. -I{BUILD_DIR}"
 LINKER_SCR = f"{BUILD_DIR}/generated/sections.lds"
 SOFTWARE_START = f"{BUILD_DIR}/generated/start.S"
-CFLAGS = f"-g -march=rv32ima -mabi=ilp32 -Wl,--build-id=none,-Bstatic,-T,{LINKER_SCR},--strip-debug -static -ffreestanding -nostdlib {CINC}"
+CFLAGS = f"-g -march=rv32ima -mabi=ilp32 -Wl,--build-id=none,-Bstatic,-T,"
+CFLAGS += f"{LINKER_SCR},--strip-debug -static -ffreestanding -nostdlib {CINC}"
+
 
 def task_gather_depencencies():
     src_files = []
@@ -28,7 +30,8 @@ def task_gather_depencencies():
         target_files.append(f"{BUILD_DIR}/{rel_path}")
 
     # ChipFlow lib dependencies
-    rel_paths = _get_source_rel_paths(f"{CHIPFLOW_SOFTWARE_DIR}/drivers", ["*.h", "*.c", "*.S"])
+    rel_paths = _get_source_rel_paths(
+        f"{CHIPFLOW_SOFTWARE_DIR}/drivers", ["*.h", "*.c", "*.S"])
     for rel_path in rel_paths:
         src_files.append(f"{CHIPFLOW_SOFTWARE_DIR}/drivers{rel_path}")
         target_files.append(f"{BUILD_DIR}/drivers{rel_path}")
@@ -43,16 +46,17 @@ def task_gather_depencencies():
         "file_dep": src_files,
         "targets": target_files,
         "verbosity": 2
-    }  
+    }
 
-@create_after(executed="gather_depencencies", target_regex='.*/software\.elf')
+
+@create_after(executed="gather_depencencies", target_regex=".*/software\\.elf")
 def task_build_software_elf():
     sources = [SOFTWARE_START]
     sources += _gather_source_paths(f"{BUILD_DIR}/drivers", ["*.c", "*.S"])
     sources += _gather_source_paths(f"{BUILD_DIR}", ["*.c"])
 
     sources_str = " ".join(sources)
-    
+
     return {
         "actions": [f"{RISCVGCC} {CFLAGS} -o {BUILD_DIR}/software.elf {sources_str}"],
         "file_dep": sources + [LINKER_SCR],
@@ -60,16 +64,21 @@ def task_build_software_elf():
         "verbosity": 2
     }
 
-@create_after(executed="build_software_elf", target_regex='.*/software\.bin')
+
+@create_after(executed="build_software_elf", target_regex=".*/software\\.bin")
 def task_build_software():
+    cmd = f"{RISCVOBJCOPY} -O binary {BUILD_DIR}/software.elf {BUILD_DIR}/software.bin"
+
     return {
-        "actions": [f"{RISCVOBJCOPY} -O binary {BUILD_DIR}/software.elf {BUILD_DIR}/software.bin"],
+        "actions": [cmd],
         "file_dep": [f"{BUILD_DIR}/software.elf"],
         "targets": [f"{BUILD_DIR}/software.bin"],
     }
 
+
 def _create_build_dir():
     Path(f"{BUILD_DIR}/drivers").mkdir(parents=True, exist_ok=True)
+
 
 def _get_source_rel_paths(source_dir, globs):
     abs_source_dir = str(Path(source_dir).absolute())
@@ -78,15 +87,16 @@ def _get_source_rel_paths(source_dir, globs):
         source_paths = list(Path(abs_source_dir).glob(glob))
         for source_path in source_paths:
             dst = str(source_path).replace(abs_source_dir, "")
-            rel_paths.append(dst)  
+            rel_paths.append(dst)
 
     return rel_paths
+
 
 def _gather_source_paths(source_dir, globs):
     sources = []
     for glob in globs:
         source_paths = list(Path(source_dir).glob(glob))
         for source_path in source_paths:
-            sources.append(f"{source_dir}/" + str(source_path.name))   
+            sources.append(f"{source_dir}/" + str(source_path.name))
 
     return sources

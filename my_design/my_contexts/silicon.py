@@ -47,14 +47,15 @@ pins = {
     "jtag_tdo": 36,
 }
 
+
 class MySiliconContext(SiliconContext):
     def __init__(self):
         our_core_size = (285*10.0, 335*10.0)
         platform = Sky130Platform(pin_map=pins, core_size=our_core_size)
 
         super().__init__(platform)
-    
+
     def build(self):
         my_design = MySoC()
-        
+
         self.platform.build(my_design)

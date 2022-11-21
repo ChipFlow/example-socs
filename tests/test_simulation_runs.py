@@ -1,7 +1,6 @@
 import os
 import time
 import unittest
-import pytest
 from subprocess import run, Popen, PIPE, STDOUT
 
 
