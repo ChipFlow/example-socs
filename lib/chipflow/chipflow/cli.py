@@ -59,7 +59,6 @@ class Main():
         getattr(self, 'run_' + args.action)(args)
 
     def _sim_build_yosys(self):
-        # TODO: this is actually more like a "build sim yosys" step
         context = self._load("load_sim_context")
         context.build()
 
