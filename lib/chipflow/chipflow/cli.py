@@ -88,7 +88,7 @@ class Main():
         config_dir = os.getcwd();
         config_file = f"{config_dir}/chipflow.toml"
 
-        # TODO: better errors
+        # TODO: Add better validation/errors for loading chipflow.toml
         with open(config_file, mode="rb") as fp:
             self.config = tomli.load(fp)
 
