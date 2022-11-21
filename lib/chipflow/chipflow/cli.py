@@ -33,7 +33,7 @@ class Main():
             # TODO: Sort out file linking in doit so we don't need to call these
             "gather_chipflow_library_deps",
             "gather_project_deps",
-            "build_bios_bin"
+            "build_software_bin"
         ]
 
         DoitMain(ModuleTaskLoader(chipflow.software.doit_build)).run(cmd)

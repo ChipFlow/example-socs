@@ -6,8 +6,8 @@ init:
 build-simulation:
 	poetry run python -m chipflow.cli sim build
 
-.PHONY: build-bios # Builds the RISC-V bios to run on the design
-build-bios: build-simulation
+.PHONY: build-software # Builds the RISC-V software/bios to run on the design
+build-software: build-simulation
 	poetry run python -m chipflow.cli software build
 
 .PHONY: build-board # Build a bitstream for the board
@@ -17,9 +17,9 @@ build-board:
 	export YOSYS=yowasp-yosys && \
 	poetry run python -m chipflow.cli board
 
-.PHONY: load-board-bios-ulx3s # Load the bios onto a ulx3s board
-load-board-bios-ulx3s:
-	openFPGALoader -fb ulx3s -o 0x00100000 build/software/bios.bin
+.PHONY: load-board-software-ulx3s # Load the software/bios onto a ulx3s board
+load-board-software-ulx3s:
+	openFPGALoader -fb ulx3s -o 0x00100000 build/software/software.bin
 
 .PHONY: load-board-ulx3s # Load the design onto a ulx3s board
 load-board-ulx3s:

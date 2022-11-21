@@ -23,7 +23,7 @@ Next we need to build the software/BIOS which will run on our design. The build
 of this depends on the design itself.
 
 ```
-make build-bios
+make build-software
 ```
 
 Now that we have our simulation and a BIOS, we can run it:
@@ -47,8 +47,8 @@ make build-board
 Build the bios, and program BIOS into the board's flash:
 
 ```
-make build-mpw5-bios
-make load-board-bios-ulx3s
+make build-mpw5-software
+make load-board-software-ulx3s
 ```
 
 Load SoC onto board (program its bitstream):

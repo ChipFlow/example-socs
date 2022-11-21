@@ -13,7 +13,7 @@ class TestAPI(unittest.TestCase):
 
         build_command = f"cd {project_path} && \
             make build-simulation && \
-            make build-bios"
+            make build-software"
 
         run(build_command, shell=True, check=True)
 
