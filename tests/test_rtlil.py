@@ -10,7 +10,7 @@ class TestRtlil(unittest.TestCase):
         )
 
         command = f"cd {project_path} && \
-            make build-rtlil"
+            make silicon-rtlil"
 
         subprocess.run(command, shell=True, check=True)
 

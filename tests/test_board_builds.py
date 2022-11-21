@@ -16,7 +16,7 @@ class TestBoard(unittest.TestCase):
             export PATH={project_path}:$PATH && \
             cp README.md {fake_file} && \
             chmod +x {fake_file} && \
-            make build-board"
+            make board-build"
 
         try:
             subprocess.run(command, shell=True, check=True)

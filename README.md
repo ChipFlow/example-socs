@@ -16,20 +16,20 @@ First we need to build a local simulation binary. The simulation uses blackbox C
 of external peripherals, such as the flash, to interact with:
 
 ```
-make build-simulation
+make sim-build
 ```
 
 Next we need to build the software/BIOS which will run on our design. The build
 of this depends on the design itself.
 
 ```
-make build-software
+make software-build
 ```
 
 Now that we have our simulation and a BIOS, we can run it:
 
 ```
-make run-simulation
+make sim-run
 ```
 
 You should see something like this:
@@ -41,20 +41,20 @@ You should see something like this:
 Build the design into a bitstream for the board (doesn't load it):
 
 ```
-make build-board
+make board-build
 ```
 
 Build the bios, and program BIOS into the board's flash:
 
 ```
-make build-mpw5-software
-make load-board-software-ulx3s
+make software-build
+make board-load-software-ulx3s
 ```
 
 Load SoC onto board (program its bitstream):
 
 ```
-make load-board-ulx3s
+make board-load-ulx3s
 ```
 
 Your board should now be running. You can connect to it via its serial port:
@@ -74,7 +74,7 @@ Your board should now be running. You can connect to it via its serial port:
 ## Generate an RTLIL from your design
 
 ```
-make build-rtlil
+make silicon-rtlil
 ```
 
 You should now have an `build/my_design.rtlil`.

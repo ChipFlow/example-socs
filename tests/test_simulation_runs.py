@@ -11,13 +11,13 @@ class TestAPI(unittest.TestCase):
         )
 
         build_command = f"cd {project_path} && \
-            make build-simulation && \
-            make build-software"
+            make sim-build && \
+            make software-build"
 
         run(build_command, shell=True, check=True)
 
         run_command = f"cd {project_path} && \
-            make run-simulation"
+            make sim-run"
 
         process = Popen(run_command, stdout=PIPE, stderr=STDOUT, shell=True)
 

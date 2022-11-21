@@ -1,9 +1,15 @@
-import sys, argparse, os, tomli, importlib
+import sys
+import argparse
+import os
+import tomli
+import importlib
 from doit.cmd_base import ModuleTaskLoader
 from doit.doit_cmd import DoitMain
 
+
 class ChipFlowError(Exception):
     pass
+
 
 class Main():
     def run_sim(self, args):
@@ -27,20 +33,20 @@ class Main():
         context = self._load("load_board_context")
         context.build()
 
-    def run_gen_rtlil(self, args):
+    def run_silicon_rtlil(self, args):
         context = self._load("load_silicon_context")
         context.build()
 
     def run_path(self, args):
         print(os.path.dirname(__file__))
 
-    def run(self):    
+    def run(self):
         parser = self._build_arg_parser()
 
         args = parser.parse_args(sys.argv[1:])
 
         self._parse_config(args)
-    
+
         getattr(self, 'run_' + args.action)(args)
 
     def _sim_build_yosys(self):
@@ -58,19 +64,22 @@ class Main():
         sim_action.add_parser("build", help="Build the simulation binary.")
         sim_action.add_parser("build-yosys", help="Build the intermediate yosys simulation.")
 
-        parser_action.add_parser("gen_rtlil", help="Generate RTLIL")
+        # Board
         parser_action.add_parser("board", help="Build the design for a board.")
         parser_action.add_parser("path", help="Get path of module.")
-        
+
         # Software/BIOS
         software_parser = parser_action.add_parser("software", help="Software.")
         software_action = software_parser.add_subparsers(dest="software_action")
         software_action.add_parser("build", help="Build.")
 
+        # Silicon
+        parser_action.add_parser("silicon_rtlil", help="Generate RTLIL for silicon.")
+
         return parser
 
     def _parse_config(self, args):
-        config_dir = os.getcwd();
+        config_dir = os.getcwd()
         config_file = f"{config_dir}/chipflow.toml"
 
         # TODO: Add better validation/errors for loading chipflow.toml
@@ -86,7 +95,7 @@ class Main():
             raise ChipFlowError("Could not locate module, {module_loc}.") from error
 
         if (not hasattr(module, loader_name)):
-            raise ChipFlowError(f"Loader module is missing loader. module={module_loc}, loader={loader_name}");
+            raise ChipFlowError(f"Loader module is missing loader. module={module_loc}, loader={loader_name}")
 
         return getattr(module, loader_name)(self.config)
 
@@ -100,6 +109,7 @@ class Main():
             raise ChipFlowError("Could not load module, {module_loc}.") from error
 
         return module
+
 
 if __name__ == '__main__':
     Main().run()
