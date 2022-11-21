@@ -1,5 +1,5 @@
 #include <backends/cxxrtl/cxxrtl.h>
-#include "build/sim_soc.h"
+#include "build/sim/sim_soc.h"
 #include "log.h"
 
 #include <fstream>

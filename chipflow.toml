@@ -1,3 +1,4 @@
 [chipflow]
 loader_module = "my_design.chipflow"
 target_silicon = ["sky130"]
+design_module = "my_design.design"

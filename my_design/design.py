@@ -96,7 +96,7 @@ class MySoC(SoCWrapper):
         sw.add_periph("plat_timer", "TIMER0", self.timer_base)
         sw.add_periph("soc_id", "SOC_ID", self.soc_id_base)
 
-        sw.generate("my_design/software/generated")
+        sw.generate("build/software/generated")
 
         return m
 

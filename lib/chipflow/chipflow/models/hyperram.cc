@@ -1,7 +1,7 @@
 #include <backends/cxxrtl/cxxrtl.h>
 #include <fstream>
 #include <stdexcept>
-#include "build/sim_soc.h"
+#include "build/sim/sim_soc.h"
 #include "log.h"
 
 namespace cxxrtl_design {

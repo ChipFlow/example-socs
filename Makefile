@@ -6,10 +6,10 @@ init: # Init local environemnt
 	poetry install
 
 build-simulation: # Builds a local binary to run the design in simulation
-	make -C my_design/sim
+	poetry run python -m chipflow.cli sim build
 
 build-bios: build-simulation # Builds the RISC-V bios to run on the design
-	$(DOCKCROSS_CMD) make -C my_design/software/
+	poetry run python -m chipflow.cli software build
 
 build-ulx3s:
 	export NEXTPNR_ECP5=yowasp-nextpnr-ecp5 && \
@@ -18,13 +18,13 @@ build-ulx3s:
 	poetry run python -m chipflow.cli ulx3s
 
 load-ulx3s-bios:
-	openFPGALoader -fb ulx3s -o 0x00100000 my_design/software/bios.bin
+	openFPGALoader -fb ulx3s -o 0x00100000 build/software/bios.bin
 
 load-ulx3s:
 	openFPGALoader -b ulx3s build/top.bit
 
 run-simulation:
-	cd my_design/sim && ./build/sim_soc
+	cd build/sim && ./sim_soc
 
 build-rtlil:
 	poetry run python -m chipflow.cli gen_rtlil
@@ -32,11 +32,5 @@ build-rtlil:
 send-to-chipflow:
 	echo "See https://chipflow.io for details on how to join the beta"
 
-clean-simulation: 
-	make -C my_design/sim clean
-
-clean-bios: 
-	$(DOCKCROSS_CMD) make -C my_design/software/ clean
-
-clean: clean-bios clean-simulation
+clean: 
 	rm -fr build

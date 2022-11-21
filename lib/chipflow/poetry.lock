@@ -139,12 +139,45 @@ url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
 reference = "chipflow"
 
 [[package]]
+name = "cloudpickle"
+version = "2.2.0"
+description = "Extended pickling support for Python objects"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.source]
+type = "legacy"
+url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
+reference = "chipflow"
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 description = "Cross-platform colored terminal text."
 category = "main"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,>=2.7"
+
+[package.source]
+type = "legacy"
+url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
+reference = "chipflow"
+
+[[package]]
+name = "doit"
+version = "0.36.0"
+description = "doit - Automation Tool"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+cloudpickle = "*"
+importlib-metadata = ">=4.4"
+
+[package.extras]
+toml = ["tomli"]
 
 [package.source]
 type = "legacy"
@@ -161,6 +194,27 @@ python-versions = ">=3.7"
 
 [package.extras]
 test = ["pytest (>=6)"]
+
+[package.source]
+type = "legacy"
+url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
+reference = "chipflow"
+
+[[package]]
+name = "importlib-metadata"
+version = "5.0.0"
+description = "Read metadata from Python packages"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+zipp = ">=0.5"
+
+[package.extras]
+docs = ["furo", "jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)"]
+perf = ["ipython"]
+testing = ["flake8 (<5)", "flufl.flake8", "importlib-resources (>=1.3)", "packaging", "pyfakefs", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-flake8", "pytest-mypy (>=0.9.1)", "pytest-perf (>=0.9.2)"]
 
 [package.source]
 type = "legacy"
@@ -362,10 +416,27 @@ type = "legacy"
 url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
 reference = "chipflow"
 
+[[package]]
+name = "zipp"
+version = "3.10.0"
+description = "Backport of pathlib-compatible object wrapper for zip files"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+docs = ["furo", "jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)"]
+testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools", "more-itertools", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-flake8", "pytest-mypy (>=0.9.1)"]
+
+[package.source]
+type = "legacy"
+url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
+reference = "chipflow"
+
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "0a02f9d9e8e609e69e33c53aaf0ee01073478771136cebec4aaa1a637e105dd0"
+content-hash = "2f910c975db573fd1a76dc083555267f2ad8ae108e8f5c767a0d635d171eb9f9"
 
 [metadata.files]
 amaranth = []
@@ -385,13 +456,25 @@ attrs = [
     {file = "attrs-22.1.0-py2.py3-none-any.whl", hash = "sha256:86efa402f67bf2df34f51a335487cf46b1ec130d02b8d39fd248abfd30da551c"},
     {file = "attrs-22.1.0.tar.gz", hash = "sha256:29adc2665447e5191d0e7c568fde78b21f9672d344281d0c6e1ab085429b22b6"},
 ]
+cloudpickle = [
+    {file = "cloudpickle-2.2.0-py3-none-any.whl", hash = "sha256:7428798d5926d8fcbfd092d18d01a2a03daf8237d8fcdc8095d256b8490796f0"},
+    {file = "cloudpickle-2.2.0.tar.gz", hash = "sha256:3f4219469c55453cfe4737e564b67c2a149109dabf7f242478948b895f61106f"},
+]
 colorama = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
 ]
+doit = [
+    {file = "doit-0.36.0-py3-none-any.whl", hash = "sha256:ebc285f6666871b5300091c26eafdff3de968a6bd60ea35dd1e3fc6f2e32479a"},
+    {file = "doit-0.36.0.tar.gz", hash = "sha256:71d07ccc9514cb22fe59d98999577665eaab57e16f644d04336ae0b4bae234bc"},
+]
 exceptiongroup = [
     {file = "exceptiongroup-1.0.3-py3-none-any.whl", hash = "sha256:6002703c7d31fb9950ddc8780840f67880c440895dc1151dd551553aa1246e4a"},
     {file = "exceptiongroup-1.0.3.tar.gz", hash = "sha256:76cac74b5207c5997678a1c7105cb6f14213c9c63c096a38cfcb529d83ce5c02"},
+]
+importlib-metadata = [
+    {file = "importlib_metadata-5.0.0-py3-none-any.whl", hash = "sha256:ddb0e35065e8938f867ed4928d0ae5bf2a53b7773871bfe6bcc7e4fcdc7dea43"},
+    {file = "importlib_metadata-5.0.0.tar.gz", hash = "sha256:da31db32b304314d044d3c12c79bd59e307889b287ad12ff387b3500835fc2ab"},
 ]
 iniconfig = [
     {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
@@ -480,4 +563,8 @@ yowasp-nextpnr-ecp5 = [
 ]
 yowasp-yosys = [
     {file = "yowasp_yosys-0.23.dev444-py3-none-any.whl", hash = "sha256:60e9129b34e93b127ce61b65cd6ad5beaf12ffc3995a7257be4cb0ff97be9ce2"},
+]
+zipp = [
+    {file = "zipp-3.10.0-py3-none-any.whl", hash = "sha256:4fcb6f278987a6605757302a6e40e896257570d11c51628968ccb2a47e80c6c1"},
+    {file = "zipp-3.10.0.tar.gz", hash = "sha256:7a7262fd930bd3e36c50b9a64897aec3fafff3dfdeec9623ae22b40e93f99bb8"},
 ]
