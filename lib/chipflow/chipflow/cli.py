@@ -10,33 +10,18 @@ class Main():
         if args.sim_action == "build-yosys":
             return self._sim_build_yosys()
 
-        import chipflow.sim.doit_build
+        module_loc = self.config["chipflow"]["sim_module"]
+        doit_build_module = self._load_module(module_loc + ".doit_build")
 
-        design_module = self._load_design_module()
-        design_dir = os.path.dirname(design_module.__file__)
-
-        cmd = [
-            "set_params", "-d", design_dir, 
-            "build_sim"
-        ]
-
-        DoitMain(ModuleTaskLoader(chipflow.sim.doit_build)).run(cmd)
+        cmd = ["build_sim"]
+        DoitMain(ModuleTaskLoader(doit_build_module)).run(cmd)
 
     def run_software(self, args):
-        import chipflow.software.doit_build
+        module_loc = self.config["chipflow"]["software_module"]
+        doit_build_module = self._load_module(module_loc + ".doit_build")
 
-        design_module = self._load_design_module()
-        design_dir = os.path.dirname(design_module.__file__)
-
-        cmd = [
-            "set_params", "-d", design_dir, 
-            # TODO: Sort out file linking in doit so we don't need to call these
-            "gather_chipflow_library_deps",
-            "gather_project_deps",
-            "build_software_bin"
-        ]
-
-        DoitMain(ModuleTaskLoader(chipflow.software.doit_build)).run(cmd)
+        cmd = ["build_software"]
+        DoitMain(ModuleTaskLoader(doit_build_module)).run(cmd)
 
     def run_board(self, args):
         context = self._load("load_board_context")
@@ -106,11 +91,13 @@ class Main():
         return getattr(module, loader_name)(self.config)
 
     def _load_design_module(self):
+        return self._load_module(self.config["chipflow"]["design_module"])
+
+    def _load_module(self, module_loc):
         try:
-            module_loc = self.config["chipflow"]["design_module"]
             module = importlib.import_module(module_loc)
         except ModuleNotFoundError as error:
-            raise ChipFlowError("Could not load design module, {module_loc}.") from error
+            raise ChipFlowError("Could not load module, {module_loc}.") from error
 
         return module
 

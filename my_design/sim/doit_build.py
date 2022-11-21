@@ -1,11 +1,13 @@
 import yowasp_yosys
 import os
 import shutil
+import chipflow.config
 
 from pathlib import Path
 from doit.action import CmdAction
 
-CHIPFLOW_MODEL_DIR = os.path.dirname(__file__) + '/../models'
+CHIPFLOW_MODEL_DIR = chipflow.config.get_dir_models()
+DESIGN_DIR = os.path.dirname(__file__) + "/.."
 YOSYS_DATDIR = os.path.abspath(os.path.dirname(yowasp_yosys.__file__)) + "/share"
 BUILD_DIR = "./build/sim"
 CXX = "g++"
@@ -13,23 +15,6 @@ CXXFLAGS = f"-O3 -g -std=c++17 -I {CHIPFLOW_MODEL_DIR}"
 RTL_CXXFLGAGS = "-O1 -std=c++17"
 # TODO: we need these models to be pulled in according to what has been used in the design
 DESIGN_MODELS=["uart", "spiflash", "wb_mon", "log"]
-
-def task_set_params():
-    def return_params(design_dir):
-        return {
-            "design_dir": design_dir
-        }
-
-    return {
-        "actions": [return_params],
-        "params": [
-            {
-                "name": "design_dir",
-                "default": "",
-                "short": "d"
-            },
-        ],
-    }
 
 def task_build_sim_soc_yosys():
     def get_build_cmd():
@@ -95,23 +80,19 @@ def task_gather_sim_project_files():
     sources = ["main"]
 
     for source in sources:
-        target_files.append(f"{BUILD_DIR}/{source}.cc")
+        src_files.append(f"{DESIGN_DIR}/sim/{source}.cc")
+        target_files.append(f"{BUILD_DIR}/{source}.cc")     
 
-    def do_copy(design_dir):
+    def do_copy():
         # Ensure dir exists
         Path(f"{BUILD_DIR}").mkdir(parents=True, exist_ok=True)
-
-        for source in sources:
-            src_files.append(f"{design_dir}/sim/{source}.cc")
 
         for i in range(len(src_files)):
             shutil.copyfile(src_files[i - 1], target_files[i - 1])
 
-    # TODO: Add "file_dep" of src_files - which depend on a param
-
     return {
         "actions": [do_copy],
-        "getargs": {"design_dir": ("set_params", "design_dir")},
+        "file_dep": src_files,
         "targets": target_files,
     }
 
