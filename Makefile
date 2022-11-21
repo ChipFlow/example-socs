@@ -1,7 +1,3 @@
-# Prevent sharing of our host .ssh folder with dockcross - we don't need to git clone anything
-# TODO: Refactor this to remove file layout dependency
-DOCKCROSS_CMD := SSH_DIR="/dev/null" ./lib/chipflow/chipflow/software/dockcross-linux-riscv32
-
 init: # Init local environemnt
 	poetry install
 
