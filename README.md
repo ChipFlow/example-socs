@@ -2,7 +2,11 @@
 
 ## Preparing your local environment
 
- - Ensure you have [Poetry installed](https://python-poetry.org/docs/#installation).
+ - Ensure you have [Poetry installed](https://python-poetry.org/docs/#installation). 
+   - Note: If you choose to install `poetry` within a venv, `poetry` will reuse 
+     that venv instead of creating a new one, so you should ensure that its 
+     version of Python is compatible with the requirements of this project 
+     in `./pyproject.toml`.
  - Ensure you have Docker (or podman) available, which is used for the 
    [dockcross](https://github.com/dockcross/dockcross) builds.
  - If you want to use a board, ensure you have openfpgaloader
