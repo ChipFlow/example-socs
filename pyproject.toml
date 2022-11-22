@@ -7,7 +7,7 @@ license = "BSD-2-Clause"
 packages = [{include = "my_design"}]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 pytest = "^7.2.0"
 chipflow = {path = "./lib/chipflow", develop = true}
 
