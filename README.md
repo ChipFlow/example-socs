@@ -10,7 +10,7 @@
  - Ensure you have Docker (or podman) available, which is used for the 
    [dockcross](https://github.com/dockcross/dockcross) builds.
  - If you want to use a board, ensure you have openfpgaloader
-  - macOS: `brew install openfpgaloader`
+   - macOS: `brew install openfpgaloader`
  - Clone this repository to your local environment.
  - Run `make init` to install the dependencies.
 
