@@ -32,7 +32,7 @@ struct spiflash_model : public bb_p_spiflash__model {
             throw std::out_of_range("flash: offset beyond end");
         }
         if (!in) {
-            throw std::runtime_error("flash: failed to read input file!");
+            throw std::runtime_error("flash: failed to read input file: " + file);
         }
         in.read(reinterpret_cast<char*>(data.data() + offset), (data.size() - offset));
     }
