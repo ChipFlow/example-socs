@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: BSD-2-Clause
 from .my_contexts.board import MyBoardContext
 from .my_contexts.silicon import MySiliconContext
 from .my_contexts.sim import MySimContext

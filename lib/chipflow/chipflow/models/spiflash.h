@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
 #ifndef SPIFLASH_H
 #define SPIFLASH_H
 

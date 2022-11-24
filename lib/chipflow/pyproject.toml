@@ -6,6 +6,7 @@ authors = [
     "Robert Taylor <rob.taylor@chipflow.io>", 
     "Ross Motley <ross.motley@chipflow.io>"
 ]
+license = "BSD-2-Clause"
 
 [tool.poetry.dependencies]
 python = "^3.8"

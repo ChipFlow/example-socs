@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
 #include "spiflash.h"
 
 extern uint32_t flashio_worker_begin;

@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
 #include "uart.h"
 
 void uart_putc(volatile uart_regs_t *uart, char c) {

@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
 #ifndef SPI_FLASH_H
 #define SPI_FLASH_H
 

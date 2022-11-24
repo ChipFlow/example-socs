@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
 #ifndef PLAT_TIMER_H
 #define PLAT_TIMER_H
 

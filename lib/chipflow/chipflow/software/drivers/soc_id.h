@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
 #ifndef SOC_ID_H
 #define SOC_ID_H
 

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: BSD-2-Clause
 from amaranth import *
 from amaranth.build import *
 from amaranth_boards.ulx3s import *

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: BSD-2-Clause
 from ..design import MySoC
 from amaranth_boards.ulx3s import ULX3S_85F_Platform
 from chipflow.contexts.board import BoardContext

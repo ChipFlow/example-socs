@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
 #undef NDEBUG
 
 #include <backends/cxxrtl/cxxrtl.h>

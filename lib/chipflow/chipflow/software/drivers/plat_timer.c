@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: BSD-2-Clause */
 #include "plat_timer.h"
 
 uint64_t plat_timer_read(volatile plat_timer_regs_t *timer) {

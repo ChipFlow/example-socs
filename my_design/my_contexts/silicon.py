@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: BSD-2-Clause
 from ..design import MySoC
 from chipflow.sky130_platform import Sky130Platform
 from chipflow.contexts.silicon import SiliconContext

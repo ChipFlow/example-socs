@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Copyright (c) 2015, 2016, 2017, 2018, 2021 Steeve Morin, Rob Burns, Matthew McCormick, Jean-Christophe-Fillion-Robin, Bensuperpc
+# See: https://github.com/dockcross/dockcross/blob/master/LICENSE
 
 DEFAULT_DOCKCROSS_IMAGE=dockcross/linux-riscv32:20221108-102ebcc
 
