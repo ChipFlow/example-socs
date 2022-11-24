@@ -24,7 +24,7 @@ class TestAPI(unittest.TestCase):
         output_lines = []
         start_time = time.time()
         max_seconds = 60
-        expected_text = "about to boop the kernel"
+        expected_text = "Initialised!"
         extra_msg = ""
 
         while True:
