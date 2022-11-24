@@ -26,7 +26,7 @@ class SoCWrapper(Elaboratable):
             raise ChipFlowError("Platform obj didn't have `chipflow_context` attribute.")
         return platform.chipflow_context
 
-    def require(self, platform, class_name):
+    def load_provider(self, platform, class_name):
         """Require a ChipFlow provider for the platform's context."""
         context = self.get_chipflow_context(platform)
 
@@ -39,4 +39,4 @@ class SoCWrapper(Elaboratable):
         if (not hasattr(module, class_name)):
             raise ChipFlowError(f"Provider module missing class. {module_loc}, {class_name}")
 
-        return getattr(module, class_name)
+        return getattr(module, class_name)(platform)

@@ -7,50 +7,51 @@ from amaranth_orchard.memory.spimemio import QSPIPins
 from amaranth_orchard.base.gpio import GPIOPins
 from amaranth_orchard.io.uart import UARTPins
 from amaranth_orchard.memory.hyperram import HyperRAMPins
+from chipflow.providers.base import BaseProvider
 
 
-class QSPIFlash():
-    def add(self, m, platform):
+class QSPIFlash(BaseProvider):
+    def add(self, m):
         flash = QSPIPins()
-        platform.connect_io(m, flash, "flash")
+        self.platform.connect_io(m, flash, "flash")
         return flash
 
 
-class LEDGPIO():
-    def add(self, m, platform):
+class LEDGPIO(BaseProvider):
+    def add(self, m):
         leds = GPIOPins(width=8)
-        platform.connect_io(m, leds, "gpio")
+        self.platform.connect_io(m, leds, "gpio")
         return leds
 
 
-class UART():
-    def add(self, m, platform):
+class UART(BaseProvider):
+    def add(self, m):
         uart = UARTPins()
 
-        platform.connect_io(m, uart, "uart")
+        self.platform.connect_io(m, uart, "uart")
 
         return uart
 
 
-class HyperRAM():
-    def add(self, m, platform):
+class HyperRAM(BaseProvider):
+    def add(self, m):
         # Dual HyperRAM PMOD, starting at GPIO 0+/-
         hram = HyperRAMPins(cs_count=4)
 
-        platform.connect_io(m, hram, "ram")
+        self.platform.connect_io(m, hram, "ram")
 
         return hram
 
 
-class JTAG:
-    def add(self, m, platform, cpu):
+class JTAG(BaseProvider):
+    def add(self, m, cpu):
         jtag_io = Record([
             ('tck_i', 1),
             ('tms_i', 1),
             ('tdi_i', 1),
             ('tdo_o', 1),
         ])
-        platform.connect_io(m, jtag_io, "jtag")
+        self.platform.connect_io(m, jtag_io, "jtag")
 
         m.d.comb += [
             cpu.jtag_tck.eq(jtag_io.tck_i),
@@ -62,13 +63,13 @@ class JTAG:
         return jtag_io
 
 
-class Init:
-    def add(self, m, platform):
+class Init(BaseProvider):
+    def add(self, m):
         sys_io = Record([
             ('clk_i', 1),
             ('rstn_i', 1),
         ])
-        platform.connect_io(m, sys_io, "sys")
+        self.platform.connect_io(m, sys_io, "sys")
         m.domains.sync = ClockDomain()
         m.d.comb += ClockSignal().eq(sys_io.clk_i)
 

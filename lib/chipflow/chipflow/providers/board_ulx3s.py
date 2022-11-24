@@ -7,13 +7,14 @@ from amaranth_orchard.memory.spimemio import QSPIPins
 from amaranth_orchard.base.gpio import GPIOPins
 from amaranth_orchard.io.uart import UARTPins
 from amaranth_orchard.memory.hyperram import HyperRAMPins
+from chipflow.providers.base import BaseProvider
 
 
-class QSPIFlash():
-    def add(self, m, platform):
+class QSPIFlash(BaseProvider):
+    def add(self, m):
         flash = QSPIPins()
 
-        plat_flash = platform.request("spi_flash", dir=dict(cs='-', copi='-', cipo='-', wp='-', hold='-'))
+        plat_flash = self.platform.request("spi_flash", dir=dict(cs='-', copi='-', cipo='-', wp='-', hold='-'))
         # Flash clock requires a special primitive to access in ECP5
         m.submodules.usrmclk = Instance(
             "USRMCLK",
@@ -42,22 +43,22 @@ class QSPIFlash():
         return flash
 
 
-class LEDGPIO():
-    def add(self, m, platform):
+class LEDGPIO(BaseProvider):
+    def add(self, m):
         leds = GPIOPins(width=8)
 
         for i in range(8):
-            led = platform.request("led", i)
+            led = self.platform.request("led", i)
             m.d.comb += led.o.eq(leds.o[i])
 
         return leds
 
 
-class UART():
-    def add(self, m, platform):
+class UART(BaseProvider):
+    def add(self, m):
         uart = UARTPins()
 
-        plat_uart = platform.request("uart")
+        plat_uart = self.platform.request("uart")
         m.d.comb += [
             plat_uart.tx.o.eq(uart.tx_o),
             uart.rx_i.eq(plat_uart.rx.i),
@@ -66,12 +67,12 @@ class UART():
         return uart
 
 
-class HyperRAM():
-    def add(self, m, platform):
+class HyperRAM(BaseProvider):
+    def add(self, m):
         # Dual HyperRAM PMOD, starting at GPIO 0+/-
         hram = HyperRAMPins(cs_count=4)
 
-        platform.add_resources([
+        self.platform.add_resources([
             Resource(
                 "hyperram",
                 0,
@@ -86,7 +87,7 @@ class HyperRAM():
             )
         ])
 
-        plat_hram = platform.request("hyperram", 0)
+        plat_hram = self.platform.request("hyperram", 0)
         m.d.comb += [
             plat_hram.clk.o.eq(hram.clk_o),
             plat_hram.csn.o.eq(hram.csn_o),
@@ -104,8 +105,8 @@ class HyperRAM():
         return hram
 
 
-class JTAG:
-    def add(self, m, platform, cpu):
+class JTAG(BaseProvider):
+    def add(self, m, cpu):
         m.d.comb += [
             cpu.jtag_tck.eq(0),
             cpu.jtag_tdi.eq(0),
@@ -113,10 +114,10 @@ class JTAG:
         ]
 
 
-class Init:
-    def add(self, m, platform):
-        clk25 = platform.request("clk25")
+class Init(BaseProvider):
+    def add(self, m):
+        clk25 = self.platform.request("clk25")
         m.domains.sync = ClockDomain()
         m.d.comb += ClockSignal().eq(clk25.i)
-        reset_in = platform.request("button_pwr", 0)
+        reset_in = self.platform.request("button_pwr", 0)
         m.submodules += ResetSynchronizer(reset_in)

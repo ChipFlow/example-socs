@@ -7,40 +7,41 @@ from amaranth_orchard.memory.spimemio import QSPIPins
 from amaranth_orchard.base.gpio import GPIOPins
 from amaranth_orchard.io.uart import UARTPins
 from amaranth_orchard.memory.hyperram import HyperRAMPins
+from chipflow.providers.base import BaseProvider
 
 
-class QSPIFlash():
-    def add(self, m, platform):
+class QSPIFlash(BaseProvider):
+    def add(self, m):
         flash = QSPIPins()
-        m.submodules.flash = platform.add_model("spiflash_model", flash, edge_det=['clk_o', 'csn_o'])
+        m.submodules.flash = self.platform.add_model("spiflash_model", flash, edge_det=['clk_o', 'csn_o'])
         return flash
 
 
-class LEDGPIO():
-    def add(self, m, platform):
+class LEDGPIO(BaseProvider):
+    def add(self, m):
         leds = GPIOPins(width=8)
         # TODO - something in simulation?
         return leds
 
 
-class UART():
-    def add(self, m, platform):
+class UART(BaseProvider):
+    def add(self, m):
         uart = UARTPins()
-        m.submodules.uart_model = platform.add_model("uart_model", uart, edge_det=[])
+        m.submodules.uart_model = self.platform.add_model("uart_model", uart, edge_det=[])
 
         return uart
 
 
-class HyperRAM():
-    def add(self, m, platform):
+class HyperRAM(BaseProvider):
+    def add(self, m):
         # Dual HyperRAM PMOD, starting at GPIO 0+/-
         hram = HyperRAMPins(cs_count=4)
-        m.submodules.hram = platform.add_model("hyperram_model", hram, edge_det=['clk_o', ])
+        m.submodules.hram = self.platform.add_model("hyperram_model", hram, edge_det=['clk_o', ])
         return hram
 
 
-class JTAG:
-    def add(self, m, platform, cpu):
+class JTAG(BaseProvider):
+    def add(self, m, cpu):
         m.d.comb += [
             cpu.jtag_tck.eq(0),
             cpu.jtag_tdi.eq(0),
@@ -48,8 +49,8 @@ class JTAG:
         ]
 
 
-class Init:
-    def add(self, m, platform):
+class Init(BaseProvider):
+    def add(self, m):
         m.domains.sync = ClockDomain()
-        m.d.comb += ClockSignal().eq(platform.clk)
-        m.d.comb += ResetSignal().eq(platform.rst)
+        m.d.comb += ClockSignal().eq(self.platform.clk)
+        m.d.comb += ResetSignal().eq(self.platform.rst)

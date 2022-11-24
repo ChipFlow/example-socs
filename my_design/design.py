@@ -34,7 +34,7 @@ class MySoC(SoCWrapper):
     def elaborate(self, platform):
         m = Module()
 
-        self.require(platform, "Init")().add(m, platform)
+        self.load_provider(platform, "Init").add(m)
 
         self._arbiter = wishbone.Arbiter(
             addr_width=30,
@@ -52,7 +52,7 @@ class MySoC(SoCWrapper):
         self._arbiter.add(self.cpu.dbus)
 
         self.rom = SPIMemIO(
-            flash=self.require(platform, "QSPIFlash")().add(m, platform)
+            flash=self.load_provider(platform, "QSPIFlash").add(m)
         )
         self._decoder.add(self.rom.data_bus, addr=self.spi_base)
         self._decoder.add(self.rom.ctrl_bus, addr=self.spi_ctrl_base)
@@ -61,13 +61,14 @@ class MySoC(SoCWrapper):
         self._decoder.add(self.sram.bus, addr=self.sram_base)
 
         self.gpio = GPIOPeripheral(
-            pins=self.require(platform, "LEDGPIO")().add(m, platform)
+            pins=self.load_provider(platform, "LEDGPIO").add(m)
         )
         self._decoder.add(self.gpio.bus, addr=self.led_gpio_base)
 
         self.uart = UARTPeripheral(
             init_divisor=(25000000//115200),
-            pins=self.require(platform, "UART")().add(m, platform))
+            pins=self.load_provider(platform, "UART").add(m)
+        )
         self._decoder.add(self.uart.bus, addr=self.uart_base)
 
         self.timer = PlatformTimer(width=48)
@@ -93,7 +94,7 @@ class MySoC(SoCWrapper):
             self.cpu.timer_irq.eq(self.timer.timer_irq),
         ]
 
-        self.require(platform, "JTAG")().add(m, platform, self.cpu)
+        self.load_provider(platform, "JTAG").add(m, self.cpu)
 
         if self.get_chipflow_context(platform) == "sim":
             m.submodules.bus_mon = platform.add_monitor(
