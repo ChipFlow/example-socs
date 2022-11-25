@@ -14,10 +14,27 @@ before_script:
   - pip3 install poetry
   - poetry install
 
+stages:
+  - prechecks
+  - test
+
+license:
+  image: docker:latest
+  stage: prechecks
+  services:
+    - name: "docker:dind"
+  before_script: [] # We don't need to install our dependencies for this
+  script: 
+    # Use Google's `addlicence` to check for BSD-2-Clause license 
+    # See: https://github.com/google/addlicense
+    - docker run --platform=linux/amd64 -v ${PWD}:/src ghcr.io/google/addlicense -v -check -l BSD-2-Clause -c "ChipFlow" -s=only -ignore **/__init__.py **/*.py
+
 lint:
+  stage: prechecks
   script: make lint
 
 test:
+  stage: test
   # We need dind (Docker-IN-Docker) for dockcross
   services:
     - name: "docker:20.10.17-dind"
@@ -36,3 +53,5 @@ test:
     - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable"
     - apt-get update && apt-get install -y docker-ce-cli 
     - poetry run pytest
+
+
