@@ -25,6 +25,13 @@ class LEDGPIO(BaseProvider):
         return leds
 
 
+class ButtonGPIO(BaseProvider):
+    def add(self, m):
+        buttons = GPIOPins(width=2)
+        m.d.comb += buttons.i.eq(self.platform.buttons)
+        return buttons
+
+
 class UART(BaseProvider):
     def add(self, m):
         uart = UARTPins()

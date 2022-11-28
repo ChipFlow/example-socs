@@ -15,6 +15,7 @@ class SimPlatform():
         self.extra_files = set()
         self.clk = Signal()
         self.rst = Signal()
+        self.buttons = Signal(2)
         self.sim_boxes = dict()
 
     def add_file(self, filename, content):
@@ -64,7 +65,7 @@ class SimPlatform():
     def build(self, e):
         Path(self.build_dir).mkdir(parents=True, exist_ok=True)
 
-        output = rtlil.convert(e, name="sim_top", ports=[self.clk, self.rst], platform=self)
+        output = rtlil.convert(e, name="sim_top", ports=[self.clk, self.rst, self.buttons], platform=self)
 
         top_rtlil = Path(self.build_dir) / "sim_soc.il"
         with open(top_rtlil, "w") as f:

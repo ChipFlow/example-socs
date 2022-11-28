@@ -55,6 +55,17 @@ class LEDGPIO(BaseProvider):
         return leds
 
 
+class ButtonGPIO(BaseProvider):
+    def add(self, m):
+        buttons = GPIOPins(width=2)
+
+        for i in range(2):
+            btn = self.platform.request("button_fire", i)
+            m.d.comb += buttons.i[i].eq(btn.i)
+
+        return buttons
+
+
 class UART(BaseProvider):
     def add(self, m):
         uart = UARTPins()
