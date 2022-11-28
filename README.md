@@ -1,5 +1,8 @@
 # Example ChipFlow design
 
+This repository is the basis for our [Introduction to the ChipFlow platform](https://docs.chipflow.io/en/latest/tutorial-intro-chipflow-platform.html)
+tutorial. 
+
 ## Preparing your local environment
 
  - [Poetry must be installed](https://python-poetry.org/docs/#installation). 
@@ -17,23 +20,21 @@
 
 ## Run the design in simulation
 
-First we need to build a local simulation binary. The simulation uses blackbox C++ models 
-of external peripherals, such as the flash, to interact with:
+Build local simulation binary:
 
-```
+```bash
 make sim-build
 ```
 
-Next we need to build the software/BIOS which will run on our design. The build
-of this depends on the design itself.
+Build the software/BIOS which will run on our design.
 
-```
+```bash
 make software-build
 ```
 
 Now that we have our simulation and a BIOS, we can run it:
 
-```
+```bash
 make sim-run
 ```
 
@@ -43,22 +44,22 @@ You should see something like this:
 
 ## Run the design on a ULX3S board
 
-Build the design into a bitstream for the board (doesn't load it):
+Build the design into a bitstream for the board:
 
-```
+```bash
 make board-build
 ```
 
 Build the bios, and program BIOS into the board's flash:
 
-```
+```bash
 make software-build
 make board-load-software-ulx3s
 ```
 
 Load SoC onto board (program its bitstream):
 
-```
+```bash
 make board-load-ulx3s
 ```
 
@@ -78,7 +79,7 @@ Your board should now be running. You can connect to it via its serial port:
 
 ## Generate an RTLIL from your design
 
-```
+```bash
 make silicon-rtlil
 ```
 
@@ -86,6 +87,6 @@ You should now have an `build/my_design.rtlil`.
 
 ## Send your RTLIL to the ChipFlow cloud
 
-```
+```bash
 make send-to-chipflow
 ```
