@@ -23,7 +23,8 @@ class MySoC(SoCWrapper):
         # Memory regions
         self.spi_base = 0x00000000
         self.sram_base = 0x10000000
-        self.sram_size = 8*1024  # 8KiB
+        # self.sram_size = 8*1024  # 8KiB
+        self.sram_size = 512  # Reduce for gfmpw0
 
         # CSR regions
         self.spi_ctrl_base = 0xb0000000
