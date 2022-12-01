@@ -35,7 +35,7 @@ silicon-rtlil:
 
 .PHONY: send-to-chipflow # Send the design to ChipFlow
 send-to-chipflow:
-	@echo "See https://chipflow.io for details on how to join the beta"
+	@echo "See https://chipflow.io/beta for details on how to join the beta"
 
 .PHONY: clean # Clean/delete the builds
 clean: 
