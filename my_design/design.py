@@ -31,6 +31,7 @@ class MySoC(SoCWrapper):
         self.uart_base = 0xb2000000
         self.timer_base = 0xb3000000
         self.soc_id_base = 0xb4000000
+        # self.btn_gpio_base = 0xb5000000
 
     def elaborate(self, platform):
         m = Module()
@@ -79,6 +80,11 @@ class MySoC(SoCWrapper):
         self.soc_id = SoCID(type_id=soc_type)
         self._decoder.add(self.soc_id.bus, addr=self.soc_id_base)
 
+        # self.btn = GPIOPeripheral(
+        #     pins=self.load_provider(platform, "ButtonGPIO").add(m)
+        # )
+        # self._decoder.add(self.btn.bus, addr=self.btn_gpio_base)
+
         m.submodules.arbiter = self._arbiter
         m.submodules.cpu = self.cpu
         m.submodules.decoder = self._decoder
@@ -88,6 +94,7 @@ class MySoC(SoCWrapper):
         m.submodules.uart = self.uart
         m.submodules.timer = self.timer
         m.submodules.soc_id = self.soc_id
+        # m.submodules.btn = self.btn
 
         m.d.comb += [
             self._arbiter.bus.connect(self._decoder.bus),
@@ -114,6 +121,7 @@ class MySoC(SoCWrapper):
         sw.add_periph("uart", "UART0", self.uart_base)
         sw.add_periph("plat_timer", "TIMER0", self.timer_base)
         sw.add_periph("soc_id", "SOC_ID", self.soc_id_base)
+        # sw.add_periph("gpio", "BTN_GPIO", self.btn_gpio_base)
 
         sw.generate("build/software/generated")
 
