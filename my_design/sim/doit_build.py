@@ -25,7 +25,7 @@ def task_build_sim_soc_yosys():
 
     return {
         "actions": [CmdAction(get_build_cmd)],
-        "targets": [f"{BUILD_DIR}/sim_soc.ys"],
+        "targets": [f"{BUILD_DIR}/sim_soc.ys", f"{BUILD_DIR}/sim_soc.il"],
     }
 
 
@@ -33,7 +33,7 @@ def task_build_sim_soc_c_files():
     return {
         "actions": [f"cd {BUILD_DIR} && poetry run yowasp-yosys sim_soc.ys"],
         "targets": [f"{BUILD_DIR}/sim_soc.cc", f"{BUILD_DIR}/sim_soc.h"],
-        "file_dep": [f"{BUILD_DIR}/sim_soc.ys"],
+        "file_dep": [f"{BUILD_DIR}/sim_soc.ys", f"{BUILD_DIR}/sim_soc.il"],
     }
 
 
