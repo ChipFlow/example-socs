@@ -33,8 +33,8 @@ sim-run:
 silicon-rtlil:
 	poetry run python -m chipflow.cli silicon_rtlil
 
-.PHONY: send-to-chipflow # Send the design to ChipFlow
-send-to-chipflow:
+.PHONY: silicon-prepare # Send to API to prepare for manufacture
+silicon-prepare:
 	@echo "See https://chipflow.io/beta for details on how to join the beta"
 
 .PHONY: clean # Clean/delete the builds

@@ -85,8 +85,8 @@ make silicon-rtlil
 
 You should now have an `build/my_design.rtlil`.
 
-## Send your RTLIL to the ChipFlow cloud
+## Send your RTLIL to the API to prepare for manufacturing
 
 ```bash
-make send-to-chipflow
+make silicon-prepare
 ```
