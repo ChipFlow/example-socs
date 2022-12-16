@@ -40,14 +40,14 @@ int main(int argc, char **argv) {
         idx = (idx + 1) % 1000000;
 
         // // Simulate button presses
-        // if (idx == 100000) // at t=100000, press button 1
-        //     top.p_buttons.set(0b01U);
-        // else if (idx == 150000) // at t=150000, release button 1
-        //     top.p_buttons.set(0b00U);
-        // else if (idx == 300000) // at t=300000, press button 2
-        //     top.p_buttons.set(0b10U);
-        // else if (idx == 350000) // at t=350000, release button 2
-        //     top.p_buttons.set(0b00U);
+        if (idx == 100000) // at t=100000, press button 1
+            top.p_buttons.set(0b01U);
+        else if (idx == 150000) // at t=150000, release button 1
+            top.p_buttons.set(0b00U);
+        else if (idx == 300000) // at t=300000, press button 2
+            top.p_buttons.set(0b10U);
+        else if (idx == 350000) // at t=350000, release button 2
+            top.p_buttons.set(0b00U);
     }
     return 0;
 }

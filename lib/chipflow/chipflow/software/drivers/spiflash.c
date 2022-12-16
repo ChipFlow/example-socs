@@ -35,13 +35,13 @@ void spiflash_set_qspi_flag(volatile spiflash_regs_t *flash) {
 	uint8_t buffer[8];
 
 	// Read Configuration Registers (RDCR1 35h)
-	buffer[0] = 0x35;
+	buffer[0] = 0x05;
 	buffer[1] = 0x00; // rdata
 	spiflash_io(flash, buffer, 2, 0);
 	uint8_t sr2 = buffer[1];
 
 	// Write Enable Volatile (50h) + Write Status Register 2 (31h)
-	buffer[0] = 0x31;
+	buffer[0] = 0x01;
 	buffer[1] = sr2 | 2; // Enable QSPI
 	spiflash_io(flash, buffer, 2, 0x50);
 }
