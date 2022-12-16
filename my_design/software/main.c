@@ -10,7 +10,6 @@ void main() {
 	unsigned last_buttons = 0, next_buttons = 0;
 
 	puts("🐱: nyaa~!\n");
-	puts("🐱: rob!~!\n");
 
 	puts("SoC type: ");
 	puthex(SOC_ID->type);
@@ -31,16 +30,12 @@ void main() {
 	puts("Initialised!\n");
 
 	while (1) {
-		// Listen for button presses
-		next_buttons = BTN_GPIO->in;
-		if (next_buttons) {
-			puts("Buttons pressed: ");
-			puthex(next_buttons);
-		}
-		if ((next_buttons & 1U) && !(last_buttons & 1U))
-			puts("button 1 pressed!\n");
-		if ((next_buttons & 2U) && !(last_buttons & 2U))
-			puts("button 2 pressed!\n");
-		last_buttons = next_buttons;
+		// // Listen for button presses
+		// next_buttons = BTN_GPIO->in;
+		// if ((next_buttons & 1U) && !(last_buttons & 1U))
+		// 	puts("button 1 pressed!\n");
+		// if ((next_buttons & 2U) && !(last_buttons & 2U))
+		// 	puts("button 2 pressed!\n");
+		// last_buttons = next_buttons;
 	};
 }
