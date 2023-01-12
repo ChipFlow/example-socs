@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 from ..design import MySoC
-from chipflow.contexts.sim import SimContext
-from chipflow.sim_platform import SimPlatform
+from chipflow_lib.contexts.sim import SimContext
+from chipflow_lib.sim_platform import SimPlatform
 
 
 class MySimContext(SimContext):

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
-from chipflow.chip_wrapper import SoCWrapper
-from chipflow.software.soft_gen import SoftwareGenerator
+from chipflow_lib.chip_wrapper import SoCWrapper
+from chipflow_lib.software.soft_gen import SoftwareGenerator
 
 from amaranth import Module
 

@@ -2,12 +2,12 @@
 import yowasp_yosys
 import os
 import shutil
-import chipflow.config
+import chipflow_lib.config
 
 from pathlib import Path
 from doit.action import CmdAction
 
-CHIPFLOW_MODEL_DIR = chipflow.config.get_dir_models()
+CHIPFLOW_MODEL_DIR = chipflow_lib.config.get_dir_models()
 DESIGN_DIR = os.path.dirname(__file__) + "/.."
 YOSYS_DATDIR = os.path.abspath(
     os.path.dirname(yowasp_yosys.__file__)) + "/share"
@@ -21,7 +21,7 @@ DESIGN_MODELS = ["uart", "spiflash", "wb_mon", "log"]
 
 def task_build_sim_soc_yosys():
     def get_build_cmd():
-        return f"BUILD_DIR=./build/sim poetry run python -m chipflow.cli sim build-yosys"
+        return f"BUILD_DIR=./build/sim poetry run python -m chipflow_lib.cli sim build-yosys"
 
     return {
         "actions": [CmdAction(get_build_cmd)],

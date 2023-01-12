@@ -4,18 +4,18 @@ init:
 
 .PHONY: sim-build # Builds a local binary to run the design in simulation
 sim-build:
-	poetry run python -m chipflow.cli sim build
+	poetry run python -m chipflow_lib.cli sim build
 
 .PHONY: software-build # Builds the RISC-V software/bios to run on the design
 software-build: sim-build
-	poetry run python -m chipflow.cli software build
+	poetry run python -m chipflow_lib.cli software build
 
 .PHONY: board-build # Build a bitstream for the board
 board-build:
 	export NEXTPNR_ECP5=yowasp-nextpnr-ecp5 && \
 	export ECPPACK=yowasp-ecppack && \
 	export YOSYS=yowasp-yosys && \
-	poetry run python -m chipflow.cli board
+	poetry run python -m chipflow_lib.cli board
 
 .PHONY: board-load-software-ulx3s # Load the software/bios onto a ulx3s board
 board-load-software-ulx3s:
@@ -31,7 +31,7 @@ sim-run:
 
 .PHONY: silicon-rtlil # Build RTLIL for the design
 silicon-rtlil:
-	poetry run python -m chipflow.cli silicon_rtlil
+	poetry run python -m chipflow_lib.cli silicon_rtlil
 
 .PHONY: silicon-prepare # Send to API to prepare for manufacture
 silicon-prepare:
@@ -45,4 +45,3 @@ clean:
 lint: 
 	poetry run pycodestyle --config=./.pycodestyle my_design/*
 	poetry run pycodestyle --config=./.pycodestyle tests/*
-	poetry run pycodestyle --config=./.pycodestyle lib/chipflow/chipflow

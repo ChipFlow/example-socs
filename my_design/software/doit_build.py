@@ -4,9 +4,9 @@ import shutil
 from pathlib import Path
 from doit.action import CmdAction
 from doit import create_after
-import chipflow.config
+import chipflow_lib.config
 
-CHIPFLOW_SOFTWARE_DIR = chipflow.config.get_dir_software()
+CHIPFLOW_SOFTWARE_DIR = chipflow_lib.config.get_dir_software()
 BUILD_DIR = "./build/software"
 DESIGN_DIR = os.path.dirname(__file__) + "/.."
 # We set the SSH_DIR so that we don't mount the user's .ssh folder into dockcross

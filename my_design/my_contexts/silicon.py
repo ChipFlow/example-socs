@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 from ..design import MySoC
-from chipflow.sky130_platform import Sky130Platform
-from chipflow.contexts.silicon import SiliconContext
+from chipflow_lib.sky130_platform import Sky130Platform
+from chipflow_lib.contexts.silicon import SiliconContext
 
 pins = {
     "sys_clk":   0,
