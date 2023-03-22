@@ -2,7 +2,7 @@
 
 [[package]]
 name = "amaranth"
-version = "0.4.dev36+ge3b2ba4"
+version = "0.4.dev96+g5f6b36e"
 description = "Amaranth hardware definition language"
 category = "main"
 optional = false
@@ -23,7 +23,7 @@ remote-build = ["paramiko (>=2.7,<3.0)"]
 type = "git"
 url = "https://github.com/amaranth-lang/amaranth.git"
 reference = "HEAD"
-resolved_reference = "e3b2ba43162d983da94490b3defaf422630386e9"
+resolved_reference = "5f6b36e91f44c43bd7073fc94be239e795a12128"
 
 [[package]]
 name = "amaranth-boards"
