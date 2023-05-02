@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from chipflow_lib.contexts.software import SoftwareContext
+from chipflow_lib.steps.software import SoftwareStep
 from ..software import doit_build
 
 
-class MySoftwareContext(SoftwareContext):
+class MySoftwareStep(SoftwareStep):
     doit_build_module = doit_build

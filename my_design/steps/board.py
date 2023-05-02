@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from amaranth_boards.ulx3s import ULX3S_85F_Platform
-from chipflow_lib.contexts.board import BoardContext
+from chipflow_lib.steps.board import BoardStep
 from ..design import MySoC
 
 
-class MyBoardContext(BoardContext):
+class MyBoardStep(BoardStep):
     def __init__(self, config):
 
         platform = ULX3S_85F_Platform()
