@@ -19,16 +19,6 @@ RTL_CXXFLGAGS = "-O1 -std=c++17"
 DESIGN_MODELS = ["uart", "spiflash", "wb_mon", "log"]
 
 
-def task_build_sim_soc_yosys():
-    def get_build_cmd():
-        return f"BUILD_DIR=./build/sim poetry run python -m chipflow_lib.cli sim build-yosys"
-
-    return {
-        "actions": [CmdAction(get_build_cmd)],
-        "targets": [f"{BUILD_DIR}/sim_soc.ys", f"{BUILD_DIR}/sim_soc.il"],
-    }
-
-
 def task_build_sim_soc_c_files():
     return {
         "actions": [f"cd {BUILD_DIR} && poetry run yowasp-yosys sim_soc.ys"],

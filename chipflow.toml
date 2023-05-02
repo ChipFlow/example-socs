@@ -1,6 +1,6 @@
 [chipflow]
-loader_module = "my_design.chipflow"
 target_silicon = ["sky130"]
-design_module = "my_design.design"
-software_module = "my_design.software"
-sim_module = "my_design.sim"
+sim_context = "my_design.my_contexts.sim:MySimContext"
+board_context = "my_design.my_contexts.board:MyBoardContext"
+silicon_context = "my_design.my_contexts.silicon:MySiliconContext"
+software_context = "my_design.my_contexts.software:MySoftwareContext"

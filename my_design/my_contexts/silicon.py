@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
-from ..design import MySoC
+
 from chipflow_lib.sky130_platform import Sky130Platform
 from chipflow_lib.contexts.silicon import SiliconContext
+from ..design import MySoC
 
 pins = {
     "sys_clk":   0,
@@ -37,11 +38,11 @@ pins = {
 
 
 class MySiliconContext(SiliconContext):
-    def __init__(self):
+    def __init__(self, config):
         our_core_size = (285*10.0, 335*10.0)
         platform = Sky130Platform(pin_map=pins, core_size=our_core_size)
 
-        super().__init__(platform)
+        super().__init__(config, platform)
 
     def build(self):
         my_design = MySoC()
