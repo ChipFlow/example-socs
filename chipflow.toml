@@ -1,8 +1,36 @@
-[chipflow]
-target_silicon = ["sky130"]
-
 [chipflow.steps]
 sim = "my_design.steps.sim:MySimStep"
 board = "my_design.steps.board:MyBoardStep"
 silicon = "my_design.steps.silicon:MySiliconStep"
 software = "my_design.steps.software:MySoftwareStep"
+
+[chipflow.silicon]
+# process = "sky130"
+# pad_ring = "caravel"
+
+[chipflow.silicon.pads]
+sys_clk   = { type = "i",   loc = "io[0]" }
+sys_rstn  = { type = "i",   loc = "io[1]" }
+uart_tx   = { type = "o",   loc = "io[2]" }
+uart_rx   = { type = "i",   loc = "io[3]" }
+flash_clk = { type = "o",   loc = "io[4]" }
+flash_csn = { type = "o",   loc = "io[5]" }
+flash_d0  = { type = "io",  loc = "io[6]" }
+flash_d1  = { type = "io",  loc = "io[7]" }
+flash_d2  = { type = "io",  loc = "io[8]" }
+flash_d3  = { type = "io",  loc = "io[9]" }
+gpio_0    = { type = "io",  loc = "io[10]" }
+gpio_1    = { type = "io",  loc = "io[11]" }
+gpio_2    = { type = "io",  loc = "io[12]" }
+gpio_3    = { type = "io",  loc = "io[13]" }
+gpio_4    = { type = "io",  loc = "io[14]" }
+gpio_5    = { type = "io",  loc = "io[15]" }
+gpio_6    = { type = "io",  loc = "io[16]" }
+gpio_7    = { type = "io",  loc = "io[17]" }
+btn_0     = { type = "io",  loc = "io[18]" }
+btn_1     = { type = "io",  loc = "io[19]" }
+jtag_tck  = { type = "i",   loc = "io[33]" }
+jtag_tms  = { type = "i",   loc = "io[34]" }
+jtag_tdi  = { type = "i",   loc = "io[35]" }
+jtag_tdo  = { type = "o",   loc = "io[36]" }
+

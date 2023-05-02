@@ -83,7 +83,7 @@ Your board should now be running. You can connect to it via its serial port:
 make silicon-rtlil
 ```
 
-You should now have an `build/my_design.rtlil`.
+You should now have an `build/my_design.il`.
 
 ## Send your RTLIL to the API to prepare for manufacturing
 
