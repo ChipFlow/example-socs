@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: BSD-2-Clause
-from chipflow_lib.chip_wrapper import SoCWrapper
+from chipflow_lib.sim_platform import SimPlatform
 from chipflow_lib.software.soft_gen import SoftwareGenerator
 
-from amaranth import Module
+from amaranth import *
 
 from amaranth_soc import wishbone
 
@@ -16,7 +16,7 @@ from amaranth_orchard.base.platform_timer import PlatformTimer
 from amaranth_orchard.base.soc_id import SoCID
 
 
-class MySoC(SoCWrapper):
+class MySoC(Elaboratable):
     def __init__(self):
         super().__init__()
 
@@ -36,7 +36,7 @@ class MySoC(SoCWrapper):
     def elaborate(self, platform):
         m = Module()
 
-        self.load_provider(platform, "Init").add(m)
+        platform.providers.Init(platform).add(m)
 
         self._arbiter = wishbone.Arbiter(
             addr_width=30,
@@ -54,7 +54,7 @@ class MySoC(SoCWrapper):
         self._arbiter.add(self.cpu.dbus)
 
         self.rom = SPIMemIO(
-            flash=self.load_provider(platform, "QSPIFlash").add(m)
+            flash=platform.providers.QSPIFlash(platform).add(m)
         )
         self._decoder.add(self.rom.data_bus, addr=self.spi_base)
         self._decoder.add(self.rom.ctrl_bus, addr=self.spi_ctrl_base)
@@ -63,13 +63,13 @@ class MySoC(SoCWrapper):
         self._decoder.add(self.sram.bus, addr=self.sram_base)
 
         self.gpio = GPIOPeripheral(
-            pins=self.load_provider(platform, "LEDGPIO").add(m)
+            pins=platform.providers.LEDGPIO(platform).add(m)
         )
         self._decoder.add(self.gpio.bus, addr=self.led_gpio_base)
 
         self.uart = UARTPeripheral(
             init_divisor=(25000000//115200),
-            pins=self.load_provider(platform, "UART").add(m)
+            pins=platform.providers.UART(platform).add(m)
         )
         self._decoder.add(self.uart.bus, addr=self.uart_base)
 
@@ -81,7 +81,7 @@ class MySoC(SoCWrapper):
         self._decoder.add(self.soc_id.bus, addr=self.soc_id_base)
 
         # self.btn = GPIOPeripheral(
-        #     pins=self.load_provider(platform, "ButtonGPIO").add(m)
+        #     pins=platform.providers.ButtonGPIO(platform).add(m)
         # )
         # self._decoder.add(self.btn.bus, addr=self.btn_gpio_base)
 
@@ -102,9 +102,9 @@ class MySoC(SoCWrapper):
             self.cpu.timer_irq.eq(self.timer.timer_irq),
         ]
 
-        self.load_provider(platform, "JTAG").add(m, self.cpu)
+        platform.providers.JTAG(platform).add(m, self.cpu)
 
-        if self.get_chipflow_context(platform) == "sim":
+        if isinstance(platform, SimPlatform):
             m.submodules.bus_mon = platform.add_monitor(
                 "wb_mon",
                 self._decoder.bus
