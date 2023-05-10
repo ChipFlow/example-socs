@@ -206,7 +206,7 @@ yowasp-yosys = "^0.23.dev444"
 type = "git"
 url = "https://gitlab.com/ChipFlow/chipflow-lib.git"
 reference = "HEAD"
-resolved_reference = "d72cabb53c7055d9459af140157d85d13dc3fca2"
+resolved_reference = "ddc947095b01d9cb043e95f0a8e4655388e5660e"
 
 [[package]]
 name = "cloudpickle"

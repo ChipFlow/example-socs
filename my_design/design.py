@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
+
 from chipflow_lib.sim_platform import SimPlatform
 from chipflow_lib.software.soft_gen import SoftwareGenerator
 
@@ -36,7 +37,7 @@ class MySoC(Elaboratable):
     def elaborate(self, platform):
         m = Module()
 
-        platform.providers.Init(platform).add(m)
+        m.submodules.clock_reset_provider = platform.providers.ClockResetProvider()
 
         self._arbiter = wishbone.Arbiter(
             addr_width=30,
@@ -53,8 +54,9 @@ class MySoC(Elaboratable):
         self._arbiter.add(self.cpu.ibus)
         self._arbiter.add(self.cpu.dbus)
 
+        m.submodules.rom_provider = rom_provider = platform.providers.QSPIFlashProvider()
         self.rom = SPIMemIO(
-            flash=platform.providers.QSPIFlash(platform).add(m)
+            flash=rom_provider.pins
         )
         self._decoder.add(self.rom.data_bus, addr=self.spi_base)
         self._decoder.add(self.rom.ctrl_bus, addr=self.spi_ctrl_base)
@@ -62,14 +64,16 @@ class MySoC(Elaboratable):
         self.sram = SRAMPeripheral(size=self.sram_size)
         self._decoder.add(self.sram.bus, addr=self.sram_base)
 
+        m.submodules.led_gpio_provider = led_gpio_provider = platform.providers.LEDGPIOProvider()
         self.gpio = GPIOPeripheral(
-            pins=platform.providers.LEDGPIO(platform).add(m)
+            pins=led_gpio_provider.pins
         )
         self._decoder.add(self.gpio.bus, addr=self.led_gpio_base)
 
+        m.submodules.uart_provider = uart_provider = platform.providers.UARTProvider()
         self.uart = UARTPeripheral(
             init_divisor=(25000000//115200),
-            pins=platform.providers.UART(platform).add(m)
+            pins=uart_provider.pins
         )
         self._decoder.add(self.uart.bus, addr=self.uart_base)
 
@@ -102,7 +106,7 @@ class MySoC(Elaboratable):
             self.cpu.timer_irq.eq(self.timer.timer_irq),
         ]
 
-        platform.providers.JTAG(platform).add(m, self.cpu)
+        m.submodules.jtag_provider = platform.providers.JTAGProvider(self.cpu)
 
         if isinstance(platform, SimPlatform):
             m.submodules.bus_mon = platform.add_monitor(
