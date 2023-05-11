@@ -84,8 +84,9 @@ class MySoC(Elaboratable):
         self.soc_id = SoCID(type_id=soc_type)
         self._decoder.add(self.soc_id.bus, addr=self.soc_id_base)
 
+        # m.submodules.gpio_provider = gpio_provider = platform.providers.ButtonGPIOProvider()
         # self.btn = GPIOPeripheral(
-        #     pins=platform.providers.ButtonGPIO(platform).add(m)
+        #     pins=gpio_provider.pins
         # )
         # self._decoder.add(self.btn.bus, addr=self.btn_gpio_base)
 
