@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
 from chipflow_lib.steps.sim import SimStep
-from chipflow_lib.sim_platform import SimPlatform
+from chipflow_lib.platforms.sim import SimPlatform
 from ..design import MySoC
 from ..sim import doit_build
 

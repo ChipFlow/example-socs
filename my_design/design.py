@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: BSD-2-Clause
 
-from chipflow_lib.sim_platform import SimPlatform
+from chipflow_lib.platforms.sim import SimPlatform
 from chipflow_lib.software.soft_gen import SoftwareGenerator
 
 from amaranth import *
