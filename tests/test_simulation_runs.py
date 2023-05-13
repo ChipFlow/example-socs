@@ -20,7 +20,7 @@ class TestAPI(unittest.TestCase):
         run_command = f"cd {project_path} && \
             make sim-run"
 
-        process = Popen(run_command, stdout=PIPE, stderr=STDOUT, shell=True)
+        process = Popen(run_command, stdout=PIPE, stderr=STDOUT, shell=True, encoding="utf-8")
 
         output_lines = []
         start_time = time.time()
@@ -29,11 +29,9 @@ class TestAPI(unittest.TestCase):
         extra_msg = ""
 
         while True:
-            binary_line = process.stdout.readline()
-            if not binary_line:
+            line = process.stdout.readline()
+            if not line:
                 break
-
-            line = binary_line.decode("utf-8")
             output_lines.append(line)
 
             if expected_text in line:
