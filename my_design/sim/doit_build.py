@@ -131,6 +131,8 @@ def task_build_sim_objects():
 
 
 def task_build_sim():
+    exe = ".exe" if os.name == "nt" else ""
+
     model_object_paths = []
     for model in DESIGN_MODELS:
         model_object_paths.append(f"{BUILD_DIR}/models/{model}.o")
@@ -138,10 +140,10 @@ def task_build_sim():
     model_object_paths_str = " ".join(model_object_paths)
 
     def get_build_cmd():
-        return f"{CXX} -o {BUILD_DIR}/sim_soc {BUILD_DIR}/sim_soc.o {model_object_paths_str} {BUILD_DIR}/main.o"
+        return f"{CXX} -o {BUILD_DIR}/sim_soc{exe} {BUILD_DIR}/sim_soc.o {model_object_paths_str} {BUILD_DIR}/main.o"
 
     return {
         "actions": [CmdAction(get_build_cmd)],
-        "targets": [f"{BUILD_DIR}/sim_soc"],
+        "targets": [f"{BUILD_DIR}/sim_soc{exe}"],
         "file_dep": [f"{BUILD_DIR}/sim_soc.o", f"{BUILD_DIR}/main.o"] + model_object_paths,
     }
