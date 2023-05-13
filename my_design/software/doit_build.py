@@ -1,23 +1,25 @@
 # SPDX-License-Identifier: BSD-2-Clause
+
 import os
-import shutil
+import sys
 from pathlib import Path
-from doit.action import CmdAction
+import shutil
+
 from doit import create_after
+from doit.action import CmdAction
 import chipflow_lib.config
+
 
 CHIPFLOW_SOFTWARE_DIR = chipflow_lib.config.get_dir_software()
 BUILD_DIR = "./build/software"
 DESIGN_DIR = os.path.dirname(__file__) + "/.."
-# We set the SSH_DIR so that we don't mount the user's .ssh folder into dockcross
-DOCKCROSS_CMD = f"SSH_DIR=\"/dev/null\" {CHIPFLOW_SOFTWARE_DIR}/dockcross-linux-riscv32"
-RISCVGCC = f"{DOCKCROSS_CMD} riscv32-unknown-linux-gnu-gcc"
-RISCVOBJCOPY = f"{DOCKCROSS_CMD} riscv32-unknown-linux-gnu-objcopy"
-CINC = f"-I. -I{BUILD_DIR}"
+RISCVCC = f"{sys.executable} -m ziglang cc -target riscv32-freestanding-musl"
+RISCVOBJCOPY = f"{sys.executable} -m ziglang objcopy"
+CINCLUDES = f"-I. -I{BUILD_DIR}"
 LINKER_SCR = f"{BUILD_DIR}/generated/sections.lds"
 SOFTWARE_START = f"{BUILD_DIR}/generated/start.S"
-CFLAGS = f"-g -march=rv32ima -mabi=ilp32 -Wl,--build-id=none,-Bstatic,-T,"
-CFLAGS += f"{LINKER_SCR},--strip-debug -static -ffreestanding -nostdlib {CINC}"
+CFLAGS = f"-g -mcpu=generic_rv32+m+a -mabi=ilp32 -Wl,-Bstatic,-T,"
+CFLAGS += f"{LINKER_SCR},--strip-debug -static -ffreestanding -nostdlib {CINCLUDES}"
 
 
 def task_gather_depencencies():
@@ -59,7 +61,7 @@ def task_build_software_elf():
     sources_str = " ".join(sources)
 
     return {
-        "actions": [f"{RISCVGCC} {CFLAGS} -o {BUILD_DIR}/software.elf {sources_str}"],
+        "actions": [f"{RISCVCC} {CFLAGS} -o {BUILD_DIR}/software.elf {sources_str}"],
         "file_dep": sources + [LINKER_SCR],
         "targets": [f"{BUILD_DIR}/software.elf"],
         "verbosity": 2

@@ -1,18 +1,21 @@
 # SPDX-License-Identifier: BSD-2-Clause
-import yowasp_yosys
-import os
-import shutil
-import chipflow_lib.config
 
+import os
+import sys
 from pathlib import Path
+import shutil
+
+import yowasp_yosys
+import chipflow_lib.config
 from doit.action import CmdAction
+
 
 CHIPFLOW_MODEL_DIR = chipflow_lib.config.get_dir_models()
 DESIGN_DIR = os.path.dirname(__file__) + "/.."
 YOSYS_DATDIR = os.path.abspath(
     os.path.dirname(yowasp_yosys.__file__)) + "/share"
 BUILD_DIR = "./build/sim"
-CXX = "g++"
+CXX = f"{sys.executable} -m ziglang c++"
 CXXFLAGS = f"-O3 -g -std=c++17 -I {CHIPFLOW_MODEL_DIR}"
 RTL_CXXFLGAGS = "-O1 -std=c++17"
 # TODO: we need these models to be pulled in according to what has been used in the design

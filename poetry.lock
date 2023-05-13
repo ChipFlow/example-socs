@@ -830,6 +830,28 @@ url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
 reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
+name = "ziglang"
+version = "0.10.1.post1"
+description = "Zig is a general-purpose programming language and toolchain for maintaining robust, optimal, and reusable software."
+category = "main"
+optional = false
+python-versions = "~=3.5"
+files = [
+    {file = "ziglang-0.10.1.post1-py3-none-macosx_10_9_x86_64.whl", hash = "sha256:49c34715d17057e0ddfb0ef809cac4909d37636359c7e12d675f40d375b0d856"},
+    {file = "ziglang-0.10.1.post1-py3-none-macosx_11_0_arm64.whl", hash = "sha256:aa0ed478daa6aace75e2e56d0bd5d526493fb6bd03159a30e9a5e0123b2bcf7e"},
+    {file = "ziglang-0.10.1.post1-py3-none-manylinux_2_12_i686.manylinux2010_i686.musllinux_1_1_i686.whl", hash = "sha256:3e7ce24665f7fbbe9317e10a3c349589e857181860d60c66e739e7a7f1d24f50"},
+    {file = "ziglang-0.10.1.post1-py3-none-manylinux_2_12_x86_64.manylinux2010_x86_64.musllinux_1_1_x86_64.whl", hash = "sha256:e9f7aa2c6a44dd23fb0c11722eaaca2626272ef52ac1aeb20fe8d761ca490638"},
+    {file = "ziglang-0.10.1.post1-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.musllinux_1_1_aarch64.whl", hash = "sha256:563c7e65e133f1710a8c9503b1e4a450b034490402a15ce61d1ce9dc5d4beb9b"},
+    {file = "ziglang-0.10.1.post1-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.musllinux_1_1_armv7l.whl", hash = "sha256:7fc4f015d06d64099549e1697f8ebfe95e5a2b107d348c207f17c0b1fa4e0616"},
+    {file = "ziglang-0.10.1.post1-py3-none-win_amd64.whl", hash = "sha256:567b1a06923b8b7e0dbbfe2dbaf60f5683b69706b1982d21e29c2e618b5354b0"},
+]
+
+[package.source]
+type = "legacy"
+url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
+reference = "chipflow-amaranth-vexriscv"
+
+[[package]]
 name = "zipp"
 version = "3.11.0"
 description = "Backport of pathlib-compatible object wrapper for zip files"
@@ -853,4 +875,4 @@ reference = "chipflow-amaranth-vexriscv"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "d028e4dc4d365453efef5d1430d4f2fb148d6d4b7b0755d116a5dd9a80a34314"
+content-hash = "0787570239627f21536e610ca01be32a7d394c28e583deb79f830b5f237cb872"
