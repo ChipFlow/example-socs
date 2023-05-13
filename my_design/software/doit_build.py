@@ -7,6 +7,7 @@ import shutil
 
 from doit import create_after
 from doit.action import CmdAction
+from elftools.elf.elffile import ELFFile
 import chipflow_lib.config
 
 
@@ -14,7 +15,6 @@ CHIPFLOW_SOFTWARE_DIR = chipflow_lib.config.get_dir_software()
 BUILD_DIR = "./build/software"
 DESIGN_DIR = os.path.dirname(__file__) + "/.."
 RISCVCC = f"{sys.executable} -m ziglang cc -target riscv32-freestanding-musl"
-RISCVOBJCOPY = f"{sys.executable} -m ziglang objcopy"
 CINCLUDES = f"-I. -I{BUILD_DIR}"
 LINKER_SCR = f"{BUILD_DIR}/generated/sections.lds"
 SOFTWARE_START = f"{BUILD_DIR}/generated/start.S"
@@ -70,10 +70,15 @@ def task_build_software_elf():
 
 @create_after(executed="build_software_elf", target_regex=".*/software\\.bin")
 def task_build_software():
-    cmd = f"{RISCVOBJCOPY} -O binary {BUILD_DIR}/software.elf {BUILD_DIR}/software.bin"
+    # `python -m ziglang objcopy` isn't available on ziglang==0.10.1 and ziglang==0.11.0 isn't
+    # released yet.
+    def pyobjcopy():
+        with open(f"{BUILD_DIR}/software.elf", "rb") as rfp, \
+                open(f"{BUILD_DIR}/software.bin", "wb") as wfp:
+            wfp.write(next(seg.data() for seg in ELFFile(rfp).iter_segments()))
 
     return {
-        "actions": [cmd],
+        "actions": [(pyobjcopy)],
         "file_dep": [f"{BUILD_DIR}/software.elf"],
         "targets": [f"{BUILD_DIR}/software.bin"],
     }

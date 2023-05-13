@@ -632,6 +632,23 @@ url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
 reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
+name = "pyelftools"
+version = "0.29"
+description = "Library for analyzing ELF files and DWARF debugging information"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pyelftools-0.29-py2.py3-none-any.whl", hash = "sha256:519f38cf412f073b2d7393aa4682b0190fa901f7c3fa0bff2b82d537690c7fc1"},
+    {file = "pyelftools-0.29.tar.gz", hash = "sha256:ec761596aafa16e282a31de188737e5485552469ac63b60cfcccf22263fd24ff"},
+]
+
+[package.source]
+type = "legacy"
+url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
+reference = "chipflow-amaranth-vexriscv"
+
+[[package]]
 name = "pytest"
 version = "7.2.0"
 description = "pytest: simple powerful testing with Python"
@@ -875,4 +892,4 @@ reference = "chipflow-amaranth-vexriscv"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "0787570239627f21536e610ca01be32a7d394c28e583deb79f830b5f237cb872"
+content-hash = "0a425950b4ecb7e7cfe64ea03652cdfb354b7677b81767e5b6f30348114349ee"

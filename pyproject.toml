@@ -10,6 +10,7 @@ packages = [{include = "my_design"}]
 python = "^3.8"
 chipflow-lib = { git = "https://gitlab.com/ChipFlow/chipflow-lib.git" }
 ziglang = "^0.10.1.post1"
+pyelftools = "^0.29"
 
 [[tool.poetry.source]]
 name = "chipflow-amaranth-vexriscv"
