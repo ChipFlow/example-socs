@@ -5,7 +5,5 @@ from ..design import MySoC
 
 
 class MySiliconStep(SiliconStep):
-    def build(self):
-        my_design = MySoC()
-
-        self.platform.build(my_design, name="my_design")
+    def prepare(self):
+        return self.platform.build(MySoC(), name="my_design")

@@ -29,13 +29,13 @@ board-load-ulx3s:
 sim-run:
 	cd build/sim && ./sim_soc
 
-.PHONY: silicon-rtlil # Build RTLIL for the design
-silicon-rtlil:
-	poetry run chipflow silicon
-
-.PHONY: silicon-prepare # Send to API to prepare for manufacture
+.PHONY: silicon-prepare # Build RTLIL for the design
 silicon-prepare:
-	@echo "See https://chipflow.io/beta for details on how to join the beta"
+	poetry run chipflow silicon prepare
+
+.PHONY: silicon-submit # Send to API to submit for manufacture
+silicon-submit:
+	poetry run chipflow silicon submit
 
 .PHONY: clean # Clean/delete the builds
 clean: 

@@ -3,6 +3,7 @@ __pycache__
 
 # doit local database
 .doit.db
+.doit.db.db
 
 # Visual Studio config
 .vscode/

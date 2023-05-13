@@ -5,8 +5,8 @@ silicon = "my_design.steps.silicon:MySiliconStep"
 software = "my_design.steps.software:MySoftwareStep"
 
 [chipflow.silicon]
-# process = "sky130"
-# pad_ring = "caravel"
+process = "sky130"
+pad_ring = "caravel"
 
 [chipflow.silicon.pads]
 sys_clk   = { type = "i",   loc = "io[0]" }
