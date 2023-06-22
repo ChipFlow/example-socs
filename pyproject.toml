@@ -13,6 +13,10 @@ ziglang = "^0.10.1.post1"
 pyelftools = "^0.29"
 
 [[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
+
+[[tool.poetry.source]]
 name = "chipflow-amaranth-vexriscv"
 url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
 priority = "primary"
