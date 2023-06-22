@@ -15,8 +15,7 @@ pyelftools = "^0.29"
 [[tool.poetry.source]]
 name = "chipflow-amaranth-vexriscv"
 url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-default = false
-secondary = false
+priority = "primary"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.0"
