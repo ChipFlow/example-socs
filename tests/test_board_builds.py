@@ -3,6 +3,14 @@
 import os
 import unittest
 import subprocess
+from pathlib import Path
+
+
+def get_bin_false():
+    for path in ["/bin/false", "/usr/bin/false"]:
+        if Path(path).exists():
+            return path
+    raise Exception("Coudln't locate /bin/false")
 
 
 class TestBoard(unittest.TestCase):
@@ -10,5 +18,5 @@ class TestBoard(unittest.TestCase):
         project_path = os.path.dirname(os.path.dirname(__file__))
         subprocess.check_call(
             ["make", "-C", project_path, "board-build"],
-            env={**os.environ, "OPENFPGALOADER": "/bin/false"})
+            env={**os.environ, "OPENFPGALOADER": get_bin_false()})
         assert os.path.exists(project_path + "/build/top.bit")
