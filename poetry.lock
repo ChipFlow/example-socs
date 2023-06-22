@@ -123,11 +123,6 @@ files = [
     {file = "appdirs-1.4.4.tar.gz", hash = "sha256:7d5d0167b2b1ba821647616af46a749d1c653740dd0d2415100fe26e27afdf41"},
 ]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "attrs"
 version = "22.2.0"
@@ -146,11 +141,6 @@ docs = ["furo", "myst-parser", "sphinx", "sphinx-notfound-page", "sphinxcontrib-
 tests = ["attrs[tests-no-zope]", "zope.interface"]
 tests-no-zope = ["cloudpickle", "cloudpickle", "hypothesis", "hypothesis", "mypy (>=0.971,<0.990)", "mypy (>=0.971,<0.990)", "pympler", "pympler", "pytest (>=4.3.0)", "pytest (>=4.3.0)", "pytest-mypy-plugins", "pytest-mypy-plugins", "pytest-xdist[psutil]", "pytest-xdist[psutil]"]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "autopep8"
 version = "2.0.1"
@@ -166,11 +156,6 @@ files = [
 pycodestyle = ">=2.10.0"
 tomli = {version = "*", markers = "python_version < \"3.11\""}
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "certifi"
 version = "2023.5.7"
@@ -181,11 +166,6 @@ files = [
     {file = "certifi-2023.5.7-py3-none-any.whl", hash = "sha256:c6c2e98f5c7869efca1f8916fed228dd91539f9f1b444c314c06eef02980c716"},
     {file = "certifi-2023.5.7.tar.gz", hash = "sha256:0f0d56dc5a6ad56fd4ba36484d6cc34451e1c6548c61daad8c320169f91eddc7"},
 ]
-
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
 name = "charset-normalizer"
@@ -271,11 +251,6 @@ files = [
     {file = "charset_normalizer-3.1.0-py3-none-any.whl", hash = "sha256:3d9098b479e78c85080c98e1e35ff40b4a31d8953102bb0fd7d1b6f8a2111a3d"},
 ]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "chipflow-lib"
 version = "0.0.0"
@@ -319,11 +294,6 @@ files = [
 [package.dependencies]
 colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "cloudpickle"
 version = "2.2.0"
@@ -335,11 +305,6 @@ files = [
     {file = "cloudpickle-2.2.0.tar.gz", hash = "sha256:3f4219469c55453cfe4737e564b67c2a149109dabf7f242478948b895f61106f"},
 ]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "colorama"
 version = "0.4.6"
@@ -350,11 +315,6 @@ files = [
     {file = "colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"},
     {file = "colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"},
 ]
-
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
 name = "doit"
@@ -374,11 +334,6 @@ importlib-metadata = ">=4.4"
 [package.extras]
 toml = ["tomli"]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "exceptiongroup"
 version = "1.1.0"
@@ -393,11 +348,6 @@ files = [
 [package.extras]
 test = ["pytest (>=6)"]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "idna"
 version = "3.4"
@@ -408,11 +358,6 @@ files = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
     {file = "idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
 ]
-
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
 name = "importlib-metadata"
@@ -433,11 +378,6 @@ docs = ["furo", "jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "rst.linker
 perf = ["ipython"]
 testing = ["flake8 (<5)", "flufl.flake8", "importlib-resources (>=1.3)", "packaging", "pyfakefs", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-flake8", "pytest-mypy (>=0.9.1)", "pytest-perf (>=0.9.2)"]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "importlib-resources"
 version = "5.10.2"
@@ -456,11 +396,6 @@ zipp = {version = ">=3.1.0", markers = "python_version < \"3.10\""}
 docs = ["furo", "jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-lint"]
 testing = ["flake8 (<5)", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-flake8", "pytest-mypy (>=0.9.1)"]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "iniconfig"
 version = "2.0.0"
@@ -471,11 +406,6 @@ files = [
     {file = "iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"},
     {file = "iniconfig-2.0.0.tar.gz", hash = "sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3"},
 ]
-
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
 name = "jinja2"
@@ -493,11 +423,6 @@ MarkupSafe = ">=2.0"
 
 [package.extras]
 i18n = ["Babel (>=2.7)"]
-
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
 name = "markupsafe"
@@ -548,11 +473,6 @@ files = [
     {file = "MarkupSafe-2.1.1.tar.gz", hash = "sha256:7f91197cc9e48f989d12e4e6fbc46495c446636dfc81b9ccf50bb0ec74b91d4b"},
 ]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "packaging"
 version = "23.0"
@@ -563,11 +483,6 @@ files = [
     {file = "packaging-23.0-py3-none-any.whl", hash = "sha256:714ac14496c3e68c99c29b00845f7a2b85f3bb6f1078fd9f72fd20f0570002b2"},
     {file = "packaging-23.0.tar.gz", hash = "sha256:b6ad297f8907de0fa2fe1ccbd26fdaf387f5f47c7275fedf8cce89f99446cf97"},
 ]
-
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
 name = "pluggy"
@@ -584,11 +499,6 @@ files = [
 dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "pycodestyle"
 version = "2.10.0"
@@ -600,11 +510,6 @@ files = [
     {file = "pycodestyle-2.10.0.tar.gz", hash = "sha256:347187bdb476329d98f695c213d7295a846d1152ff4fe9bacb8a9590b8ee7053"},
 ]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "pyelftools"
 version = "0.29"
@@ -615,11 +520,6 @@ files = [
     {file = "pyelftools-0.29-py2.py3-none-any.whl", hash = "sha256:519f38cf412f073b2d7393aa4682b0190fa901f7c3fa0bff2b82d537690c7fc1"},
     {file = "pyelftools-0.29.tar.gz", hash = "sha256:ec761596aafa16e282a31de188737e5485552469ac63b60cfcccf22263fd24ff"},
 ]
-
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
 name = "pytest"
@@ -644,11 +544,6 @@ tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
 [package.extras]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "pyvcd"
 version = "0.3.0"
@@ -659,11 +554,6 @@ files = [
     {file = "pyvcd-0.3.0-py2.py3-none-any.whl", hash = "sha256:971dfe5a3e68663115c6edf3f0b611ff9e8427513db16281eb4516ebcd65a336"},
     {file = "pyvcd-0.3.0.tar.gz", hash = "sha256:ec4d9198bd20f9e07d78f6558ff8bcd45b172ee332e7e8a4588727eeb6a362bc"},
 ]
-
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
 name = "requests"
@@ -686,11 +576,6 @@ urllib3 = ">=1.21.1,<3"
 socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "tomli"
 version = "2.0.1"
@@ -701,11 +586,6 @@ files = [
     {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
-
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
 name = "urllib3"
@@ -723,11 +603,6 @@ brotli = ["brotli (>=1.0.9)", "brotlicffi (>=0.8.0)"]
 secure = ["certifi", "cryptography (>=1.9)", "idna (>=2.0.0)", "pyopenssl (>=17.1.0)", "urllib3-secure-extra"]
 socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
 zstd = ["zstandard (>=0.18.0)"]
-
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
 name = "wasmtime"
@@ -747,11 +622,6 @@ files = [
 [package.extras]
 testing = ["coverage", "flake8 (==4.0.1)", "pycparser", "pytest", "pytest-flake8", "pytest-mypy"]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "yowasp-nextpnr-ecp5"
 version = "0.5.0.0.post399"
@@ -764,11 +634,6 @@ files = [
 
 [package.dependencies]
 yowasp-runtime = ">=1.1,<2.0"
-
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
 name = "yowasp-runtime"
@@ -785,11 +650,6 @@ appdirs = ">=1.4,<2.0"
 importlib-resources = {version = "*", markers = "python_version < \"3.9\""}
 wasmtime = ">=1.0,<9"
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "yowasp-yosys"
 version = "0.29.0.0.post524"
@@ -804,11 +664,6 @@ files = [
 click = "*"
 importlib-resources = {version = "*", markers = "python_version < \"3.9\""}
 yowasp-runtime = ">=1.12,<2.0"
-
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
 
 [[package]]
 name = "ziglang"
@@ -826,11 +681,6 @@ files = [
     {file = "ziglang-0.10.1.post1-py3-none-win_amd64.whl", hash = "sha256:567b1a06923b8b7e0dbbfe2dbaf60f5683b69706b1982d21e29c2e618b5354b0"},
 ]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [[package]]
 name = "zipp"
 version = "3.11.0"
@@ -846,12 +696,7 @@ files = [
 docs = ["furo", "jaraco.packaging (>=9)", "jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "sphinx (>=3.5)"]
 testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools", "more-itertools", "pytest (>=6)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=2.4)", "pytest-cov", "pytest-enabler (>=1.3)", "pytest-flake8", "pytest-mypy (>=0.9.1)"]
 
-[package.source]
-type = "legacy"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-reference = "chipflow-amaranth-vexriscv"
-
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "0a425950b4ecb7e7cfe64ea03652cdfb354b7677b81767e5b6f30348114349ee"
+content-hash = "88f3c4beaa4eb0b9b064632f9055f57d4fc185aed03ca3731d5b0c53290562d1"
