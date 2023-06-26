@@ -675,17 +675,17 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "wasmtime"
-version = "1.0.1"
+version = "8.0.1"
 description = "A WebAssembly runtime powered by Wasmtime"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "wasmtime-1.0.1-py3-none-any.whl", hash = "sha256:20c1df95a3506408dcf2116502720e7cb248f1e98122b868932dbc9bbacb4ebd"},
-    {file = "wasmtime-1.0.1-py3-none-macosx_10_13_x86_64.whl", hash = "sha256:9ccb42db2511b49c805b23a87e7c191d34112a9568292d475ec966204ac42bc3"},
-    {file = "wasmtime-1.0.1-py3-none-macosx_11_0_arm64.whl", hash = "sha256:439960f6fb2a48482c8f7beaa2b491ce684f1599d9bfdd519b5320305edc2f39"},
-    {file = "wasmtime-1.0.1-py3-none-manylinux1_x86_64.whl", hash = "sha256:b257ec11ba6d39e3cd9eed4f90c4633bcf3b964219948254244347236fe45172"},
-    {file = "wasmtime-1.0.1-py3-none-manylinux2014_aarch64.whl", hash = "sha256:f34ac6db5f91ab359566f531dca7c53d2e63f657d5b10ec9cf53d1c29ac718c0"},
-    {file = "wasmtime-1.0.1-py3-none-win_amd64.whl", hash = "sha256:0ae7e2d43a5d9da72a884a695049d7b1773717ba059bdb0ad0369e5c1e03a388"},
+    {file = "wasmtime-8.0.1-py3-none-any.whl", hash = "sha256:5bf24be8b85908cd32ec794a985855cc9c844c7526c6db4eae9b6fe92c099009"},
+    {file = "wasmtime-8.0.1-py3-none-macosx_10_13_x86_64.whl", hash = "sha256:a1048d0769224831d8a73d90890b4c5bd69b7636411d0793bc22287fffdcff8e"},
+    {file = "wasmtime-8.0.1-py3-none-macosx_11_0_arm64.whl", hash = "sha256:b46157a21baee58d7d93ba3a4c9e48a19e750dd591c705c4840fc4dbfb9f72c8"},
+    {file = "wasmtime-8.0.1-py3-none-manylinux1_x86_64.whl", hash = "sha256:eb1a11f1f54a5911650a6805f267bc59059bb49879b8be02cbf4d473fe723fc2"},
+    {file = "wasmtime-8.0.1-py3-none-manylinux2014_aarch64.whl", hash = "sha256:b51dedc9734562230a6b9335fcd6d04ccf5276985c52305d1716654ef4a6eed7"},
+    {file = "wasmtime-8.0.1-py3-none-win_amd64.whl", hash = "sha256:a0d4a62699ea11049f1be0d5c853079089965d1ff41eb48428607ab3cef2a8b2"},
 ]
 
 [package.extras]
