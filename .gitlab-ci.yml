@@ -10,7 +10,7 @@ cache:
 
 before_script:
   - apt-get update -y
-  - apt-get install curl
+  - apt-get install -y curl
   - pip3 install poetry
   - poetry install
 
