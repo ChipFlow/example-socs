@@ -188,11 +188,11 @@ files = [
 
 [[package]]
 name = "chipflow-lib"
-version = "0.1.1.dev65+ga351d13"
+version = "0.1.1.dev68+gdb4cef4"
 requires_python = "~=3.8"
 git = "https://gitlab.com/ChipFlow/chipflow-lib.git"
 ref = "main"
-revision = "a351d13fd984ba70a0f839e6e07cd59cfab15c26"
+revision = "db4cef4112dd9d3fd10cd3386a04a74a17fe0534"
 summary = "ChipFlow common tools."
 dependencies = [
     "amaranth @ git+https://github.com/amaranth-lang/amaranth.git",
@@ -205,9 +205,9 @@ dependencies = [
     "jsonschema~=4.17.3",
     "requests~=2.30.0",
     "tomli~=2.0.1",
-    "yowasp-nextpnr-ecp5~=0.5.0.0",
+    "yowasp-nextpnr-ecp5~=0.6.0.0",
     "yowasp-runtime~=1.32",
-    "yowasp-yosys~=0.29.0.0",
+    "yowasp-yosys~=0.32.0.0",
 ]
 
 [[package]]
@@ -551,13 +551,13 @@ files = [
 
 [[package]]
 name = "yowasp-nextpnr-ecp5"
-version = "0.5.0.0.post399"
+version = "0.6.0.0.post442"
 summary = "nextpnr-ecp5 FPGA place and route tool"
 dependencies = [
     "yowasp-runtime~=1.1",
 ]
 files = [
-    {file = "yowasp_nextpnr_ecp5-0.5.0.0.post399-py3-none-any.whl", hash = "sha256:b14ac842164ed97c929cc8ab1335679bacc233da7f819ccbe6d12a627fe19b06"},
+    {file = "yowasp_nextpnr_ecp5-0.6.0.0.post442-py3-none-any.whl", hash = "sha256:ffe667fde508d9d5bf39e42c8675426788c6e10546fb9f8a963c3acc42fdb280"},
 ]
 
 [[package]]
@@ -576,7 +576,7 @@ files = [
 
 [[package]]
 name = "yowasp-yosys"
-version = "0.29.0.0.post524"
+version = "0.32.0.43.post561"
 summary = "Yosys Open SYnthesis Suite"
 dependencies = [
     "click",
@@ -584,7 +584,7 @@ dependencies = [
     "yowasp-runtime~=1.12",
 ]
 files = [
-    {file = "yowasp_yosys-0.29.0.0.post524-py3-none-any.whl", hash = "sha256:019df2da2b802315d7c518d23a136325ad280a819394ba852ddea938779540d0"},
+    {file = "yowasp_yosys-0.32.0.43.post561-py3-none-any.whl", hash = "sha256:2d2d8200b1ead7b6b6be46ea4ee1da61a820dcf31f810907f5ada5d9199b18ac"},
 ]
 
 [[package]]
