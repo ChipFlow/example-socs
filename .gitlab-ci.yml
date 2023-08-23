@@ -2,17 +2,15 @@ image: python:3.11
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 cache:
   paths:
-    - .cache/pip
+    - .cache/pdm
 
 before_script:
-  - apt-get update -y
-  - apt-get install -y curl
-  - pip3 install poetry
-  - poetry install
+  - pip install pdm
+  - pdm config install.cache on
+  - pdm install
 
 stages:
   - prechecks
@@ -31,12 +29,11 @@ license:
 
 lint:
   stage: prechecks
-  script: make lint
+  script: pdm run lint
 
 test:
   stage: test
-  script:
-    - poetry run pytest
+  script: pdm run test
 
 test-macos:
   stage: test
@@ -44,13 +41,5 @@ test-macos:
     - saas-macos-medium-m1
   image: macos-12-xcode-14
   allow_failure: true
-  before_script:
-    - export HOMEBREW_NO_AUTO_UPDATE=1 # Auto-update takes 15min+
-    - export HOMEBREW_NO_INSTALL_CLEANUP=1 # Cleanup slows us down, so we turn it off.
-    - export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1 # Don't update dependencies for speed.
-    - rm '/opt/homebrew/bin/virtualenv' # Needed for brew install
-    - brew install poetry
-    - poetry install
-  script:
-    - poetry run pytest
+  script: pdm run test
 

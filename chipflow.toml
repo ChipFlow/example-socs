@@ -33,4 +33,3 @@ jtag_tck  = { type = "i",   loc = "33" }
 jtag_tms  = { type = "i",   loc = "34" }
 jtag_tdi  = { type = "i",   loc = "35" }
 jtag_tdo  = { type = "o",   loc = "36" }
-

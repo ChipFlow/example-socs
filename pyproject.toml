@@ -1,34 +1,46 @@
-[tool.poetry]
-name = "chipflow-examples"
-version = "0.0.0"
-description = "ChipFlow examples for making chips!"
-authors = ["Robert Taylor <rob.taylor@chipflow.io>"]
-license = "BSD-2-Clause"
-packages = [{include = "my_design"}]
+# Package sources
 
-[tool.poetry.dependencies]
-python = "^3.8"
-chipflow-lib = { git = "https://gitlab.com/ChipFlow/chipflow-lib.git" }
-ziglang = "==0.11.0.dev3747"
-pyelftools = "^0.29"
-
-[[tool.poetry.source]]
-name = "PyPI"
-priority = "primary"
-
-[[tool.poetry.source]]
+[[tool.pdm.source]]
 name = "chipflow-amaranth-vexriscv"
 url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-priority = "primary"
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^7.2.0"
-pycodestyle = "^2.9.1"
-autopep8 = "^2.0.0"
+# Project metadata
 
-[tool.poetry-dynamic-versioning]
-enable = true
+[project]
+name = "example-socs"
+version = "0.0.0"
+description = "ChipFlow examples for making chips!"
+authors = [
+    {name = "Robert Taylor", email = "rob.taylor@chipflow.io>" },
+    {name = "Catherine Zotova", email = "catherine.zotova@chipflow.io>" },
+]
+license = {file = "LICENSE.md"}
+
+requires-python = "~=3.8"
+dependencies = [
+  "chipflow-lib @ git+https://gitlab.com/ChipFlow/chipflow-lib.git@main",
+  "ziglang==0.11.0.dev3747",
+  "pyelftools~=0.29",
+]
+
+# Build system configuration
 
 [build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
-build-backend = "poetry_dynamic_versioning.backend"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+# Development workflow configuration
+
+[tool.pdm.dev-dependencies]
+test = [
+  "pytest~=7.2.0",
+]
+lint = [
+  "pycodestyle~=2.9.1",
+  "autopep8~=2.0.0",
+]
+
+[tool.pdm.scripts]
+_.env_file = ".env.toolchain"
+test.cmd = "pytest"
+lint.cmd = "pycodestyle --config=./.pycodestyle my_design/ tests/"
