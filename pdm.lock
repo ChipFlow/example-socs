@@ -188,11 +188,11 @@ files = [
 
 [[package]]
 name = "chipflow-lib"
-version = "0.1.1.dev68+gdb4cef4"
+version = "0.1.1.dev70+g5f76d69"
 requires_python = "~=3.8"
 git = "https://gitlab.com/ChipFlow/chipflow-lib.git"
 ref = "main"
-revision = "db4cef4112dd9d3fd10cd3386a04a74a17fe0534"
+revision = "5f76d692b4a204c22ca1c9eefd80533e679c8da0"
 summary = "ChipFlow common tools."
 dependencies = [
     "amaranth @ git+https://github.com/amaranth-lang/amaranth.git",
