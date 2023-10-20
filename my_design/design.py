@@ -4,6 +4,7 @@ from chipflow_lib.platforms.sim import SimPlatform
 from chipflow_lib.software.soft_gen import SoftwareGenerator
 
 from amaranth import *
+from amaranth.lib.wiring import connect
 
 from amaranth_soc import wishbone
 
@@ -101,8 +102,9 @@ class MySoC(Elaboratable):
         m.submodules.soc_id = self.soc_id
         # m.submodules.btn = self.btn
 
+        connect(m, self._arbiter.bus, self._decoder.bus)
+
         m.d.comb += [
-            self._arbiter.bus.connect(self._decoder.bus),
             self.cpu.software_irq.eq(0),
             self.cpu.timer_irq.eq(self.timer.timer_irq),
         ]
