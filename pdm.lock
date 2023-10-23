@@ -10,10 +10,10 @@ content_hash = "sha256:8352c40b04a493ed50b33d982971716825e0310067860bc4164171490
 
 [[package]]
 name = "amaranth"
-version = "0.4.dev172+g7714ce3"
+version = "0.4.dev223+g00699f7"
 requires_python = "~=3.8"
-git = "https://github.com/amaranth-lang/amaranth.git"
-revision = "7714ce329abe5afef9c34a4b618623716bf78e15"
+git = "https://github.com/amaranth-lang/amaranth"
+revision = "00699f7c41a97cf8373a15e0b28e29361e017812"
 summary = "Amaranth hardware definition language"
 dependencies = [
     "Jinja2~=3.0",
@@ -25,7 +25,7 @@ dependencies = [
 name = "amaranth-boards"
 version = "0.1.dev238+g91ffa38"
 requires_python = "~=3.8"
-git = "https://github.com/amaranth-lang/amaranth-boards.git"
+git = "https://github.com/amaranth-lang/amaranth-boards"
 revision = "91ffa38e788a691464a6873d44537eece72ef76e"
 summary = "Board and connector definitions for Amaranth HDL"
 dependencies = [
@@ -34,28 +34,28 @@ dependencies = [
 
 [[package]]
 name = "amaranth-orchard"
-version = "0.1.dev12+g97703a0"
+version = "0.1.dev21+gfc3a8f1"
 requires_python = ">=3.6"
-git = "https://gitlab.com/ChipFlow/amaranth-orchard.git"
-revision = "97703a061d248cd27d4f7381582cc9c5d66b299c"
+git = "https://gitlab.com/ChipFlow/amaranth-orchard"
+revision = "fc3a8f1f090c96fc50695339769ddf6d961e6a74"
 summary = "curated collection of Amaranth cores"
 
 [[package]]
 name = "amaranth-soc"
-version = "0.1.dev62+g59223a8"
+version = "0.1.dev75+g2d3d176"
 requires_python = "~=3.8"
-git = "https://github.com/amaranth-lang/amaranth-soc.git"
-revision = "59223a82399df45addf1db362ad6fb9670e72b51"
+git = "https://github.com/amaranth-lang/amaranth-soc"
+revision = "2d3d1762d682c8ca5cb60e4a6f0ef9b764f423f2"
 summary = "System on Chip toolkit for Amaranth HDL"
 dependencies = [
-    "amaranth<0.5,>=0.3",
+    "amaranth @ git+https://github.com/amaranth-lang/amaranth",
 ]
 
 [[package]]
 name = "amaranth-stdio"
-version = "0.1.dev16+gbb39058"
-git = "https://github.com/amaranth-lang/amaranth-stdio.git"
-revision = "bb39058bd956cf89379c7cde9404998476470a07"
+version = "0.1.dev17+gd33387c"
+git = "https://github.com/amaranth-lang/amaranth-stdio"
+revision = "d33387c8598df1cfc21e939d919819983b893edd"
 summary = "Industry standard I/O for Amaranth HDL"
 dependencies = [
     "amaranth<0.5,>=0.3",
@@ -63,15 +63,13 @@ dependencies = [
 
 [[package]]
 name = "amaranth-vexriscv"
-version = "0.0.4+0cc653c"
+version = "0.0.0"
 requires_python = ">=3.7,<4.0"
+git = "https://gitlab.com/ChipFlow/amaranth-vexriscv"
+revision = "c6b0479ef58830c5c3b5c091f2dacdc295efd732"
 summary = "Prebuilt VexRiscv (currently ASIC-optimised configs) and Amaranth Integration"
 dependencies = [
-    "amaranth @ git+https://github.com/amaranth-lang/amaranth.git",
-]
-files = [
-    {file = "amaranth_vexriscv-0.0.4+0cc653c-py3-none-any.whl", hash = "sha256:c78a1561196b5f09c3071e11552cccf01690b597e8f4d2580e453ac6c1f20e9b"},
-    {file = "amaranth_vexriscv-0.0.4+0cc653c.tar.gz", hash = "sha256:91b53958f46602d75794bb07d3f4d9a859fb8bd439170eb4da1efc11e4fc5d8c"},
+    "amaranth @ git+https://github.com/amaranth-lang/amaranth",
 ]
 
 [[package]]
@@ -188,19 +186,19 @@ files = [
 
 [[package]]
 name = "chipflow-lib"
-version = "0.1.1.dev70+g5f76d69"
+version = "0.1.1.dev73+g11dd63e"
 requires_python = "~=3.8"
 git = "https://gitlab.com/ChipFlow/chipflow-lib.git"
 ref = "main"
-revision = "5f76d692b4a204c22ca1c9eefd80533e679c8da0"
+revision = "11dd63eae66693cb068aec52bbc4c1ae25766778"
 summary = "ChipFlow common tools."
 dependencies = [
-    "amaranth @ git+https://github.com/amaranth-lang/amaranth.git",
-    "amaranth-boards @ git+https://github.com/amaranth-lang/amaranth-boards.git",
-    "amaranth-orchard @ git+https://gitlab.com/ChipFlow/amaranth-orchard.git",
-    "amaranth-soc @ git+https://github.com/amaranth-lang/amaranth-soc.git",
-    "amaranth-stdio @ git+https://github.com/amaranth-lang/amaranth-stdio.git",
-    "amaranth-vexriscv==0.0.4+0cc653c",
+    "amaranth @ git+https://github.com/amaranth-lang/amaranth",
+    "amaranth-boards @ git+https://github.com/amaranth-lang/amaranth-boards",
+    "amaranth-orchard @ git+https://gitlab.com/ChipFlow/amaranth-orchard",
+    "amaranth-soc @ git+https://github.com/amaranth-lang/amaranth-soc",
+    "amaranth-stdio @ git+https://github.com/amaranth-lang/amaranth-stdio",
+    "amaranth-vexriscv @ git+https://gitlab.com/ChipFlow/amaranth-vexriscv",
     "doit~=0.36.0",
     "jsonschema~=4.17.3",
     "requests~=2.30.0",
@@ -433,11 +431,11 @@ files = [
 
 [[package]]
 name = "pyelftools"
-version = "0.29"
+version = "0.30"
 summary = "Library for analyzing ELF files and DWARF debugging information"
 files = [
-    {file = "pyelftools-0.29-py2.py3-none-any.whl", hash = "sha256:519f38cf412f073b2d7393aa4682b0190fa901f7c3fa0bff2b82d537690c7fc1"},
-    {file = "pyelftools-0.29.tar.gz", hash = "sha256:ec761596aafa16e282a31de188737e5485552469ac63b60cfcccf22263fd24ff"},
+    {file = "pyelftools-0.30-py2.py3-none-any.whl", hash = "sha256:544c3440eddb9a0dce70b6611de0b28163d71def759d2ed57a0d00118fc5da86"},
+    {file = "pyelftools-0.30.tar.gz", hash = "sha256:2fc92b0d534f8b081f58c7c370967379123d8e00984deb53c209364efd575b40"},
 ]
 
 [[package]]
