@@ -1,6 +1,5 @@
 .PHONY: init # Init local environemnt
 init: 
-	pdm lock
 	pdm install
 
 .PHONY: sim-build # Builds a local binary to run the design in simulation
