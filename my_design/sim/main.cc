@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
     // uncomment to log WB transactions
     wb_mon_set_output(*top.cell_p_bus__mon, "build/wishbone_log.csv");
 #endif
-    spiflash_load(*top.cell_p_rom__provider, "../software/software.bin", 0x00100000U);
+    spiflash_load(*top.cell_p_spiflash__provider, "../software/software.bin", 0x00100000U);
 
     top.step();
     auto tick = [&]() {

@@ -20,12 +20,12 @@ void main() {
 	puts("\r\n");
 
 	puts("Flash ID: ");
-	puthex(spiflash_read_id(FLASH_CTRL));
+	puthex(spiflash_read_id(SPIFLASH));
 	puts("\r\n");
 
 	puts("Entering QSPI mode\r\n");
-	spiflash_set_qspi_flag(FLASH_CTRL);
-	spiflash_set_quad_mode(FLASH_CTRL);
+	spiflash_set_qspi_flag(SPIFLASH);
+	spiflash_set_quad_mode(SPIFLASH);
 
 	puts("Initialised!\r\n");
 
