@@ -1,5 +1,5 @@
 .PHONY: init # Init local environemnt
-init: 
+init:
 	pdm install
 
 .PHONY: sim-build # Builds a local binary to run the design in simulation
@@ -35,9 +35,5 @@ silicon-submit:
 	pdm run chipflow silicon submit
 
 .PHONY: clean # Clean/delete the builds
-clean: 
+clean:
 	rm -fr build
-
-.PHONY: lint # Lint code
-lint: 
-	pdm run lint

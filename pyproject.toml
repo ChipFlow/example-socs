@@ -35,12 +35,7 @@ build-backend = "pdm.backend"
 test = [
   "pytest~=7.2.0",
 ]
-lint = [
-  "pycodestyle~=2.9.1",
-  "autopep8~=2.0.0",
-]
 
 [tool.pdm.scripts]
 _.env_file = ".env.toolchain"
 test.cmd = "pytest"
-lint.cmd = "pycodestyle --config=./.pycodestyle my_design/ tests/"
