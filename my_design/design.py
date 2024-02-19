@@ -18,6 +18,7 @@ from amaranth_orchard.memory.sram import SRAMPeripheral
 from amaranth_orchard.base.platform_timer import PlatformTimer
 from amaranth_orchard.base.soc_id import SoCID
 
+from .cv32e40p_wrapper import CV32E40P
 
 __all__ = ["MySoC"]
 
@@ -59,7 +60,7 @@ class MySoC(wiring.Component):
 
         # CPU
 
-        cpu = VexRiscv(config="LiteDebug", reset_vector=self.bios_start)
+        cpu = CV32E40P(reset_vector=0x00100000)
         wb_arbiter.add(cpu.ibus)
         wb_arbiter.add(cpu.dbus)
 
