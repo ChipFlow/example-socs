@@ -2,17 +2,17 @@
 # It is not intended for manual editing.
 
 [metadata]
-groups = ["default", "lint", "test"]
+groups = ["default", "test"]
 strategy = ["cross_platform"]
 lock_version = "4.4.1"
-content_hash = "sha256:8352c40b04a493ed50b33d982971716825e0310067860bc4164171490b084cd7"
+content_hash = "sha256:72c3449389b386f450fbbcd1f4bff79df8d4d9d8630519b1ac033d47c237ccf0"
 
 [[package]]
 name = "amaranth"
-version = "0.4.1.dev106"
+version = "0.4.1.dev111"
 requires_python = "~=3.8"
 git = "https://github.com/amaranth-lang/amaranth"
-revision = "e3324e14566f15653c119ec68ec83d71eea0c04c"
+revision = "188eb8d4531e18602fd2886dde6d534abdb8bbe8"
 summary = "Amaranth hardware definition language"
 dependencies = [
     "Jinja2~=3.0",
@@ -33,18 +33,18 @@ dependencies = [
 
 [[package]]
 name = "amaranth-orchard"
-version = "0.1.dev28"
+version = "0.1.dev30"
 requires_python = ">=3.6"
 git = "https://gitlab.com/ChipFlow/amaranth-orchard"
-revision = "56516d3af97eecc156d8f7375f0d31de3dfc0689"
+revision = "d4c30e64c682393d5de49a0cdff810b736085f67"
 summary = "curated collection of Amaranth cores"
 
 [[package]]
 name = "amaranth-soc"
-version = "0.1a0"
+version = "0.1a1.dev1"
 requires_python = "~=3.8"
 git = "https://github.com/amaranth-lang/amaranth-soc"
-revision = "1e1490ef85433493b9c43050eae8925ec85b2a53"
+revision = "9f46553aa4289e2a11788a73fade6410a371b162"
 summary = "System on Chip toolkit for Amaranth HDL"
 dependencies = [
     "amaranth @ git+https://github.com/amaranth-lang/amaranth",
@@ -80,19 +80,6 @@ summary = "Classes Without Boilerplate"
 files = [
     {file = "attrs-23.2.0-py3-none-any.whl", hash = "sha256:99b87a485a5820b23b879f04c2305b44b951b502fd64be915879d77a7e8fc6f1"},
     {file = "attrs-23.2.0.tar.gz", hash = "sha256:935dc3b529c262f6cf76e50877d35a4bd3c1de194fd41f47a2b7ae8f19971f30"},
-]
-
-[[package]]
-name = "autopep8"
-version = "2.0.0"
-summary = "A tool that automatically formats Python code to conform to the PEP 8 style guide"
-dependencies = [
-    "pycodestyle>=2.9.1",
-    "tomli",
-]
-files = [
-    {file = "autopep8-2.0.0-py2.py3-none-any.whl", hash = "sha256:ad924b42c2e27a1ac58e432166cc4588f5b80747de02d0d35b1ecbd3e7d57207"},
-    {file = "autopep8-2.0.0.tar.gz", hash = "sha256:8b1659c7f003e693199f52caffdc06585bb0716900bbc6a7442fd931d658c077"},
 ]
 
 [[package]]
@@ -192,11 +179,11 @@ files = [
 
 [[package]]
 name = "chipflow-lib"
-version = "0.1.1.dev74"
+version = "0.1.1.dev75"
 requires_python = "~=3.8"
 git = "https://gitlab.com/ChipFlow/chipflow-lib.git"
 ref = "main"
-revision = "29c3e1ee9c9871e1e3b77937800bb524cb0c7114"
+revision = "b2ec4753f4076764a3b83e78212e5f73fa14e2fe"
 summary = "ChipFlow common tools."
 dependencies = [
     "amaranth @ git+https://github.com/amaranth-lang/amaranth",
@@ -446,16 +433,6 @@ files = [
 ]
 
 [[package]]
-name = "pycodestyle"
-version = "2.9.1"
-requires_python = ">=3.6"
-summary = "Python style guide checker"
-files = [
-    {file = "pycodestyle-2.9.1-py2.py3-none-any.whl", hash = "sha256:d1735fc58b418fd7c5f658d28d943854f8a849b01a5d0a1e6f3f3fdd0166804b"},
-    {file = "pycodestyle-2.9.1.tar.gz", hash = "sha256:2c9607871d58c76354b697b42f5d57e1ada7d261c261efac224b664affdc5785"},
-]
-
-[[package]]
 name = "pyelftools"
 version = "0.30"
 summary = "Library for analyzing ELF files and DWARF debugging information"
@@ -561,12 +538,12 @@ files = [
 
 [[package]]
 name = "urllib3"
-version = "2.2.0"
+version = "2.2.1"
 requires_python = ">=3.8"
 summary = "HTTP library with thread-safe connection pooling, file post, and more."
 files = [
-    {file = "urllib3-2.2.0-py3-none-any.whl", hash = "sha256:ce3711610ddce217e6d113a2732fafad960a03fd0318c91faa79481e35c11224"},
-    {file = "urllib3-2.2.0.tar.gz", hash = "sha256:051d961ad0c62a94e50ecf1af379c3aba230c66c710493493560c0c223c49f20"},
+    {file = "urllib3-2.2.1-py3-none-any.whl", hash = "sha256:450b20ec296a467077128bff42b73080516e71b56ff59a60a02bef2232c4fa9d"},
+    {file = "urllib3-2.2.1.tar.gz", hash = "sha256:d0570876c61ab9e520d776c38acbbb5b05a776d3f9ff98a5c8fd5162a444cf19"},
 ]
 
 [[package]]
