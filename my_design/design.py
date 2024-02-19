@@ -60,7 +60,7 @@ class MySoC(wiring.Component):
 
         # CPU
 
-        cpu = CV32E40P(reset_vector=0x00100000)
+        cpu = CV32E40P(config="default", reset_vector=self.bios_start)
         wb_arbiter.add(cpu.ibus)
         wb_arbiter.add(cpu.dbus)
 

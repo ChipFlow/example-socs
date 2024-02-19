@@ -1,11 +1,16 @@
 from amaranth import *
 from amaranth.lib import wiring
 from amaranth.lib.wiring import In, Out, flipped, connect
+from amaranth.utils import bits_for
 
 from amaranth_soc import wishbone
 from pathlib import Path
 
-class OBISignature(wiring.Signature):
+
+__all__ = ["CV32E40P"]
+
+
+class _OBISignature(wiring.Signature):
     def __init__(self):
         super().__init__({
             "req":    Out(1),
@@ -15,20 +20,18 @@ class OBISignature(wiring.Signature):
             "be":     Out(4),
             "addr":   Out(32),
             "wdata":  Out(32),
-            "rdata": In(32),
+            "rdata":  In(32),
         })
 
-class OBI2Wishbone(wiring.Component):
+
+class _OBI2Wishbone(wiring.Component):
     # From https://github.com/enjoy-digital/litex/blob/master/litex/soc/cores/cpu/cv32e40p/core.py
     def __init__(self):
-        super().__init__()
-    @property
-    def signature(self):
-        return wiring.Signature({
-            "obi": In(OBISignature()),
-            "wb": Out(wishbone.Signature(addr_width=30,
-                    data_width=32, granularity=8)),
+        super().__init__({
+            "obi": In(_OBISignature()),
+            "wb":  Out(wishbone.Signature(addr_width=30, data_width=32, granularity=8)),
         })
+
     def elaborate(self, platform):
         m = Module()
         addr = Signal.like(self.obi.addr)
@@ -74,27 +77,45 @@ class OBI2Wishbone(wiring.Component):
         m.d.comb += self.obi.rdata.eq(self.wb.dat_r)
         return m
 
-class CV32E40P(Elaboratable):
-    def __init__(self, config="default", reset_vector=0x00100000):
-        self.config = config
-        self.dbus = wishbone.Interface(addr_width=30,
-                                      data_width=32, granularity=8) 
-        self.ibus = wishbone.Interface(addr_width=30,
-                                      data_width=32, granularity=8)
-        self.timer_irq = Signal()
-        self.software_irq = Signal()
-        self.irq_sigs = [None for i in range(32)]
-        self.reset_vector = reset_vector
-    def add_irq(self, irq, sig):
-        assert self.irq_sigs[irq] is None
-        self.irq_sigs[irq] = sig
+
+class CV32E40P(wiring.Component):
+    def __init__(self, *, config="default", reset_vector=0x00100000):
+        if config not in ("default",):
+            raise ValueError(f"Unsupported configuration {config!r}; must be one of: 'default'")
+        if not isinstance(reset_vector, int) or reset_vector < 0:
+            raise TypeError(f"Reset vector address must be a non-negative integer, not "
+                            f"{reset_vector!r}")
+        if bits_for(reset_vector) > 32:
+            raise ValueError(f"Reset vector address {reset_vector:#x} cannot be represented as a "
+                             f"32-bit integer")
+
+        super().__init__({
+            "ibus":         Out(wishbone.Signature(addr_width=30, data_width=32, granularity=8)),
+            "dbus":         Out(wishbone.Signature(addr_width=30, data_width=32, granularity=8)),
+            "timer_irq":    In(unsigned(1)),
+            "software_irq": In(unsigned(1)),
+        })
+
+        self._config = config
+        self._reset_vector = reset_vector
+
+    @property
+    def config(self):
+        return self._config
+
+    @property
+    def reset_vector(self):
+        return self._reset_vector
+
     def elaborate(self, platform):
         m = Module()
-        obi_ibus = OBISignature().create(path="obi_ibus")
-        obi_dbus = OBISignature().create(path="obi_dbus")
+
         ext_irq = Signal(32)
 
-        conn = dict(
+        m.submodules.ibus_adapt = ibus_adapt = _OBI2Wishbone()
+        m.submodules.dbus_adapt = dbus_adapt = _OBI2Wishbone()
+
+        m.submodules.riscv_core = Instance("riscv_core",
             i_clk_i=ClockSignal(),
             i_rst_ni=~ResetSignal(),
             i_clock_en_i=1,
@@ -105,20 +126,20 @@ class CV32E40P(Elaboratable):
             i_core_id_i=0,
             i_cluster_id_i=0,
 
-            o_instr_req_o=obi_ibus.req,
-            i_instr_gnt_i=obi_ibus.gnt,
-            i_instr_rvalid_i=obi_ibus.rvalid,
-            o_instr_addr_o=obi_ibus.addr,
-            i_instr_rdata_i=obi_ibus.rdata,
+            o_instr_req_o=ibus_adapt.obi.req,
+            i_instr_gnt_i=ibus_adapt.obi.gnt,
+            i_instr_rvalid_i=ibus_adapt.obi.rvalid,
+            o_instr_addr_o=ibus_adapt.obi.addr,
+            i_instr_rdata_i=ibus_adapt.obi.rdata,
 
-            o_data_req_o=obi_dbus.req,
-            i_data_gnt_i=obi_dbus.gnt,
-            i_data_rvalid_i=obi_dbus.rvalid,
-            o_data_we_o=obi_dbus.we,
-            o_data_be_o=obi_dbus.be,
-            o_data_addr_o=obi_dbus.addr,
-            o_data_wdata_o=obi_dbus.wdata,
-            i_data_rdata_i=obi_dbus.rdata,
+            o_data_req_o=dbus_adapt.obi.req,
+            i_data_gnt_i=dbus_adapt.obi.gnt,
+            i_data_rvalid_i=dbus_adapt.obi.rvalid,
+            o_data_we_o=dbus_adapt.obi.we,
+            o_data_be_o=dbus_adapt.obi.be,
+            o_data_addr_o=dbus_adapt.obi.addr,
+            o_data_wdata_o=dbus_adapt.obi.wdata,
+            i_data_rdata_i=dbus_adapt.obi.rdata,
 
             i_irq_software_i=self.software_irq,
             i_irq_timer_i=self.timer_irq,
@@ -131,18 +152,11 @@ class CV32E40P(Elaboratable):
             i_fetch_enable_i=1, # debug?
         )
 
-        m.submodules.cpu = cpu = Instance("riscv_core", **conn)
+        m.d.comb += ibus_adapt.obi.we.eq(0)
 
-        m.submodules.ibus_adapt = ibus_adapt = OBI2Wishbone()
-        m.submodules.dbus_adapt = dbus_adapt = OBI2Wishbone()
-        connect(m, obi_ibus, ibus_adapt.obi)
-        connect(m, obi_dbus, dbus_adapt.obi)
         connect(m, ibus_adapt.wb, flipped(self.ibus))
         connect(m, dbus_adapt.wb, flipped(self.dbus))
 
-        m.d.comb += [
-            obi_ibus.we.eq(0)
-        ]
         path = Path(__file__).parent / f"verilog/riscv_core_conv_sv2v.v"
         with open(path, 'r') as f:
             platform.add_file(path.name, f)
