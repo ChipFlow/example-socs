@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: BSD-2-Clause
 import os
+import signal
+import subprocess
 import time
 import unittest
-from subprocess import run, Popen, PIPE, STDOUT
 
 
 class TestAPI(unittest.TestCase):
@@ -15,12 +16,13 @@ class TestAPI(unittest.TestCase):
             make sim-build && \
             make software-build"
 
-        run(build_command, shell=True, check=True)
+        subprocess.run(build_command, shell=True, check=True)
 
         run_command = f"cd {project_path} && \
             make sim-run"
 
-        process = Popen(run_command, stdout=PIPE, stderr=STDOUT, shell=True, encoding="utf-8")
+        process = subprocess.Popen(run_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                   shell=True, encoding="utf-8", start_new_session=True)
 
         output_lines = []
         start_time = time.time()
@@ -43,3 +45,5 @@ class TestAPI(unittest.TestCase):
 
         assert expected_text in "".join(
             output_lines), f"We found our expected text in the simulation output. {extra_msg}"
+
+        os.killpg(os.getpgid(process.pid), signal.SIGKILL)
