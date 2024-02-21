@@ -18,7 +18,7 @@ from amaranth_orchard.memory.sram import SRAMPeripheral
 from amaranth_orchard.base.platform_timer import PlatformTimer
 from amaranth_orchard.base.soc_id import SoCID
 
-from .cv32e40p_wrapper import CV32E40P
+from .cv32e40p_wrapper import CV32E40P, DebugModule
 
 __all__ = ["MySoC"]
 
@@ -30,6 +30,9 @@ class MySoC(wiring.Component):
         # Memory regions:
         self.mem_spiflash_base = 0x00000000
         self.mem_sram_base     = 0x10000000
+
+        # Debug region
+        self.debug_base        = 0xa0000000
 
         # CSR regions:
         self.csr_base          = 0xb0000000
@@ -60,12 +63,19 @@ class MySoC(wiring.Component):
 
         # CPU
 
-        cpu = CV32E40P(config="default", reset_vector=self.bios_start)
+        cpu = CV32E40P(config="default", reset_vector=self.bios_start, dm_haltaddress=self.debug_base+0x800)
         wb_arbiter.add(cpu.ibus)
         wb_arbiter.add(cpu.dbus)
 
         m.submodules.cpu = cpu
 
+        # Debug
+        debug = DebugModule()
+        wb_arbiter.add(debug.initiator)
+        wb_decoder.add(debug.target, addr=self.debug_base)
+        m.d.comb += cpu.debug_req.eq(debug.debug_req)
+
+        m.submodules.debug = debug
         # SPI flash
 
         spiflash_provider = platform.providers.QSPIFlashProvider()
@@ -134,7 +144,7 @@ class MySoC(wiring.Component):
 
         # Debug support
 
-        m.submodules.jtag_provider = platform.providers.JTAGProvider(cpu)
+        m.submodules.jtag_provider = platform.providers.JTAGProvider(debug)
 
         if isinstance(platform, SimPlatform):
             m.submodules.wb_mon = platform.add_monitor("wb_mon", wb_decoder.bus)

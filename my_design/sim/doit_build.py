@@ -19,7 +19,7 @@ CXX = f"{sys.executable} -m ziglang c++"
 CXXFLAGS = f"-O3 -g -std=c++17 -I {CHIPFLOW_MODEL_DIR} -Wno-array-bounds -Wno-shift-count-overflow"
 RTL_CXXFLGAGS = "-O1 -std=c++17"
 # TODO: we need these models to be pulled in according to what has been used in the design
-DESIGN_MODELS = ["uart", "spiflash", "wb_mon", "log"]
+DESIGN_MODELS = ["uart", "spiflash", "wb_mon", "log", "jtag"]
 
 
 def task_build_sim_soc_c_files():
