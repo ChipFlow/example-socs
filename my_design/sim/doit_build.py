@@ -12,8 +12,8 @@ from doit.action import CmdAction
 
 CHIPFLOW_MODEL_DIR = chipflow_lib.config.get_dir_models()
 DESIGN_DIR = os.path.dirname(__file__) + "/.."
-YOSYS_DATDIR = os.path.abspath(
-    os.path.dirname(yowasp_yosys.__file__)) + "/share"
+YOSYS_CXXRTL_DIR = os.path.abspath(
+    os.path.dirname(yowasp_yosys.__file__)) + "/share/include/backends/cxxrtl/runtime"
 BUILD_DIR = "./build/sim"
 CXX = f"{sys.executable} -m ziglang c++"
 CXXFLAGS = f"-O3 -g -std=c++17 -I {CHIPFLOW_MODEL_DIR} -Wno-array-bounds -Wno-shift-count-overflow"
@@ -32,7 +32,7 @@ def task_build_sim_soc_c_files():
 
 def task_build_sim_soc_objects():
     def get_build_cmd():
-        cmd = f"{CXX} -I . -I {YOSYS_DATDIR}/include {RTL_CXXFLGAGS} "
+        cmd = f"{CXX} -I . -I {YOSYS_CXXRTL_DIR} {RTL_CXXFLGAGS} "
         cmd += f"-o {BUILD_DIR}/sim_soc.o -c {BUILD_DIR}/sim_soc.cc"
 
         return cmd
@@ -106,7 +106,7 @@ def task_build_sim_model_objects():
     for model in DESIGN_MODELS:
         model_obj_file = f"{BUILD_DIR}/models/{model}.o"
 
-        cmd = f"{CXX} -I . -I {YOSYS_DATDIR}/include {CXXFLAGS} -o {model_obj_file} "
+        cmd = f"{CXX} -I . -I {YOSYS_CXXRTL_DIR} {CXXFLAGS} -o {model_obj_file} "
         cmd += f"-c {BUILD_DIR}/models/{model}.cc"
 
         yield {
@@ -124,7 +124,7 @@ def task_build_sim_objects():
         obj_file = f"{BUILD_DIR}/{source}.o"
         yield {
             "name": obj_file,
-            "actions": [f"{CXX} -I . -I {YOSYS_DATDIR}/include {CXXFLAGS} -o {obj_file} -c {BUILD_DIR}/{source}.cc"],
+            "actions": [f"{CXX} -I . -I {YOSYS_CXXRTL_DIR} {CXXFLAGS} -o {obj_file} -c {BUILD_DIR}/{source}.cc"],
             "targets": [obj_file],
             "file_dep": [f"{BUILD_DIR}/{source}.cc", f"{BUILD_DIR}/sim_soc.h"],
         }
