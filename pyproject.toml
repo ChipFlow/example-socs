@@ -1,9 +1,3 @@
-# Package sources
-
-[[tool.pdm.source]]
-name = "chipflow-amaranth-vexriscv"
-url = "https://gitlab.com/api/v4/projects/33096707/packages/pypi/simple"
-
 # Project metadata
 
 [project]
@@ -18,6 +12,7 @@ license = {file = "LICENSE.md"}
 
 requires-python = "~=3.8"
 dependencies = [
+  "amaranth-vexriscv @ git+https://gitlab.com/ChipFlow/amaranth-vexriscv",
   "chipflow-lib @ git+https://gitlab.com/ChipFlow/chipflow-lib.git@main",
   "ziglang==0.11.0",
 ]

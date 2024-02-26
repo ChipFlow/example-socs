@@ -5,7 +5,7 @@
 groups = ["default", "test"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:c346f68039506c843a574e947d245e826b5b396d89d7d34e82b9d844eb91ad19"
+content_hash = "sha256:56a97949408cedba49d569a87364d220d4ca20f59c8a4f6794f0fb8ca5a5be48"
 
 [[package]]
 name = "amaranth"
@@ -188,11 +188,11 @@ files = [
 
 [[package]]
 name = "chipflow-lib"
-version = "0.1.1.dev79"
+version = "0.1.1.dev81"
 requires_python = "~=3.8"
 git = "https://gitlab.com/ChipFlow/chipflow-lib.git"
 ref = "main"
-revision = "38303da0811c2b1a51ecd197b52248ac5ec25d1c"
+revision = "d5612a535b14b3309269e01b1eaa8ab8f5794913"
 summary = "ChipFlow common tools."
 groups = ["default"]
 dependencies = [
@@ -201,14 +201,13 @@ dependencies = [
     "amaranth-orchard @ git+https://gitlab.com/ChipFlow/amaranth-orchard",
     "amaranth-soc @ git+https://github.com/amaranth-lang/amaranth-soc",
     "amaranth-stdio @ git+https://github.com/amaranth-lang/amaranth-stdio",
-    "amaranth-vexriscv @ git+https://gitlab.com/ChipFlow/amaranth-vexriscv",
     "doit~=0.36.0",
     "jsonschema~=4.17.3",
     "requests~=2.30.0",
     "tomli~=2.0.1",
-    "yowasp-nextpnr-ecp5",
+    "yowasp-nextpnr-ecp5==0.7.0.11.post528.dev0",
     "yowasp-runtime",
-    "yowasp-yosys>=0.38",
+    "yowasp-yosys==0.38.0.92.post685.dev0",
 ]
 
 [[package]]
@@ -590,14 +589,14 @@ files = [
 
 [[package]]
 name = "yowasp-nextpnr-ecp5"
-version = "0.7.0.0.post517"
+version = "0.7.0.11.post528.dev0"
 summary = "nextpnr-ecp5 FPGA place and route tool"
 groups = ["default"]
 dependencies = [
     "yowasp-runtime~=1.1",
 ]
 files = [
-    {file = "yowasp_nextpnr_ecp5-0.7.0.0.post517-py3-none-any.whl", hash = "sha256:24cd07551982074b798055c6a6461066db75c61a60151c3359d606d156c5cb5b"},
+    {file = "yowasp_nextpnr_ecp5-0.7.0.11.post528.dev0-py3-none-any.whl", hash = "sha256:102d3e81004c402e4422121197fa4eaf5090bd2d6d7e483312f2191233165e66"},
 ]
 
 [[package]]
@@ -617,7 +616,7 @@ files = [
 
 [[package]]
 name = "yowasp-yosys"
-version = "0.38.0.0.post669"
+version = "0.38.0.92.post685.dev0"
 summary = "Yosys Open SYnthesis Suite"
 groups = ["default"]
 dependencies = [
@@ -626,7 +625,7 @@ dependencies = [
     "yowasp-runtime~=1.12",
 ]
 files = [
-    {file = "yowasp_yosys-0.38.0.0.post669-py3-none-any.whl", hash = "sha256:18e955a57d53a570061ffd7415bf6a10a40e21ecca7f1b6b34231de6c6a64c9b"},
+    {file = "yowasp_yosys-0.38.0.92.post685.dev0-py3-none-any.whl", hash = "sha256:d665f35ca1557f1e021dd41605bd6bb47220400ed9454594b29f6723c9950d84"},
 ]
 
 [[package]]
