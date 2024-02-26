@@ -5,13 +5,7 @@ tutorial.
 
 ## Preparing your local environment
 
- - [Poetry must be installed](https://python-poetry.org/docs/#installation). 
-   - Note: If you choose to install `poetry` within a venv, `poetry` will reuse 
-     that venv instead of creating a new one, so you should ensure that its 
-     version of Python is compatible with the requirements of this project 
-     in `./pyproject.toml`.
- - Docker (or podman) should be available, which is used for the 
-   [dockcross](https://github.com/dockcross/dockcross) builds.
+ - [PDM must be installed](https://pdm-project.org/latest/#installation). 
  - [openFPGAloader is required](https://trabucayre.github.io/openFPGALoader/guide/install.html) to use a board.
    - macOS: Easiest way is `brew install openfpgaloader`.
    - Linux/Windows: Easiest way may be via the [OSS CAD Suite](https://github.com/YosysHQ/oss-cad-suite-build).
