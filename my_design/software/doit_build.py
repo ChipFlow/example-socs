@@ -7,7 +7,6 @@ import shutil
 
 from doit import create_after
 from doit.action import CmdAction
-from elftools.elf.elffile import ELFFile
 import chipflow_lib.config
 
 
@@ -70,15 +69,9 @@ def task_build_software_elf():
 
 @create_after(executed="build_software_elf", target_regex=".*/software\\.bin")
 def task_build_software():
-    # `python -m ziglang objcopy` isn't available on ziglang==0.10.1 and ziglang==0.11.0 isn't
-    # released yet.
-    def pyobjcopy():
-        with open(f"{BUILD_DIR}/software.elf", "rb") as rfp, \
-                open(f"{BUILD_DIR}/software.bin", "wb") as wfp:
-            wfp.write(next(seg.data() for seg in ELFFile(rfp).iter_segments()))
-
     return {
-        "actions": [(pyobjcopy)],
+        "actions": [f"{sys.executable} -m ziglang objcopy -O binary "
+                    f"{BUILD_DIR}/software.elf {BUILD_DIR}/software.bin"],
         "file_dep": [f"{BUILD_DIR}/software.elf"],
         "targets": [f"{BUILD_DIR}/software.bin"],
     }

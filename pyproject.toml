@@ -19,8 +19,7 @@ license = {file = "LICENSE.md"}
 requires-python = "~=3.8"
 dependencies = [
   "chipflow-lib @ git+https://gitlab.com/ChipFlow/chipflow-lib.git@main",
-  "ziglang==0.11.0.dev3747",
-  "pyelftools~=0.29",
+  "ziglang==0.11.0",
 ]
 
 # Build system configuration

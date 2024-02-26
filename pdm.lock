@@ -5,14 +5,14 @@
 groups = ["default", "test"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:72c3449389b386f450fbbcd1f4bff79df8d4d9d8630519b1ac033d47c237ccf0"
+content_hash = "sha256:c346f68039506c843a574e947d245e826b5b396d89d7d34e82b9d844eb91ad19"
 
 [[package]]
 name = "amaranth"
-version = "0.4.1.dev115"
+version = "0.4.1.dev116"
 requires_python = "~=3.8"
 git = "https://github.com/amaranth-lang/amaranth"
-revision = "09029cdd914d550e924cecfb9aa1692a536b4161"
+revision = "a586df89ad43bfe55dcad207bae9f7c8106046fe"
 summary = "Amaranth hardware definition language"
 groups = ["default"]
 dependencies = [
@@ -188,11 +188,11 @@ files = [
 
 [[package]]
 name = "chipflow-lib"
-version = "0.1.1.dev78"
+version = "0.1.1.dev79"
 requires_python = "~=3.8"
 git = "https://gitlab.com/ChipFlow/chipflow-lib.git"
 ref = "main"
-revision = "07879593709ed6dd07652c55e570c3618c6a4f97"
+revision = "38303da0811c2b1a51ecd197b52248ac5ec25d1c"
 summary = "ChipFlow common tools."
 groups = ["default"]
 dependencies = [
@@ -302,7 +302,7 @@ files = [
 
 [[package]]
 name = "importlib-resources"
-version = "6.1.1"
+version = "6.1.2"
 requires_python = ">=3.8"
 summary = "Read resources from Python packages"
 groups = ["default"]
@@ -311,8 +311,8 @@ dependencies = [
     "zipp>=3.1.0; python_version < \"3.10\"",
 ]
 files = [
-    {file = "importlib_resources-6.1.1-py3-none-any.whl", hash = "sha256:e8bf90d8213b486f428c9c39714b920041cb02c184686a3dee24905aaa8105d6"},
-    {file = "importlib_resources-6.1.1.tar.gz", hash = "sha256:3893a00122eafde6894c59914446a512f728a0c1a45f9bb9b63721b6bacf0b4a"},
+    {file = "importlib_resources-6.1.2-py3-none-any.whl", hash = "sha256:9a0a862501dc38b68adebc82970140c9e4209fc99601782925178f8386339938"},
+    {file = "importlib_resources-6.1.2.tar.gz", hash = "sha256:308abf8474e2dba5f867d279237cd4076482c3de7104a40b41426370e891549b"},
 ]
 
 [[package]]
@@ -460,16 +460,6 @@ groups = ["test"]
 files = [
     {file = "pluggy-1.4.0-py3-none-any.whl", hash = "sha256:7db9f7b503d67d1c5b95f59773ebb58a8c1c288129a88665838012cfb07b8981"},
     {file = "pluggy-1.4.0.tar.gz", hash = "sha256:8c85c2876142a764e5b7548e7d9a0e0ddb46f5185161049a79b7e974454223be"},
-]
-
-[[package]]
-name = "pyelftools"
-version = "0.30"
-summary = "Library for analyzing ELF files and DWARF debugging information"
-groups = ["default"]
-files = [
-    {file = "pyelftools-0.30-py2.py3-none-any.whl", hash = "sha256:544c3440eddb9a0dce70b6611de0b28163d71def759d2ed57a0d00118fc5da86"},
-    {file = "pyelftools-0.30.tar.gz", hash = "sha256:2fc92b0d534f8b081f58c7c370967379123d8e00984deb53c209364efd575b40"},
 ]
 
 [[package]]
@@ -641,17 +631,18 @@ files = [
 
 [[package]]
 name = "ziglang"
-version = "0.11.0.dev3747"
+version = "0.11.0"
 requires_python = "~=3.5"
 summary = "       Zig is a general-purpose programming language and toolchain for\nmaintaining robust, optimal, and reusable software."
 groups = ["default"]
 files = [
-    {file = "ziglang-0.11.0.dev.3747-py3-none-macosx_10_9_x86_64.whl", hash = "sha256:cc032b5345ba144664eaad619fa1d08989bf2e0f9c62f68c3f54f5805c5c0b58"},
-    {file = "ziglang-0.11.0.dev.3747-py3-none-macosx_11_0_arm64.whl", hash = "sha256:a075ceaeba6e10e18dbe49a0fbba23a832e1e68526ae629462e79e06626a8b80"},
-    {file = "ziglang-0.11.0.dev.3747-py3-none-manylinux_2_12_i686.manylinux2010_i686.musllinux_1_1_i686.whl", hash = "sha256:5f2f7e8930da3b7a7cf4e47054307ac9b1e756e7a02301ed3103cc99de8c8236"},
-    {file = "ziglang-0.11.0.dev.3747-py3-none-manylinux_2_12_x86_64.manylinux2010_x86_64.musllinux_1_1_x86_64.whl", hash = "sha256:4e9a96629f62be03b1df2838c9e3bba44ef8fd5cde6e9957f021bae70f77e377"},
-    {file = "ziglang-0.11.0.dev.3747-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.musllinux_1_1_aarch64.whl", hash = "sha256:46e0f031806a142ea7357bbdf06b8f07f32212373de7fe62a166799d70788d9a"},
-    {file = "ziglang-0.11.0.dev.3747-py3-none-win_amd64.whl", hash = "sha256:078c4e5537783d793ca210e70edd1c08bed33d3378c1ec09596afc7b7ce83708"},
+    {file = "ziglang-0.11.0-py3-none-macosx_10_9_x86_64.whl", hash = "sha256:bd046eeab97ad51048575768f6dae10468b3a4449f4467ed61dae621faf6ee55"},
+    {file = "ziglang-0.11.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:038b95cac9adef0c6dce9b72bdad895a0e4e0654c77c4a8f84fe79d2909a366e"},
+    {file = "ziglang-0.11.0-py3-none-manylinux_2_12_i686.manylinux2010_i686.musllinux_1_1_i686.whl", hash = "sha256:4f848c8cca520cb12357cfa3d303bf1149a30566f4c1e5999284dbdf921cc2b8"},
+    {file = "ziglang-0.11.0-py3-none-manylinux_2_12_x86_64.manylinux2010_x86_64.musllinux_1_1_x86_64.whl", hash = "sha256:45e8116428267e20529b9ee43a7e7364791c1a092845d2143b248a1dbf6760b0"},
+    {file = "ziglang-0.11.0-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.musllinux_1_1_aarch64.whl", hash = "sha256:d6372bada34714a5395539cc4d76e9cc6062739cee5ce9949a250f7c525ceb94"},
+    {file = "ziglang-0.11.0-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.musllinux_1_1_armv7l.whl", hash = "sha256:5fe81f91fd872fc32ed0f82807df6c680a82cbea56a9f24f818e9da299049022"},
+    {file = "ziglang-0.11.0-py3-none-win_amd64.whl", hash = "sha256:a7edc7020e7ffbbb3af3a40c17a9bda65d5a65132ff933e153ffa80d8f5ad731"},
 ]
 
 [[package]]
