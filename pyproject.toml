@@ -11,8 +11,8 @@ name = "example-socs"
 version = "0.0.0"
 description = "ChipFlow examples for making chips!"
 authors = [
-    {name = "Robert Taylor", email = "rob.taylor@chipflow.io>" },
-    {name = "Catherine Zotova", email = "catherine.zotova@chipflow.io>" },
+    {name = "Robert Taylor", email = "rob.taylor@chipflow.io" },
+    {name = "Catherine Zotova", email = "catherine.zotova@chipflow.io" },
 ]
 license = {file = "LICENSE.md"}
 
