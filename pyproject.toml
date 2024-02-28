@@ -32,4 +32,5 @@ test = [
 
 [tool.pdm.scripts]
 _.env_file = ".env.toolchain"
+test.env = {PYTHONWARNINGS = "error"}
 test.cmd = "pytest"
