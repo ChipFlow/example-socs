@@ -39,7 +39,7 @@ class MySoC(wiring.Component):
         self.csr_soc_id_base   = 0xb4000000
         #self.csr_btn_gpio_base = 0xb5000000
 
-        self.sram_size  = 0x2000 # 8KiB
+        self.sram_size  = 0x400 # 1KiB
         self.bios_start = 0x100000 # 1MiB into spiflash to make room for a bitstream
 
     def elaborate(self, platform):
