@@ -1,0 +1,54 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  merge_group:
+
+name: CI
+jobs:
+
+  test:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            allow-failure: false
+          - os: macos-latest
+            allow-failure: true
+    name: "test (${{ matrix.os }})"
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.allow-failure }}
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up PDM
+        uses: pdm-project/setup-pdm@v4
+        with:
+          cache: true
+      - name: Install dependencies
+        run: |
+          pdm install
+      - name: Cache YoWASP build products
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/YoWASP
+          key: YoWASP-${{ runner.os }}-${{ hashFiles('./.venv/**/*.wasm') }}
+          restore-keys: |
+            YoWASP-${{ runner.os }}-
+      - name: Run tests
+        run: |
+          pdm run test
+
+  license:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check source code licenses
+        run: |
+          docker run --platform=linux/amd64 -v ${PWD}:/src ghcr.io/google/addlicense -v -check -l BSD-2-Clause -c "ChipFlow" -s=only -ignore **/__init__.py **/*.py
