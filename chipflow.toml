@@ -1,3 +1,6 @@
+[chipflow]
+project_id = 8
+
 [chipflow.steps]
 sim = "my_design.steps.sim:MySimStep"
 board = "my_design.steps.board:MyBoardStep"
