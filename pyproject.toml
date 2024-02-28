@@ -13,7 +13,7 @@ license = {file = "LICENSE.md"}
 requires-python = "~=3.8"
 dependencies = [
   "amaranth-vexriscv @ git+https://gitlab.com/ChipFlow/amaranth-vexriscv",
-  "chipflow-lib @ git+https://github.com/ChipFlow/chipflow-lib.git@main",
+  "chipflow-lib @ git+https://github.com/ChipFlow/chipflow-lib",
   "ziglang==0.11.0",
 ]
 
@@ -27,7 +27,7 @@ build-backend = "pdm.backend"
 
 [tool.pdm.dev-dependencies]
 test = [
-  "pytest~=7.2.0",
+  "pytest~=8.0",
 ]
 
 [tool.pdm.scripts]
