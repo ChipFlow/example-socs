@@ -45,6 +45,7 @@ class MySoC(wiring.Component):
     def elaborate(self, platform):
         m = Module()
 
+        m.domains += ClockDomain("sync")
         m.submodules.clock_reset_provider = platform.providers.ClockResetProvider()
 
         wb_arbiter  = wishbone.Arbiter(addr_width=30, data_width=32, granularity=8)
