@@ -69,25 +69,25 @@ class MySoC(wiring.Component):
         # SPI flash
 
         spiflash_provider = platform.providers.QSPIFlashProvider()
-        spiflash = SPIMemIO(name="spiflash", flash=spiflash_provider.pins)
-        wb_decoder .add(spiflash.data_bus, addr=self.mem_spiflash_base)
-        csr_decoder.add(spiflash.ctrl_bus, addr=self.csr_spiflash_base - self.csr_base)
+        spiflash = SPIMemIO(flash=spiflash_provider.pins)
+        wb_decoder .add(spiflash.data_bus, name="spiflash", addr=self.mem_spiflash_base)
+        csr_decoder.add(spiflash.ctrl_bus, name="spiflash", addr=self.csr_spiflash_base - self.csr_base)
 
         m.submodules.spiflash_provider = spiflash_provider
         m.submodules.spiflash = spiflash
 
         # SRAM
 
-        sram = SRAMPeripheral(name="sram", size=self.sram_size)
-        wb_decoder.add(sram.bus, addr=self.mem_sram_base)
+        sram = SRAMPeripheral(size=self.sram_size)
+        wb_decoder.add(sram.bus, name="sram", addr=self.mem_sram_base)
 
         m.submodules.sram = sram
 
         # LED GPIOs
 
         led_gpio_provider = platform.providers.LEDGPIOProvider()
-        led_gpio = GPIOPeripheral(name="led_gpio", pins=led_gpio_provider.pins)
-        csr_decoder.add(led_gpio.bus, addr=self.csr_led_gpio_base - self.csr_base)
+        led_gpio = GPIOPeripheral(pins=led_gpio_provider.pins)
+        csr_decoder.add(led_gpio.bus, name="led_gpio", addr=self.csr_led_gpio_base - self.csr_base)
 
         m.submodules.led_gpio_provider = led_gpio_provider
         m.submodules.led_gpio = led_gpio
@@ -95,40 +95,40 @@ class MySoC(wiring.Component):
         # UART
 
         uart_provider = platform.providers.UARTProvider()
-        uart = UARTPeripheral(name="uart", init_divisor=int(25e6//115200), pins=uart_provider.pins)
-        csr_decoder.add(uart.bus, addr=self.csr_uart_base - self.csr_base)
+        uart = UARTPeripheral(init_divisor=int(25e6//115200), pins=uart_provider.pins)
+        csr_decoder.add(uart.bus, name="uart", addr=self.csr_uart_base - self.csr_base)
 
         m.submodules.uart_provider = uart_provider
         m.submodules.uart = uart
 
         # Timer
 
-        timer = PlatformTimer(name="timer")
-        csr_decoder.add(timer.bus, addr=self.csr_timer_base - self.csr_base)
+        timer = PlatformTimer()
+        csr_decoder.add(timer.bus, name="timer", addr=self.csr_timer_base - self.csr_base)
 
         m.submodules.timer = timer
         m.d.comb += cpu.timer_irq.eq(timer.irq)
 
         # SoC ID
 
-        soc_id = SoCID(name="soc_id", type_id=0xCA7F100F)
-        csr_decoder.add(soc_id.bus, addr=self.csr_soc_id_base - self.csr_base)
+        soc_id = SoCID(type_id=0xCA7F100F)
+        csr_decoder.add(soc_id.bus, name="soc_id", addr=self.csr_soc_id_base - self.csr_base)
 
         m.submodules.soc_id = soc_id
 
         # Button GPIOs
 
         #btn_gpio_provider = platform.providers.ButtonGPIOProvider()
-        #btn_gpio = GPIOPeripheral(name="btn_gpio", pins=btn_gpio_provider.pins)
-        #csr_decoder.add(btn_gpio.bus, addr=self.csr_btn_gpio_base - self.csr_base)
+        #btn_gpio = GPIOPeripheral(pins=btn_gpio_provider.pins)
+        #csr_decoder.add(btn_gpio.bus, name="btn_gpio", addr=self.csr_btn_gpio_base - self.csr_base)
 
         #m.submodules.btn_gpio_provider = btn_gpio_provider
         #m.submodules.btn_gpio = btn_gpio
 
         # Wishbone-CSR bridge
 
-        wb_to_csr = WishboneCSRBridge(csr_decoder.bus, data_width=32, name="csr")
-        wb_decoder.add(wb_to_csr.wb_bus, addr=self.csr_base, sparse=False)
+        wb_to_csr = WishboneCSRBridge(csr_decoder.bus, data_width=32)
+        wb_decoder.add(wb_to_csr.wb_bus, name="csr", addr=self.csr_base, sparse=False)
 
         m.submodules.wb_to_csr = wb_to_csr
 
