@@ -6,12 +6,11 @@ from amaranth import *
 from amaranth.lib import wiring
 from amaranth.lib.wiring import connect
 
-from amaranth_soc import csr, wishbone
+from amaranth_soc import csr, wishbone, gpio
 from amaranth_soc.csr.wishbone import WishboneCSRBridge
 
 from amaranth_vexriscv.vexriscv import VexRiscv
 
-from amaranth_orchard.base.gpio import GPIOPeripheral
 from amaranth_orchard.memory.spimemio import SPIMemIO
 from amaranth_orchard.io.uart import UARTPeripheral
 from amaranth_orchard.memory.sram import SRAMPeripheral
@@ -86,11 +85,15 @@ class MySoC(wiring.Component):
         # LED GPIOs
 
         led_gpio_provider = platform.providers.LEDGPIOProvider()
-        led_gpio = GPIOPeripheral(pins=led_gpio_provider.pins)
-        csr_decoder.add(led_gpio.bus, name="led_gpio", addr=self.csr_led_gpio_base - self.csr_base)
+        led_gpio = gpio.Peripheral(pin_count=8, addr_width=4, data_width=8)
 
         m.submodules.led_gpio_provider = led_gpio_provider
         m.submodules.led_gpio = led_gpio
+
+        for n in range(8):
+            connect(m, led_gpio.pins[n], led_gpio_provider.pins[n])
+
+        csr_decoder.add(led_gpio.bus, name="led_gpio", addr=self.csr_led_gpio_base - self.csr_base)
 
         # UART
 
@@ -119,11 +122,15 @@ class MySoC(wiring.Component):
         # Button GPIOs
 
         #btn_gpio_provider = platform.providers.ButtonGPIOProvider()
-        #btn_gpio = GPIOPeripheral(pins=btn_gpio_provider.pins)
-        #csr_decoder.add(btn_gpio.bus, name="btn_gpio", addr=self.csr_btn_gpio_base - self.csr_base)
+        #btn_gpio = gpio.Peripheral(pin_count=2, addr_width=4, data_width=8)
 
         #m.submodules.btn_gpio_provider = btn_gpio_provider
         #m.submodules.btn_gpio = btn_gpio
+
+        #for n in range(2):
+        #    connect(m, btn_gpio.pins[n], btn_gpio_provider.pins[n])
+
+        #csr_decoder.add(btn_gpio.bus, name="btn_gpio", addr=self.csr_btn_gpio_base - self.csr_base)
 
         # Wishbone-CSR bridge
 

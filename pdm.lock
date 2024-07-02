@@ -5,7 +5,7 @@
 groups = ["default", "test"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.2"
-content_hash = "sha256:7e596c1a1c31b18926b9a77caf35f770fe3f5680466366d8830bdf69f40331cb"
+content_hash = "sha256:1ad53ecc07fde95da0515939243230b0deca09df20b0581b261a43bc65e63c45"
 
 [[package]]
 name = "amaranth"
@@ -38,10 +38,10 @@ dependencies = [
 
 [[package]]
 name = "amaranth-orchard"
-version = "0.1.dev38"
+version = "0.1.dev39"
 requires_python = "~=3.8"
 git = "https://github.com/ChipFlow/amaranth-orchard"
-revision = "c54c5f7350452a664cbe45400d09fc4bc3268924"
+revision = "a7a364141c4d751ebf20f7e5390d4206180fbc8c"
 summary = "curated collection of Amaranth cores"
 groups = ["default"]
 dependencies = [
@@ -50,10 +50,10 @@ dependencies = [
 
 [[package]]
 name = "amaranth-soc"
-version = "0.1a1.dev17"
+version = "0.1a1.dev18"
 requires_python = "~=3.8"
 git = "https://github.com/amaranth-lang/amaranth-soc"
-revision = "f5d44534ed729cc1f7419fffef4da679c4b84c56"
+revision = "058057f38b18537585a02e1db7955a184a1c5334"
 summary = "System on Chip toolkit for Amaranth HDL"
 groups = ["default"]
 dependencies = [
@@ -194,10 +194,10 @@ files = [
 
 [[package]]
 name = "chipflow-lib"
-version = "0.1.1.dev104"
+version = "0.1.1.dev106"
 requires_python = "~=3.8"
 git = "https://github.com/ChipFlow/chipflow-lib"
-revision = "172215ee7306ee7d6bc27bc0013b730d6e055a84"
+revision = "d92258e87daec9cdd1c2f5fbc9002b84b5c48ec5"
 summary = "ChipFlow common tools."
 groups = ["default"]
 dependencies = [
