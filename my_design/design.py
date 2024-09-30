@@ -9,7 +9,7 @@ from amaranth.lib.wiring import connect
 from amaranth_soc import csr, wishbone, gpio
 from amaranth_soc.csr.wishbone import WishboneCSRBridge
 
-from amaranth_vexriscv.vexriscv import VexRiscv
+from minerva.core import Minerva
 
 from amaranth_orchard.memory.spimemio import SPIMemIO
 from amaranth_orchard.io.uart import UARTPeripheral
@@ -59,7 +59,7 @@ class MySoC(wiring.Component):
 
         # CPU
 
-        cpu = VexRiscv(config="LiteDebug", reset_vector=self.bios_start)
+        cpu = Minerva(reset_address=self.bios_start)
         wb_arbiter.add(cpu.ibus)
         wb_arbiter.add(cpu.dbus)
 
@@ -110,7 +110,7 @@ class MySoC(wiring.Component):
         csr_decoder.add(timer.bus, name="timer", addr=self.csr_timer_base - self.csr_base)
 
         m.submodules.timer = timer
-        m.d.comb += cpu.timer_irq.eq(timer.irq)
+        m.d.comb += cpu.timer_interrupt.eq(timer.irq)
 
         # SoC ID
 
@@ -123,13 +123,13 @@ class MySoC(wiring.Component):
 
         #btn_gpio_provider = platform.providers.ButtonGPIOProvider()
         #btn_gpio = gpio.Peripheral(pin_count=2, addr_width=4, data_width=8)
-
+        #
         #m.submodules.btn_gpio_provider = btn_gpio_provider
         #m.submodules.btn_gpio = btn_gpio
-
+        #
         #for n in range(2):
         #    connect(m, btn_gpio.pins[n], btn_gpio_provider.pins[n])
-
+        #
         #csr_decoder.add(btn_gpio.bus, name="btn_gpio", addr=self.csr_btn_gpio_base - self.csr_base)
 
         # Wishbone-CSR bridge
@@ -140,8 +140,6 @@ class MySoC(wiring.Component):
         m.submodules.wb_to_csr = wb_to_csr
 
         # Debug support
-
-        m.submodules.jtag_provider = platform.providers.JTAGProvider(cpu)
 
         if isinstance(platform, SimPlatform):
             m.submodules.wb_mon = platform.add_monitor("wb_mon", wb_decoder.bus)

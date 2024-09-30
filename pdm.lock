@@ -5,14 +5,14 @@
 groups = ["default", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:1ad53ecc07fde95da0515939243230b0deca09df20b0581b261a43bc65e63c45"
+content_hash = "sha256:137b3536c8e90c9c225b79328af774c39f500cb2312520418201161c9dcea816"
 
 [[metadata.targets]]
 requires_python = "~=3.8"
 
 [[package]]
 name = "amaranth"
-version = "0.5.1"
+version = "0.5.2"
 requires_python = "~=3.8"
 summary = "Amaranth hardware definition language"
 groups = ["default"]
@@ -23,8 +23,8 @@ dependencies = [
     "pyvcd<0.5,>=0.2.2",
 ]
 files = [
-    {file = "amaranth-0.5.1-py3-none-any.whl", hash = "sha256:2d370cc5b97e2472aab0a4eca515ab7f5116274550bd454132520eaec6068fb6"},
-    {file = "amaranth-0.5.1.tar.gz", hash = "sha256:58b01efcec24c3696a7465e97a6e62f46466afab1f956a6eb00bda4b791c8345"},
+    {file = "amaranth-0.5.2-py3-none-any.whl", hash = "sha256:552ac232a12093d5375e23276c070f21da74d07778bf75c456b8db781a4bc919"},
+    {file = "amaranth-0.5.2.tar.gz", hash = "sha256:af52811bca464233a3bbd72193ede584e75de592391cae92d1cbf24b98a3c954"},
 ]
 
 [[package]]
@@ -76,15 +76,33 @@ dependencies = [
 ]
 
 [[package]]
-name = "amaranth-vexriscv"
-version = "0.0.0"
-requires_python = "<4.0,>=3.8"
-git = "https://github.com/ChipFlow/amaranth-vexriscv"
-revision = "0fcc254d2812e4b96a80aa61844acaf4d88ffcfd"
-summary = "Prebuilt VexRiscv (currently ASIC-optimised configs) and Amaranth Integration"
+name = "amaranth-yosys"
+version = "0.40.0.0.post100"
+requires_python = "~=3.8"
+summary = "Specialized WebAssembly build of Yosys used by Amaranth HDL"
 groups = ["default"]
 dependencies = [
-    "amaranth<0.6,>=0.5",
+    "importlib-resources>=1.4; python_version < \"3.9\"",
+    "wasmtime<26,>=1",
+]
+files = [
+    {file = "amaranth_yosys-0.40.0.0.post100-py3-none-any.whl", hash = "sha256:5df73a9d2d12683ad59c86e50f17b2d0f2758927dc42a32d718a981748ac729a"},
+]
+
+[[package]]
+name = "amaranth"
+version = "0.5.2"
+extras = ["builtin-yosys"]
+requires_python = "~=3.8"
+summary = "Amaranth hardware definition language"
+groups = ["default"]
+dependencies = [
+    "amaranth-yosys>=0.40",
+    "amaranth==0.5.2",
+]
+files = [
+    {file = "amaranth-0.5.2-py3-none-any.whl", hash = "sha256:552ac232a12093d5375e23276c070f21da74d07778bf75c456b8db781a4bc919"},
+    {file = "amaranth-0.5.2.tar.gz", hash = "sha256:af52811bca464233a3bbd72193ede584e75de592391cae92d1cbf24b98a3c954"},
 ]
 
 [[package]]
@@ -200,10 +218,10 @@ files = [
 
 [[package]]
 name = "chipflow-lib"
-version = "0.1.1.dev107"
+version = "0.1.1.dev108"
 requires_python = "~=3.8"
 git = "https://github.com/ChipFlow/chipflow-lib"
-revision = "497149ee9426f17f6ba47b5f12697fcd35342de7"
+revision = "df78b12d815736de435e0c7d2425e4494e0607fc"
 summary = "ChipFlow common tools."
 groups = ["default"]
 dependencies = [
@@ -211,7 +229,7 @@ dependencies = [
     "amaranth-orchard @ git+https://github.com/ChipFlow/amaranth-orchard",
     "amaranth-soc @ git+https://github.com/amaranth-lang/amaranth-soc",
     "amaranth-stdio @ git+https://github.com/amaranth-lang/amaranth-stdio",
-    "amaranth<0.6,>=0.5",
+    "amaranth<0.7,>=0.5",
     "doit~=0.36.0",
     "jsonschema~=4.17.3",
     "requests~=2.30.0",
@@ -445,6 +463,20 @@ files = [
 ]
 
 [[package]]
+name = "minerva"
+version = "0.1.dev129"
+requires_python = "~=3.8"
+git = "https://github.com/minerva-cpu/minerva"
+revision = "2c435ccf5bd478d7dfd60d28f8baec3faf6caf92"
+summary = "A 32-bit RISC-V soft processor"
+groups = ["default"]
+dependencies = [
+    "amaranth-soc @ git+https://github.com/amaranth-lang/amaranth-soc",
+    "amaranth[builtin-yosys]<0.6,>=0.5",
+    "yowasp-yosys",
+]
+
+[[package]]
 name = "packaging"
 version = "24.1"
 requires_python = ">=3.8"
@@ -532,7 +564,7 @@ files = [
 
 [[package]]
 name = "pytest"
-version = "8.3.2"
+version = "8.3.3"
 requires_python = ">=3.8"
 summary = "pytest: simple powerful testing with Python"
 groups = ["test"]
@@ -545,8 +577,8 @@ dependencies = [
     "tomli>=1; python_version < \"3.11\"",
 ]
 files = [
-    {file = "pytest-8.3.2-py3-none-any.whl", hash = "sha256:4ba08f9ae7dcf84ded419494d229b48d0903ea6407b030eaec46df5e6a73bba5"},
-    {file = "pytest-8.3.2.tar.gz", hash = "sha256:c132345d12ce551242c87269de812483f5bcc87cdbb4722e48487ba194f9fdce"},
+    {file = "pytest-8.3.3-py3-none-any.whl", hash = "sha256:a6853c7375b2663155079443d2e45de913a911a11d669df02a50814944db57b2"},
+    {file = "pytest-8.3.3.tar.gz", hash = "sha256:70b98107bd648308a7952b06e6ca9a50bc660be218d53c257cc1fc94fda10181"},
 ]
 
 [[package]]
