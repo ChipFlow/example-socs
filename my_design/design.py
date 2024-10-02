@@ -8,12 +8,12 @@ from amaranth.lib.wiring import connect
 
 from amaranth_soc import csr, wishbone, gpio
 from amaranth_soc.csr.wishbone import WishboneCSRBridge
+from amaranth_soc.wishbone.sram import WishboneSRAM
 
 from minerva.core import Minerva
 
 from amaranth_orchard.memory.spimemio import SPIMemIO
 from amaranth_orchard.io.uart import UARTPeripheral
-from amaranth_orchard.memory.sram import SRAMPeripheral
 from amaranth_orchard.base.platform_timer import PlatformTimer
 from amaranth_orchard.base.soc_id import SoCID
 
@@ -77,8 +77,8 @@ class MySoC(wiring.Component):
 
         # SRAM
 
-        sram = SRAMPeripheral(size=self.sram_size)
-        wb_decoder.add(sram.bus, name="sram", addr=self.mem_sram_base)
+        sram = WishboneSRAM(size=self.sram_size, data_width=32, granularity=8)
+        wb_decoder.add(sram.wb_bus, name="sram", addr=self.mem_sram_base)
 
         m.submodules.sram = sram
 
