@@ -10,12 +10,12 @@ authors = [
 ]
 license = {file = "LICENSE.md"}
 
-requires-python = "~=3.8"
+requires-python = "~=3.11"
 dependencies = [
   "amaranth>=0.5,<0.6",
   "amaranth-vexriscv @ git+https://github.com/ChipFlow/amaranth-vexriscv",
   "chipflow-lib @ git+https://github.com/ChipFlow/chipflow-lib",
-  "ziglang==0.11.0",
+  "ziglang==0.13.0",
 ]
 
 # Build system configuration
